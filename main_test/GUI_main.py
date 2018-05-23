@@ -16,10 +16,12 @@ import edge_test.test as tt
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
+        self.import_path = ""
         super().__init__()
         self.init_ui()
 
     def init_ui(self):
+        self.statusBar()
         exitAct = Qtqw.QAction(Qtqg.QIcon('../img/quit1.png'), '&退出', self)  # 设置退出按钮，属于文件菜单
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('退出程序')
@@ -35,7 +37,7 @@ class MainWindow(Qtqw.QMainWindow):
         delDtAct.setStatusTip('删除场次数据')
         delDtAct.triggered.connect(self.delete_round)
 
-        self.statusBar()
+
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&文件')
         fileMenu.addAction(exitAct)
@@ -52,7 +54,9 @@ class MainWindow(Qtqw.QMainWindow):
         pass
 
     def import_file(self):
-        pass
+        fname = Qtqw.QFileDialog.getOpenFileName()
+        self.import_path = fname[0]
+        #  do release
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",
@@ -69,10 +73,10 @@ class MainWindow(Qtqw.QMainWindow):
             event.accept()
         else:
             event.ignore()
+            print(self.import_path)
 
 
 if __name__ == '__main__':
-    tt.test1()
     app = Qtqw.QApplication(sys.argv)
     mw = MainWindow()
     sys.exit(app.exec_())
