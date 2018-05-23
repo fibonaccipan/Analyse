@@ -21,7 +21,7 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
 # self.gridLayoutWidget = QtWidgets.QWidget()
 # self.gridLayoutWidget.setGeometry(QtCore.QRect(180, 10, 1100, 500))  # 定义gridLayout控件的大小和位置，4个数字分别为左边坐标，上边坐标，长，宽
 # self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-# self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget)
+# self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget)  
 # self.gridLayout_2.setContentsMargins(0, 0, 0, 0)  # 在gridLayoutWidget 上创建一个网格Layout，注意以gridLayoutWidget为参
 # self.gridLayout_2.setObjectName("gridLayout_2")
 # # ===通过graphicview来显示图形

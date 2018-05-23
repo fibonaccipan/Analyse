@@ -11,7 +11,7 @@ import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 import pandas as pd
-
+import edge_test.test as tt
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
@@ -71,6 +71,7 @@ class MainWindow(Qtqw.QMainWindow):
 
 
 if __name__ == '__main__':
+    tt.test1()
     app = Qtqw.QApplication(sys.argv)
     mw = MainWindow()
     sys.exit(app.exec_())
