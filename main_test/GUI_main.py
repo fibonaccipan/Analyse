@@ -10,6 +10,7 @@ Final : No
 import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
+import pandas as pd
 
 
 class MainWindow(Qtqw.QMainWindow):
