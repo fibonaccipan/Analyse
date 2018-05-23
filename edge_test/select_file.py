@@ -45,7 +45,7 @@ class Example(QMainWindow):
 
     def showDialog(self):
         fname = QFileDialog.getOpenFileName()
-        self.textEdit.setText(fname[0])
+        print(fname[0])
 
 
 if __name__ == '__main__':
