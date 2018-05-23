@@ -28,7 +28,7 @@ class MainWindow(Qtqw.QMainWindow):
         iptDtAct.setStatusTip('导入比赛数据')
         iptDtAct.triggered.connect(self.import_file)
 
-        delDtAct = Qtqw.QAction(Qtqg.QIcon('../img/import.png'), '&删除场次', self)  # 设置导入按钮，属于文件菜单
+        delDtAct = Qtqw.QAction(Qtqg.QIcon('../img/import.png'), '&删除场次', self)  # 设置删除按钮，属于文件菜单
         delDtAct.setShortcut('Ctrl+D')
         delDtAct.setStatusTip('删除场次数据')
         delDtAct.triggered.connect(self.delete_round)
@@ -40,7 +40,6 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu.addAction(iptDtAct)
         fileMenu = menubar.addMenu('&编辑')
         fileMenu.addAction(delDtAct)
-
 
         self.setWindowTitle("狗逼的程序")
         self.setGeometry(300, 300, 600, 300)
