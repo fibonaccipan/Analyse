@@ -27,7 +27,7 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu = menubar.addMenu('&文件')
         fileMenu.addAction(exitAct)
 
-        self.setWindowTitle("狗逼的程序")
+        self.setWindowTitle("yant狗逼的程序")
         self.setGeometry(300, 300, 600, 300)
         self.setWindowIcon(Qtqg.QIcon('../img/axur17.png'))
         self.show()
