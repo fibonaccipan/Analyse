@@ -13,6 +13,7 @@ import PyQt5.QtGui as Qtqg
 import pandas as pd
 import edge_test.test as tt
 
+
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         super().__init__()
