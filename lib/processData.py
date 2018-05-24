@@ -10,7 +10,8 @@ Accomplish : Yes
 Final : No
 """
 import os
-
+import shutil
+import pandas as pd
 
 class SplitData:
     def __init__(self, gameDegree, gameRound):
@@ -19,6 +20,19 @@ class SplitData:
         self.gameRound = gameRound
         self.gameDegree = gameDegree
         self.outPath = self.fPath + "/" + self.gameDegree + "/" +self.gameRound
+
+    def splitDate(self):
+        if os.path.exists(self.outPath):
+            shutil.rmtree(self.outPath)
+        filelist = os.listdir(self.fromPath)
+        for teamdata in filelist:
+            teamoutpath = self.outPath+"/"+teamdata[:teamdata.find(".")]
+            teamfrompath = self.fromPath+ "/" + teamdata
+            os.makedirs(teamoutpath)
+            sheetlist = pd.ExcelFile(teamfrompath).sheet_names
+            for sheet in sheetlist:
+                datatype = teamdata.find("年")
+                print(teamdata+"--"+sheet+"--"+datatype)
 
     def showAll(self):
         print(self.fPath)

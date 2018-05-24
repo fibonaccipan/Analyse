@@ -62,7 +62,7 @@ class MainWindow(Qtqw.QMainWindow):
 
     def split_file(self):
         spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
-        spliter.showAll()
+        spliter.splitDate()
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",
