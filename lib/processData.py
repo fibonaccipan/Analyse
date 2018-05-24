@@ -12,6 +12,7 @@ Final : No
 import os
 import shutil
 import pandas as pd
+import lib.processDataFunc as PDF
 
 class SplitData:
     def __init__(self, gameDegree, gameRound):
@@ -27,12 +28,19 @@ class SplitData:
         filelist = os.listdir(self.fromPath)
         for teamdata in filelist:
             teamoutpath = self.outPath+"/"+teamdata[:teamdata.find(".")]
-            teamfrompath = self.fromPath+ "/" + teamdata
+            teamfrompath = self.fromPath + "/" + teamdata
             os.makedirs(teamoutpath)
             sheetlist = pd.ExcelFile(teamfrompath).sheet_names
             for sheet in sheetlist:
                 datatype = teamdata.find("年")
-                print(teamdata+"--"+sheet+"--"+datatype)
+                if datatype > -1:
+                    if sheet.rfind("年初广告投放") > -1:
+                        PDF.clear_year_ad_data(teamdata, sheet, teamoutpath)
+                    if sheet.rfind("综合费用") > -1 or sheet.rfind("利润") > -1 or sheet.rfind("资产负债表") > -1:
+                        pass
+                else:
+                    if sheet.rfind("订单信息") > -1 or sheet.rfind("现金流量表") > -1:
+                        pass
 
     def showAll(self):
         print(self.fPath)

@@ -13,6 +13,7 @@ import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
 import lib.processData as pcsd
 
+
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         self.import_path: str = ""
@@ -47,7 +48,7 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu.addAction(sptAct)
 
         self.setWindowTitle("狗逼的程序")
-        self.setGeometry(300, 300, 600, 300)
+        self.setGeometry(300, 300, 600, 600)
         self.setWindowIcon(Qtqg.QIcon('../img/axur17.png'))
         self.show()
 
