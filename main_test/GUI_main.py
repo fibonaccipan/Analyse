@@ -10,13 +10,11 @@ Final : No
 import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
-import pandas as pd
-import edge_test.test as tt
-
+import lib.releaseZip as rls
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
-        self.import_path = ""
+        self.import_path: str
         super().__init__()
         self.init_ui()
 
@@ -56,7 +54,9 @@ class MainWindow(Qtqw.QMainWindow):
     def import_file(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
         self.import_path = fname[0]
-        #  do release
+        releaser = rls.ReleaseZip(self.import_path, "hard")
+        releaser.release()
+        releaser.showAll()
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",
