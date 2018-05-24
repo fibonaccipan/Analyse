@@ -33,10 +33,10 @@ class MainWindow(Qtqw.QMainWindow):
         iptDtAct.setStatusTip('导入比赛数据')
         iptDtAct.triggered.connect(self.import_file)
 
-        delDtAct = Qtqw.QAction(Qtqg.QIcon('../img/import.png'), '&删除场次', self)  # 设置删除按钮，属于文件菜单
-        delDtAct.setShortcut('Ctrl+D')
-        delDtAct.setStatusTip('删除场次数据')
-        delDtAct.triggered.connect(self.delete_round)
+        sptAct = Qtqw.QAction(Qtqg.QIcon('../img/import.png'), '&处理数据', self)  # 设置处理按钮，属于文件菜单
+        sptAct.setShortcut('Ctrl+X')
+        sptAct.setStatusTip('处理场次数据')
+        sptAct.triggered.connect(self.split_file)
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&文件')
@@ -44,7 +44,7 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu.addAction(iptDtAct)
         # 分割处理数据
         fileMenu = menubar.addMenu('&编辑')
-        fileMenu.addAction(delDtAct)
+        fileMenu.addAction(sptAct)
 
         self.setWindowTitle("狗逼的程序")
         self.setGeometry(300, 300, 600, 300)
