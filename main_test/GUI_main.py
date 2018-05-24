@@ -11,10 +11,13 @@ import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
+import lib.processData as pcsd
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
-        self.import_path: str
+        self.import_path: str = ""
+        self.gameRound: str = ""
+        self.gameDegree: str = "easy"
         super().__init__()
         self.init_ui()
 
@@ -35,7 +38,6 @@ class MainWindow(Qtqw.QMainWindow):
         delDtAct.setStatusTip('删除场次数据')
         delDtAct.triggered.connect(self.delete_round)
 
-
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&文件')
         fileMenu.addAction(exitAct)
@@ -54,9 +56,12 @@ class MainWindow(Qtqw.QMainWindow):
     def import_file(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
         self.import_path = fname[0]
-        releaser = rls.ReleaseZip(self.import_path, "hard")
-        releaser.release()
-        releaser.showAll()
+        releaser = rls.ReleaseZip(self.import_path)
+        self.gameRound = releaser.release()
+
+    def split_file(self):
+        spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
+        spliter.showAll()
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",
