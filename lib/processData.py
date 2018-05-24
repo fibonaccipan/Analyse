@@ -17,10 +17,10 @@ import lib.processDataFunc as PDF
 class SplitData:
     def __init__(self, gameDegree, gameRound):
         self.fPath = os.path.abspath('..').replace('\\', '/')
-        self.fromPath = self.fPath + "/" + "tmp"
+        self.fromPath = self.fPath + "/tmp/" + gameRound
         self.gameRound = gameRound
         self.gameDegree = gameDegree
-        self.outPath = self.fPath + "/" + self.gameDegree + "/" +self.gameRound
+        self.outPath = self.fPath + "/data/" + self.gameDegree + "/" +self.gameRound
 
     def splitDate(self):
         if os.path.exists(self.outPath):
@@ -35,9 +35,11 @@ class SplitData:
                 datatype = teamdata.find("年")
                 if datatype > -1:
                     if sheet.rfind("年初广告投放") > -1:
-                        PDF.clear_year_ad_data(teamdata, sheet, teamoutpath)
+                        cleanr = PDF.clear_data(teamfrompath, sheet, teamoutpath)
+                        cleanr.clear_year_ad_data()
                     if sheet.rfind("综合费用") > -1 or sheet.rfind("利润") > -1 or sheet.rfind("资产负债表") > -1:
-                        pass
+                        cleanr = PDF.clear_data(teamfrompath, sheet, teamoutpath)
+                        cleanr.clear_year_normal_data()
                 else:
                     if sheet.rfind("订单信息") > -1 or sheet.rfind("现金流量表") > -1:
                         pass

@@ -7,6 +7,7 @@ Edit date :20180523
 Accomplish : No
 Final : No
 """
+import os
 import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
@@ -16,9 +17,11 @@ import lib.processData as pcsd
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
+        self.fPath = os.path.abspath('..').replace('\\', '/')
         self.import_path: str = ""
-        self.gameRound: str = ""
         self.gameDegree: str = "easy"
+        filelist = os.listdir(self.fPath + "/tmp")
+        self.gameRound = filelist.pop()
         super().__init__()
         self.init_ui()
 
@@ -64,6 +67,7 @@ class MainWindow(Qtqw.QMainWindow):
     def split_file(self):
         spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
         spliter.splitDate()
+        # print(self.gameDegree, self.gameRound)
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",

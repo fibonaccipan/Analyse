@@ -17,7 +17,8 @@ class ReleaseZip:
     def __init__(self, importPath):
         self.fPath = os.path.abspath('..').replace('\\', '/')
         self.importPath = importPath
-        self.tmpPath = self.fPath + "/" + "tmp"
+        self.gameRound = self.importPath[self.importPath.rfind("/")+1:self.importPath.rfind(".")]
+        self.tmpPath = self.fPath + "/tmp/" + self.gameRound
 
     def showAll(self):
         print(self.importPath)
@@ -30,4 +31,4 @@ class ReleaseZip:
         zpf = zf.ZipFile(self.importPath)
         zpf.extractall(self.tmpPath)
         # 返回比赛场次（文件名）
-        return self.importPath[self.importPath.rfind("/"):self.importPath.rfind(".")]
+        return self.gameRound
