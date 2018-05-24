@@ -42,6 +42,7 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu = menubar.addMenu('&文件')
         fileMenu.addAction(exitAct)
         fileMenu.addAction(iptDtAct)
+        # 分割处理数据
         fileMenu = menubar.addMenu('&编辑')
         fileMenu.addAction(delDtAct)
 
