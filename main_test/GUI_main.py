@@ -42,6 +42,8 @@ class MainWindow(Qtqw.QMainWindow):
         sptAct.setStatusTip('处理场次数据')
         sptAct.triggered.connect(self.split_file)
 
+        # qwgt1 = Qtqw.QDockWidget("ss",)
+
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&文件')
         fileMenu.addAction(exitAct)
@@ -50,9 +52,11 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu = menubar.addMenu('&编辑')
         fileMenu.addAction(sptAct)
 
+        # sdockwidget =  self.addDockWidget()
         self.setWindowTitle("狗逼的程序")
         self.setGeometry(300, 300, 600, 400)
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
+        # print(type(menubar))
         self.show()
 
     def delete_round(self):
@@ -84,7 +88,6 @@ class MainWindow(Qtqw.QMainWindow):
             event.accept()
         else:
             event.ignore()
-            print(self.import_path)
 
 
 if __name__ == '__main__':
