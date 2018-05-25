@@ -27,7 +27,7 @@ class MainWindow(Qtqw.QMainWindow):
 
     def init_ui(self):
         self.statusBar()
-        exitAct = Qtqw.QAction(Qtqg.QIcon('../img/quit1.png'), '&退出', self)  # 设置退出按钮，属于文件菜单
+        exitAct = Qtqw.QAction(Qtqg.QIcon('../img/quit.png'), '&退出', self)  # 设置退出按钮，属于文件菜单
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('退出程序')
         exitAct.triggered.connect(self.app_quit)
@@ -51,8 +51,8 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu.addAction(sptAct)
 
         self.setWindowTitle("狗逼的程序")
-        self.setGeometry(300, 300, 600, 600)
-        self.setWindowIcon(Qtqg.QIcon('../img/axur17.png'))
+        self.setGeometry(300, 300, 600, 400)
+        self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
         self.show()
 
     def delete_round(self):

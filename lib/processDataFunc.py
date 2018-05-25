@@ -38,4 +38,14 @@ class clear_data:
         df.drop([0, 1], inplace=True)
         dfsave = df.reset_index(drop=True)
         dfsave.to_excel(self.outpath + "/" + self.sheet + ".xlsx")
-        # print(df)
+
+    def clear_team_normal(self):
+        df = pd.read_excel(self.infile, sheet_name=self.sheet, header=None)
+        if df.empty:
+            return 0
+        df.columns = df.iloc[2, :].tolist()
+        col_nm = [x for x in df.ix[2, :].tolist() if str(x) != 'nan']
+        df = df[col_nm]
+        df.drop([0, 1, 2], inplace=True)
+        dfsave = df.reset_index(drop=True)
+        dfsave.to_excel(self.outpath + "/" + self.sheet + ".xlsx")

@@ -30,7 +30,7 @@ class SplitData:
             teamoutpath = self.outPath+"/"+teamdata[:teamdata.find(".")]
             teamfrompath = self.fromPath + "/" + teamdata
             os.makedirs(teamoutpath)
-            sheetlist = pd.ExcelFile(teamfrompath).sheet_names
+            sheetlist = pd.ExcelFile(teamfrompath).sheet_names  # 需要抛异常
             for sheet in sheetlist:
                 datatype = teamdata.find("年")
                 if datatype > -1:
@@ -42,7 +42,8 @@ class SplitData:
                         cleanr.clear_year_normal_data()
                 else:
                     if sheet.rfind("订单信息") > -1 or sheet.rfind("现金流量表") > -1:
-                        pass
+                        cleanr = PDF.clear_data(teamfrompath, sheet, teamoutpath)
+                        cleanr.clear_team_normal()
 
     def showAll(self):
         print(self.fPath)
