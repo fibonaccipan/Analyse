@@ -37,7 +37,7 @@ class MainWindow(Qtqw.QMainWindow):
         iptDtAct.setStatusTip('导入比赛数据')
         iptDtAct.triggered.connect(self.import_file)
 
-        sptAct = Qtqw.QAction(Qtqg.QIcon('../img/import.png'), '&处理数据', self)  # 设置处理按钮，属于文件菜单
+        sptAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&处理数据', self)  # 设置处理按钮，属于文件菜单
         sptAct.setShortcut('Ctrl+X')
         sptAct.setStatusTip('处理场次数据')
         sptAct.triggered.connect(self.split_file)
