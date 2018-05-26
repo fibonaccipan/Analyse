@@ -9,19 +9,48 @@ Final : No
 """
 import os
 import sys
+import matplotlib
+matplotlib.use("Qt5Agg")
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
 import lib.processData as pcsd
+import pandas as pd
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 
+
+class MyMplCanvas(FigureCanvas):
+    """这是一个窗口部件，即QWidget（当然也是FigureCanvasAgg）"""
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        self.initial_figure()
+        FigureCanvas.__init__(self, fig)
+        self.setParent(parent)
+        FigureCanvas.setSizePolicy(self, Qtqw.QSizePolicy.Expanding, Qtqw.QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
+
+    def initial_figure(self):
+        pass
+
+
+class MyMplCan1(MyMplCanvas):
+    def initial_figure(self):
+        df = pd.read_excel("E:/Analyse/data/data.xlsx")
+        self.axes.plot(df['month'], df['amnt'])
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         self.fPath = os.path.abspath('..').replace('\\', '/')
         self.import_path: str = ""
         self.gameDegree: str = "easy"
+        self.main_widget = Qtqw.QWidget()
         filelist = os.listdir(self.fPath + "/tmp")
-        self.gameRound = filelist.pop()
+        if filelist:
+            self.gameRound = filelist.pop()
+        else:
+            self.gameRound = "noNameGame"
         super().__init__()
         self.init_ui()
 
@@ -42,7 +71,16 @@ class MainWindow(Qtqw.QMainWindow):
         sptAct.setStatusTip('处理场次数据')
         sptAct.triggered.connect(self.split_file)
 
-        # qwgt1 = Qtqw.QDockWidget("ss",)
+        # grid = Qtqw.QGridLayout()
+        # btn = Qtqw.QPushButton('Button', self)
+        # qwgt1 = Qtqw.QWidget()
+        # qwgt1.setLayout(grid)
+        # grid.addWidget(btn)
+        # qwgt1.setWindowTitle("yes")
+        # qwgt1.setGeometry(300, 300, 300, 220)
+        #
+        # self.centralWidget()
+        # self.setCentralWidget(qwgt1)
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&文件')
@@ -52,11 +90,17 @@ class MainWindow(Qtqw.QMainWindow):
         fileMenu = menubar.addMenu('&编辑')
         fileMenu.addAction(sptAct)
 
-        # sdockwidget =  self.addDockWidget()
+        Qbox = Qtqw.QVBoxLayout(self.main_widget)
+        sc = MyMplCan1(self.main_widget, width=5, height=4, dpi=100)
+        Qbox.addWidget(sc)
+
+        self.setCentralWidget(self.main_widget)
+
+        # sdockwidget = self.addDockWidget()
         self.setWindowTitle("狗逼的程序")
         self.setGeometry(300, 300, 600, 400)
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
-        # print(type(menubar))
+        # print(type(qwgt1))
         self.show()
 
     def delete_round(self):
