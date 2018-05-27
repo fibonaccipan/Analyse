@@ -40,6 +40,31 @@ class MyMplCan1(MyMplCanvas):
         df = pd.read_excel("E:/Analyse/data/data.xlsx")
         self.axes.plot(df['month'], df['amnt'])
 
+
+class QRateBar(Qtqw.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.vsetp: int =0
+        self.initUI()
+
+    def initUI(self):
+        self.pbar = Qtqw.QProgressBar(self)
+        self.pbar.setGeometry(30, 40, 300, 25)
+
+        self.btn = Qtqw.QPushButton('取消', self)
+        self.btn.move(40, 80)
+        self.btn.clicked.connect(self.timer.stop)
+
+    def timerEvent(self, a):
+        if self.step >= 100:
+            self.timer.stop()
+            return
+        self.step = self.vsetp
+
+    def setStep(self, rate):
+        self.vsetp = rate
+
+
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         self.fPath = os.path.abspath('..').replace('\\', '/')
@@ -51,6 +76,7 @@ class MainWindow(Qtqw.QMainWindow):
             self.gameRound = filelist.pop()
         else:
             self.gameRound = "noNameGame"
+        self.release_rate = 0
         super().__init__()
         self.init_ui()
 
@@ -110,7 +136,8 @@ class MainWindow(Qtqw.QMainWindow):
         fname = Qtqw.QFileDialog.getOpenFileName()
         self.import_path = fname[0]
         releaser = rls.ReleaseZip(self.import_path)
-        self.gameRound = releaser.release()
+        self.gameRound, self.release_rate = releaser.release()
+        # print(self.release_rate)
 
     def split_file(self):
         spliter = pcsd.SplitData(self.gameDegree, self.gameRound)

@@ -31,4 +31,4 @@ class ReleaseZip:
         zpf = zf.ZipFile(self.importPath)
         zpf.extractall(self.tmpPath)
         # 返回比赛场次（文件名）
-        return self.gameRound
+        return self.gameRound, 99
