@@ -9,15 +9,18 @@ Final : No
 """
 import os
 import sys
+import time
+import threading as thd
 import matplotlib
-matplotlib.use("Qt5Agg")
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
 import lib.processData as pcsd
+import lib.rateBar as rtb
 import pandas as pd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+matplotlib.use("Qt5Agg")
 
 
 class MyMplCanvas(FigureCanvas):
@@ -39,30 +42,6 @@ class MyMplCan1(MyMplCanvas):
     def initial_figure(self):
         df = pd.read_excel("E:/Analyse/data/data.xlsx")
         self.axes.plot(df['month'], df['amnt'])
-
-
-class QRateBar(Qtqw.QWidget):
-    def __init__(self):
-        super().__init__()
-        self.vsetp: int =0
-        self.initUI()
-
-    def initUI(self):
-        self.pbar = Qtqw.QProgressBar(self)
-        self.pbar.setGeometry(30, 40, 300, 25)
-
-        self.btn = Qtqw.QPushButton('取消', self)
-        self.btn.move(40, 80)
-        self.btn.clicked.connect(self.timer.stop)
-
-    def timerEvent(self, a):
-        if self.step >= 100:
-            self.timer.stop()
-            return
-        self.step = self.vsetp
-
-    def setStep(self, rate):
-        self.vsetp = rate
 
 
 class MainWindow(Qtqw.QMainWindow):
@@ -92,10 +71,16 @@ class MainWindow(Qtqw.QMainWindow):
         iptDtAct.setStatusTip('导入比赛数据')
         iptDtAct.triggered.connect(self.import_file)
 
-        sptAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&处理数据', self)  # 设置处理按钮，属于文件菜单
+        sptAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&处理数据', self)  # 设置处理按钮，属于编辑菜单
         sptAct.setShortcut('Ctrl+X')
         sptAct.setStatusTip('处理场次数据')
         sptAct.triggered.connect(self.split_file)
+        sptAct.triggered.connect(self.pop_widget)
+
+        popAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&弹窗', self)  # 设置弹窗，属于弹窗菜单
+        popAct.setShortcut('Ctrl+P')
+        popAct.setStatusTip('弹窗')
+        popAct.triggered.connect(self.pop_widget)
 
         # grid = Qtqw.QGridLayout()
         # btn = Qtqw.QPushButton('Button', self)
@@ -109,12 +94,16 @@ class MainWindow(Qtqw.QMainWindow):
         # self.setCentralWidget(qwgt1)
 
         menubar = self.menuBar()
+        # 文件菜单
         fileMenu = menubar.addMenu('&文件')
         fileMenu.addAction(exitAct)
         fileMenu.addAction(iptDtAct)
-        # 分割处理数据
-        fileMenu = menubar.addMenu('&编辑')
-        fileMenu.addAction(sptAct)
+        # 编辑菜单
+        editMenu = menubar.addMenu('&编辑')
+        editMenu.addAction(sptAct)
+        # 其他菜单
+        otherMenu = menubar.addMenu('&弹窗')
+        otherMenu.addAction(popAct)
 
         Qbox = Qtqw.QVBoxLayout(self.main_widget)
         sc = MyMplCan1(self.main_widget, width=5, height=4, dpi=100)
@@ -129,7 +118,21 @@ class MainWindow(Qtqw.QMainWindow):
         # print(type(qwgt1))
         self.show()
 
-    def delete_round(self):
+    def pop_widget(self):
+
+
+        def Qbar_show():
+            print("aaaaa")
+            time.sleep(1)
+            print("aaaaa")
+            Qbar = rtb.QRateBar()
+            Qbar.exec()
+
+        # t = thd.Thread(target=Qbar_show, name="Qbar_show")
+        # t.start()
+        Qbar_show()
+        print("do")
+        # Qbar.do()
         pass
 
     def import_file(self):

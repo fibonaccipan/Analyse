@@ -36,7 +36,7 @@ class Example(QWidget):
         self.pbar.setValue(self.step)
 
     def doAction(self, value):
-        if self.timer.isActive():  # running 状态下点一下 stop 按钮变为开始
+        if self.timer.isActive():  # running 状态下点一下 stop , 按钮变为开始
             self.timer.stop()
             self.btn.setText('开始')
         else:

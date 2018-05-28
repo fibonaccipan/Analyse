@@ -60,6 +60,7 @@ class MyDynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
+
 class ApplicationWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
