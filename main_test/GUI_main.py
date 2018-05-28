@@ -119,21 +119,21 @@ class MainWindow(Qtqw.QMainWindow):
         self.show()
 
     def pop_widget(self):
-
+        Qbar = rtb.QRateBar()
 
         def Qbar_show():
-            print("aaaaa")
-            time.sleep(1)
-            print("aaaaa")
-            Qbar = rtb.QRateBar()
             Qbar.exec()
 
-        # t = thd.Thread(target=Qbar_show, name="Qbar_show")
-        # t.start()
-        Qbar_show()
-        print("do")
+        t = thd.Thread(target=Qbar_show, name="Qbar_show")
+        t.start()
+        # Qbar_show()
+        Qbar.step = 15
+        Qbar.do()
+        print(type(Qbar))
+        # # def chstp():
+        # time.sleep(2)
+        # Qbar.step = 5
         # Qbar.do()
-        pass
 
     def import_file(self):
         fname = Qtqw.QFileDialog.getOpenFileName()

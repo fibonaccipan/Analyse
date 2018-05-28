@@ -8,6 +8,7 @@ class QRateBar(Qtqw.QDialog):
     def __init__(self):
         super().__init__()
         self.step: int = 0
+        self.step1 = 1
         self.initUI()
 
     def initUI(self):
@@ -15,7 +16,7 @@ class QRateBar(Qtqw.QDialog):
         self.pbar.setGeometry(20, 50, 260, 25)
         self.btn = Qtqw.QPushButton('取消', self)
         self.btn.move(170, 125)
-        self.btn.clicked.connect(self.do)
+        self.btn.clicked.connect(self.Qquit)
 
         self.timer = Qtqc.QBasicTimer()
 
@@ -28,7 +29,7 @@ class QRateBar(Qtqw.QDialog):
             self.timer.stop()
             self.btn.setText('完成')
             return
-        self.step = self.step+2
+        self.step = self.step+1
         self.pbar.setValue(self.step)
 
     # def doAction(self, value):
@@ -38,8 +39,8 @@ class QRateBar(Qtqw.QDialog):
     #         self.timer.start(100, self)
     #
     def do(self):
-        self.timer.start(100, self)
-    #
-    # def Qquit(self):
-    #     # self.timer.stop()
-    #     self.close()
+        self.timer.start(1000, self)
+
+    def Qquit(self):
+        self.timer.stop()
+        self.close()
