@@ -10,9 +10,13 @@ Accomplish : Yes
 Final : No
 """
 import os
+import time
 import shutil
 import pandas as pd
+import threading as thd
+import lib.rateBar as rtb
 import lib.processDataFunc as PDF
+
 
 class SplitData:
     def __init__(self, gameDegree, gameRound):
@@ -20,12 +24,28 @@ class SplitData:
         self.fromPath = self.fPath + "/tmp/" + gameRound
         self.gameRound = gameRound
         self.gameDegree = gameDegree
-        self.outPath = self.fPath + "/data/" + self.gameDegree + "/" +self.gameRound
+        self.outPath = self.fPath + "/data/" + self.gameDegree + "/" + self.gameRound
 
     def splitDate(self):
+        Qbar = rtb.QRateBar()
+
+        def Qbar_show():
+            Qbar.exec()
+
+        def Qbar_do():
+            Qbar.do()
+
+        tshow = thd.Thread(target=Qbar_show, name="Qbar_show")
+        tshow.start()
+        tbarrun = thd.Thread(target=Qbar_do(), name="Qbar_do")
+        tbarrun.start()
+
+        tshow.join()
+
         if os.path.exists(self.outPath):
             shutil.rmtree(self.outPath)
         filelist = os.listdir(self.fromPath)
+        # print(filelist)
         for teamdata in filelist:
             teamoutpath = self.outPath+"/"+teamdata[:teamdata.find(".")]
             teamfrompath = self.fromPath + "/" + teamdata
@@ -44,6 +64,10 @@ class SplitData:
                     if sheet.rfind("订单信息") > -1 or sheet.rfind("现金流量表") > -1:
                         cleanr = PDF.clear_data(teamfrompath, sheet, teamoutpath)
                         cleanr.clear_team_normal()
+            f = open("../rate/step.txt", "w")
+            f.write(str(int((filelist.index(teamdata)+1)*100/len(filelist))))
+            f.close()
+            time.sleep(0.5)
 
     def showAll(self):
         print(self.fPath)

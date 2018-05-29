@@ -24,12 +24,19 @@ class QRateBar(Qtqw.QDialog):
         self.setWindowFlags(Qt.Qt.WindowTitleHint)  # 使得关闭按钮失效
         self.setWindowTitle('进度条')
 
+    def getstep(self):
+        f = open("../rate/step.txt", "r")
+        rate = int(f.readline())
+        f.close()
+        return rate
+
     def timerEvent(self, e):
         if self.step >= 100:
             self.timer.stop()
             self.btn.setText('完成')
             return
-        self.step = self.step+1
+        # self.step = self.step+1
+        self.step = self.getstep()
         self.pbar.setValue(self.step)
 
     # def doAction(self, value):
@@ -39,7 +46,7 @@ class QRateBar(Qtqw.QDialog):
     #         self.timer.start(100, self)
     #
     def do(self):
-        self.timer.start(1000, self)
+        self.timer.start(500, self)
 
     def Qquit(self):
         self.timer.stop()

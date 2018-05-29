@@ -9,14 +9,11 @@ Final : No
 """
 import os
 import sys
-import time
-import threading as thd
 import matplotlib
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
 import lib.processData as pcsd
-import lib.rateBar as rtb
 import pandas as pd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -51,6 +48,12 @@ class MainWindow(Qtqw.QMainWindow):
         self.gameDegree: str = "easy"
         self.main_widget = Qtqw.QWidget()
         filelist = os.listdir(self.fPath + "/tmp")
+        # 创建 进度保存文件
+        if os.path.exists("../rate/step.txt"):
+            pass
+        else:
+            open("../rate/step.txt", "w").write("0")
+
         if filelist:
             self.gameRound = filelist.pop()
         else:
@@ -75,12 +78,12 @@ class MainWindow(Qtqw.QMainWindow):
         sptAct.setShortcut('Ctrl+X')
         sptAct.setStatusTip('处理场次数据')
         sptAct.triggered.connect(self.split_file)
-        sptAct.triggered.connect(self.pop_widget)
+        # sptAct.triggered.connect(self.pop_widget)
 
         popAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&弹窗', self)  # 设置弹窗，属于弹窗菜单
         popAct.setShortcut('Ctrl+P')
         popAct.setStatusTip('弹窗')
-        popAct.triggered.connect(self.pop_widget)
+        # popAct.triggered.connect(self.pop_widget)
 
         # grid = Qtqw.QGridLayout()
         # btn = Qtqw.QPushButton('Button', self)
@@ -117,23 +120,6 @@ class MainWindow(Qtqw.QMainWindow):
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
         # print(type(qwgt1))
         self.show()
-
-    def pop_widget(self):
-        Qbar = rtb.QRateBar()
-
-        def Qbar_show():
-            Qbar.exec()
-
-        t = thd.Thread(target=Qbar_show, name="Qbar_show")
-        t.start()
-        # Qbar_show()
-        Qbar.step = 15
-        Qbar.do()
-        print(type(Qbar))
-        # # def chstp():
-        # time.sleep(2)
-        # Qbar.step = 5
-        # Qbar.do()
 
     def import_file(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
