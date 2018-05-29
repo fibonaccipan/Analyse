@@ -40,7 +40,7 @@ class SplitData:
         tbarrun = thd.Thread(target=Qbar_do(), name="Qbar_do")
         tbarrun.start()
 
-        tshow.join()
+        # tshow.join()
 
         if os.path.exists(self.outPath):
             shutil.rmtree(self.outPath)
@@ -67,7 +67,7 @@ class SplitData:
             f = open("../rate/step.txt", "w")
             f.write(str(int((filelist.index(teamdata)+1)*100/len(filelist))))
             f.close()
-            time.sleep(0.5)
+            # time.sleep(0.5)
 
     def showAll(self):
         print(self.fPath)
