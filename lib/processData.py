@@ -13,7 +13,8 @@ import os
 import time
 import shutil
 import pandas as pd
-import threading as thd
+import multiprocessing as mtprc
+import threading as td
 import lib.rateBar as rtb
 import lib.processDataFunc as PDF
 
@@ -27,25 +28,10 @@ class SplitData:
         self.outPath = self.fPath + "/data/" + self.gameDegree + "/" + self.gameRound
 
     def splitDate(self):
-        Qbar = rtb.QRateBar()
-
-        def Qbar_show():
-            Qbar.exec()
-
-        def Qbar_do():
-            Qbar.do()
-
-        tshow = thd.Thread(target=Qbar_show, name="Qbar_show")
-        tshow.start()
-        tbarrun = thd.Thread(target=Qbar_do(), name="Qbar_do")
-        tbarrun.start()
-
-        # tshow.join()
-
         if os.path.exists(self.outPath):
             shutil.rmtree(self.outPath)
         filelist = os.listdir(self.fromPath)
-        # print(filelist)
+        # time.sleep(10)
         for teamdata in filelist:
             teamoutpath = self.outPath+"/"+teamdata[:teamdata.find(".")]
             teamfrompath = self.fromPath + "/" + teamdata
@@ -67,7 +53,7 @@ class SplitData:
             f = open("../rate/step.txt", "w")
             f.write(str(int((filelist.index(teamdata)+1)*100/len(filelist))))
             f.close()
-            # time.sleep(0.5)
+            time.sleep(0.5)
 
     def showAll(self):
         print(self.fPath)

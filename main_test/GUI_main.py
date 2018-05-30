@@ -9,7 +9,10 @@ Final : No
 """
 import os
 import sys
+import time
 import matplotlib
+import threading as td
+import lib.rateBar as rtb
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
@@ -48,17 +51,16 @@ class MainWindow(Qtqw.QMainWindow):
         self.gameDegree: str = "easy"
         self.main_widget = Qtqw.QWidget()
         filelist = os.listdir(self.fPath + "/tmp")
-        # 创建 进度保存文件
-        if os.path.exists("../rate/step.txt"):
-            pass
-        else:
-            open("../rate/step.txt", "w").write("0")
 
         if filelist:
             self.gameRound = filelist.pop()
         else:
             self.gameRound = "noNameGame"
         self.release_rate = 0
+
+        self.Qbar = rtb.QRateBar()
+        self.Qbar.show()
+        self.Qbar.hide()
         super().__init__()
         self.init_ui()
 
@@ -77,13 +79,13 @@ class MainWindow(Qtqw.QMainWindow):
         sptAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&处理数据', self)  # 设置处理按钮，属于编辑菜单
         sptAct.setShortcut('Ctrl+X')
         sptAct.setStatusTip('处理场次数据')
-        sptAct.triggered.connect(self.split_file)
         # sptAct.triggered.connect(self.pop_widget)
+        sptAct.triggered.connect(self.split_file)
 
         popAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&弹窗', self)  # 设置弹窗，属于弹窗菜单
         popAct.setShortcut('Ctrl+P')
         popAct.setStatusTip('弹窗')
-        # popAct.triggered.connect(self.pop_widget)
+        popAct.triggered.connect(self.pop_widget)
 
         # grid = Qtqw.QGridLayout()
         # btn = Qtqw.QPushButton('Button', self)
@@ -121,6 +123,16 @@ class MainWindow(Qtqw.QMainWindow):
         # print(type(qwgt1))
         self.show()
 
+    def pop_widget(self):
+        self.Qbar.show()
+        self.Qbar.do()
+        def Qbar_show():
+            print("def content")
+        t = td.Thread(target=Qbar_show, name="Qbar_show")
+        t.start()
+        print("end")
+
+
     def import_file(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
         self.import_path = fname[0]
@@ -129,9 +141,15 @@ class MainWindow(Qtqw.QMainWindow):
         # print(self.release_rate)
 
     def split_file(self):
-        spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
-        spliter.splitDate()
-        # print(self.gameDegree, self.gameRound)
+        self.Qbar.show()
+        self.Qbar.do()
+        # print("show end")
+        def back_job():
+            spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
+            spliter.splitDate()
+        t = td.Thread(target=back_job, name="back_split_job")
+        t.start()
+        # print("function end")
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",

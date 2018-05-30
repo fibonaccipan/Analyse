@@ -9,6 +9,8 @@ class QRateBar(Qtqw.QDialog):
         super().__init__()
         self.step: int = 0
         self.step1 = 1
+        # 创建 进度保存文件
+        open("../rate/step.txt", "w").write("0")
         self.initUI()
 
     def initUI(self):
@@ -23,6 +25,7 @@ class QRateBar(Qtqw.QDialog):
         self.setGeometry(500, 350, 280, 170)
         self.setWindowFlags(Qt.Qt.WindowTitleHint)  # 使得关闭按钮失效
         self.setWindowTitle('进度条')
+        # self.show()
 
     def getstep(self):
         f = open("../rate/step.txt", "r")
@@ -46,7 +49,7 @@ class QRateBar(Qtqw.QDialog):
     #         self.timer.start(100, self)
     #
     def do(self):
-        self.timer.start(500, self)
+        self.timer.start(100, self)
 
     def Qquit(self):
         self.timer.stop()
