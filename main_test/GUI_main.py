@@ -12,11 +12,12 @@ import sys
 import time
 import matplotlib
 import threading as td
+import lib.stopThread as stptd
 import lib.rateBar as rtb
-import PyQt5.QtWidgets as Qtqw
-import PyQt5.QtGui as Qtqg
 import lib.releaseZip as rls
 import lib.processData as pcsd
+import PyQt5.QtWidgets as Qtqw
+import PyQt5.QtGui as Qtqg
 import pandas as pd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -153,6 +154,9 @@ class MainWindow(Qtqw.QMainWindow):
             spliter.splitDate()
         t = td.Thread(target=back_job, name="back_split_job")
         t.start()
+        self.Qbar.thd = t
+        # time.sleep(5)
+        # stptd.stop_thread(t)
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",
