@@ -49,6 +49,10 @@ class QRateBar(Qtqw.QDialog):
     #         self.timer.start(100, self)
     #
     def do(self):
+        self.step = 0
+        f = open("../rate/step.txt", "w")
+        f.write("0")
+        f.close()
         self.timer.start(100, self)
 
     def Qquit(self):

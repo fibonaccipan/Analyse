@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class clear_data:
     def __init__(self, infile, sheet, outpath):
         self.team_name: str

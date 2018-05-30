@@ -11,7 +11,6 @@ Final : No
 import zipfile as zf
 import os
 import shutil
-import lib.popwidget as pwgt
 
 
 class ReleaseZip:
@@ -27,12 +26,12 @@ class ReleaseZip:
         print(self.tmpPath)
 
     def release(self):
-        pop = pwgt.PopWidget()
-        pop.pop()
         if os.path.exists(self.tmpPath):
             shutil.rmtree(self.tmpPath)
         zpf = zf.ZipFile(self.importPath)
         zpf.extractall(self.tmpPath)
-        open("../tmp/step.txt", "w").write("100")
+        f = open("../rate/step.txt", "w")
+        f.write("100")
+        f.close()
         # 返回比赛场次（文件名）
-        return self.gameRound, 99
+        return self.gameRound

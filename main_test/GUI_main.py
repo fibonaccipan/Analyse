@@ -56,7 +56,6 @@ class MainWindow(Qtqw.QMainWindow):
             self.gameRound = filelist.pop()
         else:
             self.gameRound = "noNameGame"
-        self.release_rate = 0
 
         self.Qbar = rtb.QRateBar()
         self.Qbar.show()
@@ -136,20 +135,24 @@ class MainWindow(Qtqw.QMainWindow):
     def import_file(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
         self.import_path = fname[0]
-        releaser = rls.ReleaseZip(self.import_path)
-        self.gameRound, self.release_rate = releaser.release()
-        # print(self.release_rate)
+        self.Qbar.show()
+        self.Qbar.do()
+
+        def back_job():
+            releaser = rls.ReleaseZip(self.import_path)
+            self.gameRound = releaser.release()
+        t = td.Thread(target=back_job, name="back_import_job")
+        t.start()
 
     def split_file(self):
         self.Qbar.show()
         self.Qbar.do()
-        # print("show end")
+
         def back_job():
             spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
             spliter.splitDate()
         t = td.Thread(target=back_job, name="back_split_job")
         t.start()
-        # print("function end")
 
     def app_quit(self):
         replay = Qtqw.QMessageBox.question(self, "消息", "确认退出么？",
