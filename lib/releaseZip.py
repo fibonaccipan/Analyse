@@ -15,23 +15,23 @@ import shutil
 
 class ReleaseZip:
     def __init__(self, importPath):
-        self.fPath = os.path.abspath('..').replace('\\', '/')
+        # self.fPath = os.path.abspath('..').replace('\\', '/')
         self.importPath = importPath
         self.gameRound = self.importPath[self.importPath.rfind("/")+1:self.importPath.rfind(".")]
-        self.tmpPath = self.fPath + "/tmp/" + self.gameRound
-
-    def showAll(self):
-        print(self.importPath)
-        print(self.fPath)
-        print(self.tmpPath)
+        self.tmpPath = "../tmp/" + self.gameRound
 
     def release(self):
-        if os.path.exists(self.tmpPath):
+        if os.path.exists(self.tmpPath):  # 判断解压目标位置是否存在 不存在则创建
             shutil.rmtree(self.tmpPath)
-        zpf = zf.ZipFile(self.importPath)
+        zpf = zf.ZipFile(self.importPath)  # 解压zip
         zpf.extractall(self.tmpPath)
-        f = open("../rate/step.txt", "w")
+        f = open("../rate/step.txt", "w")  # 写入完成率
         f.write("100")
         f.close()
         # 返回比赛场次（文件名）
         return self.gameRound
+
+    def showAll(self):
+        print(self.importPath)
+        # print(self.fPath)
+        print(self.tmpPath)

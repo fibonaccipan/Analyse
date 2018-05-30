@@ -66,6 +66,7 @@ class MainWindow(Qtqw.QMainWindow):
 
     def init_ui(self):
         self.statusBar()
+        # 定义菜单栏按钮
         exitAct = Qtqw.QAction(Qtqg.QIcon('../img/quit.png'), '&退出', self)  # 设置退出按钮，属于文件菜单
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('退出程序')
@@ -82,12 +83,12 @@ class MainWindow(Qtqw.QMainWindow):
         # sptAct.triggered.connect(self.pop_widget)
         sptAct.triggered.connect(self.split_file)
 
-        popAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&弹窗', self)  # 设置弹窗，属于弹窗菜单
+        popAct = Qtqw.QAction(Qtqg.QIcon('../img/process.png'), '&弹窗', self)  # 设置弹窗，属于弹窗菜单  测试用
         popAct.setShortcut('Ctrl+P')
         popAct.setStatusTip('弹窗')
         popAct.triggered.connect(self.pop_widget)
 
-        # grid = Qtqw.QGridLayout()
+        # grid = Qtqw.QGridLayout() # 测试QgridLayout的框架插入图像。
         # btn = Qtqw.QPushButton('Button', self)
         # qwgt1 = Qtqw.QWidget()
         # qwgt1.setLayout(grid)
@@ -97,7 +98,7 @@ class MainWindow(Qtqw.QMainWindow):
         #
         # self.centralWidget()
         # self.setCentralWidget(qwgt1)
-
+        # 菜单栏按钮 位置初始化
         menubar = self.menuBar()
         # 文件菜单
         fileMenu = menubar.addMenu('&文件')
@@ -110,20 +111,19 @@ class MainWindow(Qtqw.QMainWindow):
         otherMenu = menubar.addMenu('&弹窗')
         otherMenu.addAction(popAct)
 
+        # 主窗体的 框架，放入画布
         Qbox = Qtqw.QVBoxLayout(self.main_widget)
         sc = MyMplCan1(self.main_widget, width=5, height=4, dpi=100)
         Qbox.addWidget(sc)
 
         self.setCentralWidget(self.main_widget)
 
-        # sdockwidget = self.addDockWidget()
         self.setWindowTitle("狗逼的程序")
-        self.setGeometry(300, 300, 600, 400)
+        self.setGeometry(300, 150, 800, 600)
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
-        # print(type(qwgt1))
         self.show()
 
-    def pop_widget(self):
+    def pop_widget(self):   # 测试弹窗用，已废弃
         self.Qbar.show()
         self.Qbar.do()
         def Qbar_show():

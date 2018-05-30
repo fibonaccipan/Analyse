@@ -20,8 +20,8 @@ class QRateBar(Qtqw.QDialog):
         self.pbar.setGeometry(20, 50, 260, 25)
         self.btn = Qtqw.QPushButton('完成', self)
         self.btn.move(170, 125)
-        self.btn.clicked.connect(self.Qquit)
         self.btn.clicked.connect(self.Kill)
+        self.btn.clicked.connect(self.Qquit)
 
         self.timer = Qtqc.QBasicTimer()
 
@@ -60,7 +60,10 @@ class QRateBar(Qtqw.QDialog):
         self.timer.start(100, self)
 
     def Kill(self):
-        stptd.stop_thread(self.thd)
+        if self.step >= 100:
+            pass
+        else:
+            stptd.stop_thread(self.thd)
 
     def Qquit(self):
         self.timer.stop()
