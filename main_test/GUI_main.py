@@ -12,7 +12,6 @@ import sys
 import time
 import matplotlib
 import threading as td
-import lib.stopThread as stptd
 import lib.rateBar as rtb
 import lib.releaseZip as rls
 import lib.processData as pcsd
