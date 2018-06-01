@@ -15,25 +15,39 @@ group_by_year = salaries.groupby(['name','Year'])
 # print(len(group_by_year.groups))
 df: pd.DataFrame
 
+
 for user_year, group in group_by_year:
     print("####")
-    tmp = group.set_index(['Year'])
+    # col_lst =[]
+    # print(user_year)
+    tmp = group.set_index(['Year']) # , drop=False)
     tmp.drop(['name'],axis=1,inplace=True)
-    col_nm = list(map(lambda x:user_year[0]+ "_" + x, tmp.columns.tolist()))
-    # print(col_nm)
-    tmp.columns = col_nm
-    # try:
-    #     df
-    # except NameError:
-    df = tmp
-    # else:
-    print(df)
+    col_lst = list(map(lambda x:user_year[0]+ "_" + x, tmp.columns.tolist()))
+    # tmplist = tmp.columns.tolist()
+    # for col in tmplist:
+    #     if(tmplist.index(col)+1 != len(tmplist)):
+    #         col_lst.append(user_year[0] + "_" + col)
+    #     else:
+    #         col_lst.append(col+"_2")
+    # print(col_lst)
+    # print(tmp)
+    tmp.columns = col_lst
+    tmp = tmp.groupby(by=['Year']).sum()
+    # print(tmp)
+    try:
+        df
+    except NameError:
+        df = tmp
+    else:
+        tmpcol = tmp.columns.tolist()
+        dfcol = df.columns.tolist()
+        d = [False for c in tmp.columns.tolist() if c not in df.columns.tolist() ]
+        # pass
+        print(tmpcol)
+        print(d)
+        print(dfcol)
+    # print(tmp.columns.tolist())
 
-# salaries = salaries.groupby(by=['Year','name']).sum()
-# print(salaries)
-# print("-----------------")
+
+
 # salaries["Year_name"]=salaries["Year"].map(str) + salaries["name"]
-# salaries.set_index(['Year_name'],inplace=True)
-# salaries.drop(['Year', 'name'], axis=1, inplace=True)
-# tmp = salaries.groupby(by=['Year_name']).sum()
-# print(tmp)
