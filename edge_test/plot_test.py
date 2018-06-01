@@ -10,7 +10,7 @@ from matplotlib.font_manager import FontProperties
 #     })
 df1 = pd.read_excel("E:/Analyse/data/data.xlsx")
 # salaries = salaries.groupby(by=['name','Year']).sum()
-df1['month'] = df1['month'].astype('str')
+df1['month'] = df1['month'].astype('int')
 print(df1)
 print("-------------")
 group_by_year = df1.groupby(['group', 'month'])
@@ -44,8 +44,8 @@ font1 = FontProperties(fname=r"c:\windows\fonts\simsun.ttc",size=15) #可指定�
 # plt.figure()
 
 
-df.plot(kind="line", rot=45, figsize = (200,200))
-plt.title(u"标题", fontproperties=font1)
+df.plot()
+plt.title(u"标题",fontproperties=font1)
 # plt.grid()
 plt.show()
 

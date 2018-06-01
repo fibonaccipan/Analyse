@@ -143,6 +143,7 @@ class MainWindow(Qtqw.QMainWindow):
             self.gameRound = releaser.release()
         t = td.Thread(target=back_job, name="back_import_job")
         t.start()
+        self.Qbar.thd = t
 
     def split_file(self):
         self.Qbar.show()
