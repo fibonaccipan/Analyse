@@ -44,7 +44,7 @@ font1 = FontProperties(fname=r"c:\windows\fonts\simsun.ttc",size=15) #可指定�
 # plt.figure()
 
 
-df.plot(kind="line", rot=45, figsize = (200,200))
+df.plot(kind="bar", rot=45)
 plt.title(u"标题", fontproperties=font1)
 # plt.grid()
 plt.show()
