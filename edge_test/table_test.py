@@ -9,11 +9,14 @@ class Window(Qtqw.QWidget):
     def __init__(self):
         super().__init__()
         self.MyTable = Qtqw.QTableWidget(5, 3)
+        self.MyTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
         self.initUI()
 
     def initUI(self):
         layout = Qtqw.QHBoxLayout()
         layout.addWidget(self.MyTable)
+        newItem = Qtqw.QTableWidgetItem("哈？")
+        self.MyTable.setItem(1, 1, newItem)
         self.setLayout(layout)
         self.show()
 
