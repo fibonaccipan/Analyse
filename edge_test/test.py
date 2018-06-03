@@ -21,11 +21,12 @@ df: pd.DataFrame
 
 for group_year, group in group_by_year:
     tmp = group.set_index(['month']) # , drop=False)
+    print(tmp)
     tmp.drop(['group'],axis=1,inplace=True)
-    col_lst = list(map(lambda x: group_year[0] +  "_" + x, tmp.columns.tolist()))
+    col_lst = list(map(lambda x: group_year[0] + "_" + x, tmp.columns.tolist()))
     tmp.columns = col_lst
     tmp = tmp.groupby(by=['month']).sum()
-    # print(tmp)
+    print(tmp)
     try:
         df
     except NameError:

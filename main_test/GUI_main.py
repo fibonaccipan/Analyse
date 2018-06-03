@@ -13,6 +13,7 @@ import time
 import matplotlib
 import threading as td
 import lib.rateBar as rtb
+import lib.splitDimToCol as split
 import lib.releaseZip as rls
 import lib.processData as pcsd
 import PyQt5.QtWidgets as Qtqw
@@ -41,6 +42,7 @@ class MyMplCanvas(FigureCanvas):
 class MyMplCan1(MyMplCanvas):
     def initial_figure(self):
         df = pd.read_excel("E:/Analyse/data/data.xlsx")
+        spliter = split.SplitDimToCol(df, 0, 1)
         self.axes.plot(df['month'], df['amnt'])
 
 
