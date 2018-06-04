@@ -1,6 +1,7 @@
 # -*-  coding:utf-8  -*-
 # https://blog.csdn.net/vah101/article/details/6215066 参考方法URL
-# http://www.jyguagua.com/?p=2835
+# https://www.cnblogs.com/findumars/p/5422995.html
+
 import sys
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
@@ -14,6 +15,7 @@ class Window(Qtqw.QWidget):
         self.MyTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
         self.MyTable.verticalHeader().setVisible(False)
         self.MyTable.horizontalHeader().setVisible(False)
+        self.MyTable.setSpan(0, 0, 2, 1)
         self.initUI()
 
     def initUI(self):

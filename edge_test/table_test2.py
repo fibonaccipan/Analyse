@@ -3,6 +3,7 @@ import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
 
+
 class Window(Qtqw.QWidget):
     def __init__(self):
         super().__init__()
