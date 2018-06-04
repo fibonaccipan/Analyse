@@ -1,5 +1,6 @@
 # -*-  coding:utf-8  -*-
 # https://blog.csdn.net/vah101/article/details/6215066 参考方法URL
+# http://www.jyguagua.com/?p=2835
 import sys
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
