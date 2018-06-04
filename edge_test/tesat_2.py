@@ -1,7 +1,7 @@
 
 class Test:
     def __init__(self):
-        self.dict1 = {"aaa": "111", "bbb": "222"}
+        self.dict1 = {"aaa": "111", "bbb": "222", "ccc": "333", "ddd": "444"}
         self.dict2: dict
 
     def fun(self):
