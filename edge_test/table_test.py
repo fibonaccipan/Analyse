@@ -6,6 +6,7 @@ import sys
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
+import PyQt5.Qt as qt
 
 
 class Window(Qtqw.QWidget):
@@ -19,9 +20,11 @@ class Window(Qtqw.QWidget):
         self.initUI()
 
     def initUI(self):
+        flag = Qtqc.Qt.ItemFlag(63)
         layout = Qtqw.QHBoxLayout()
         layout.addWidget(self.MyTable)
         newItem = Qtqw.QTableWidgetItem("哈？")
+        newItem.setFlags(flag)
         self.MyTable.setItem(1, 1, newItem)
         self.setLayout(layout)
         self.setGeometry(400, 400, 600, 400)
