@@ -20,7 +20,7 @@ class Window(Qtqw.QWidget):
         self.initUI()
 
     def initUI(self):
-        flag = Qtqc.Qt.ItemFlag(63)
+        flag = Qtqc.Qt.ItemFlag(60)  # 1  和32 和63
         layout = Qtqw.QHBoxLayout()
         layout.addWidget(self.MyTable)
         newItem = Qtqw.QTableWidgetItem("哈？")
