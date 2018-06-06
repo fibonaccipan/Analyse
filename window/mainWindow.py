@@ -12,12 +12,15 @@ import sys
 import datetime
 import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
+# 以下为自建库
+import window.examineManage as EM
+import window.popWindow as popw
 
 
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
-
         super().__init__()
+        self.EMwindow = EM.EMwindow()
         self.initUI()
 
     def initUI(self):
@@ -69,7 +72,10 @@ class MainWindow(Qtqw.QMainWindow):
             event.ignore()
 
     def showEM(self):
-        print("11111")
+        # print("11111")
+
+        self.EMwindow.show()
+
 
     def printsss(self):
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

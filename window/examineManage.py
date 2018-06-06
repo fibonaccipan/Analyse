@@ -10,12 +10,15 @@ Final : No
 import datetime
 import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
+import PyQt5.QtCore as Qtqc
 
 
 class EMwindow(Qtqw.QMainWindow):
     def __init__(self):
 
         super().__init__()
+        self.setWindowModality(Qtqc.Qt.ApplicationModal)  # 设置QMainWindow 弹出为模态
+        self.setAttribute(Qtqc.Qt.WA_DeleteOnClose)  # 功能待查
         self.initUI()
 
     def initUI(self):
