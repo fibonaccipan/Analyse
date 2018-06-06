@@ -41,7 +41,7 @@ class EMwindow(Qtqw.QMainWindow):
         menubar.addAction(analyseData)
 
         self.setWindowTitle("试题管理")
-        self.setGeometry(250, 125, 1000, 800)
+        self.setGeometry(300, 150, 800, 600)
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
         # self.show()
 
