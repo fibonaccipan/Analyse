@@ -14,7 +14,6 @@ import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
 # 以下为自建库
 import window.examineManage as EM
-import window.popWindow as popw
 
 
 class MainWindow(Qtqw.QMainWindow):
@@ -59,7 +58,7 @@ class MainWindow(Qtqw.QMainWindow):
 
 
         self.setWindowTitle("通用数据分析工具")
-        self.setGeometry(300, 150, 800, 600)
+        self.setGeometry(350, 180, 400, 300)
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
         self.show()
 
