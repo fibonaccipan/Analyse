@@ -7,7 +7,6 @@ Edit date :20180606
 Accomplish : No
 Final : No
 """
-import os
 import sys
 import datetime
 import PyQt5.QtGui as Qtqg
@@ -72,7 +71,6 @@ class MainWindow(Qtqw.QMainWindow):
 
     def showEM(self):
         # print("11111")
-
         self.EMwindow.show()
 
 
