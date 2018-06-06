@@ -26,7 +26,7 @@ class MainWindow(Qtqw.QMainWindow):
 
         # 生成 试题管理 按钮
         examineManage = Qtqw.QAction('&试题管理', self)
-        examineManage.triggered.connect(self.printsss)
+        examineManage.triggered.connect(self.showEM)
         menubar.addAction(examineManage)
 
         # 生成 导入数据 按钮
@@ -67,6 +67,9 @@ class MainWindow(Qtqw.QMainWindow):
             event.accept()
         else:
             event.ignore()
+
+    def showEM(self):
+        print("11111")
 
     def printsss(self):
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
