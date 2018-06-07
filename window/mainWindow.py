@@ -18,7 +18,6 @@ import window.examineManage as EM
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.EMwindow = EM.EMwindow()
         self.initUI()
 
     def initUI(self):
@@ -52,7 +51,7 @@ class MainWindow(Qtqw.QMainWindow):
 
         # 生成 帮助 按钮
         helpMenu = Qtqw.QAction('&帮助', self)
-        helpMenu.triggered.connect(self.printsss)
+        helpMenu.triggered.connect(self.showEM)
         menubar.addAction(helpMenu)
 
 
@@ -71,11 +70,13 @@ class MainWindow(Qtqw.QMainWindow):
 
     def showEM(self):
         # print("11111")
+        self.EMwindow = EM.EMwindow()
         self.EMwindow.show()
 
 
     def printsss(self):
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        # print(self.EMwindow)
 
 
 if __name__ == '__main__':
