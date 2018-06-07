@@ -14,7 +14,9 @@ class TreeWidget(QMainWindow):
         # 设置部件的列数为2
         # self.tree.setColumnCount(1)
         # 设置头部信息，因为上面设置列数为2，所以要设置两个标识符
-        self.tree.setHeaderLabels(["赛程"])
+        # self.tree.setHeaderLabels(["赛程"])
+        # 隐藏头部信息，
+        self.tree.setHeaderHidden(False)
 
         # 设置root为self.tree的子树，所以root就是跟节点
         root = QTreeWidgetItem(self.tree)
