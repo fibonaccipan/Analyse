@@ -15,6 +15,7 @@ import PyQt5.QtWidgets as Qtqw
 import window.examineManage as EM
 
 
+
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -73,6 +74,8 @@ class MainWindow(Qtqw.QMainWindow):
         self.EMwindow = EM.EMwindow()
         self.EMwindow.show()
 
+    def showIptDate(self):
+        print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     def printsss(self):
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

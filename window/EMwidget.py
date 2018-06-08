@@ -13,7 +13,7 @@ import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 
 
-class CentralWidget(Qtqw.QWidget):
+class EMwidget(Qtqw.QWidget):
     def __init__(self):
         super().__init__()
         self.Qtree = self.initTree()
@@ -73,5 +73,5 @@ class CentralWidget(Qtqw.QWidget):
 
 if __name__ == '__main__':
     app = Qtqw.QApplication(sys.argv)
-    mw = CentralWidget()
+    mw = EMwidget()
     sys.exit(app.exec_())
