@@ -26,6 +26,6 @@ class IptDTwindow(Qtqw.QMainWindow):
         self.setWindowTitle("导入数据")
         self.setGeometry(400, 230, 400, 300)
         self.setWindowIcon(Qtqg.QIcon('../img/import.png'))
-        centralWidget = IptDTwdgt.IptDTwidget()
+        centralWidget = IptDTwdgt.IptDTwidget(self)
+        # 将本QMainWindow 作为参数传入自己包含的widget，为widget内按钮关闭外QMainWindow 提供操作对象
         self.setCentralWidget(centralWidget)
-

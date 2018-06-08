@@ -12,11 +12,13 @@ Final : No
 import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
+import PyQt5.QtGui as Qtqg
 
 
 class IptDTwidget(Qtqw.QWidget):
-    def __init__(self):
+    def __init__(self,fwindow:Qtqw.QMainWindow):
         super().__init__()
+        self.fwindow = fwindow
         # 定义按钮层控件
         self.HboxButton = Qtqw.QHBoxLayout()
         self.btnYes = Qtqw.QPushButton("确定", self)
@@ -46,11 +48,13 @@ class IptDTwidget(Qtqw.QWidget):
         # 初始化
         self.initUI()
 
+
     def initUI(self):
         self.initBtnLay()
         self.initFileLay()
         self.initDateLay()
         self.initGameNameLay()
+        self.initExamine()
 
         # 设置纵向 各Hbox的布局
         self.Vbox.addStretch(2)
@@ -68,6 +72,7 @@ class IptDTwidget(Qtqw.QWidget):
         self.setLayout(self.Vbox)
 
     def initExamine(self):
+        # 初始化试题层
         self.LabelExamine.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
         self.ComBoxExamine.addItem("aaaa")  # 此处去读比赛类型 目录得到循环解析到Item
         self.HboxExamine.addWidget(self.LabelExamine)
@@ -89,7 +94,7 @@ class IptDTwidget(Qtqw.QWidget):
 
     def initDateLay(self):
         # 初始化日期选择层
-        # https://blog.csdn.net/liang19890820/article/details/52387275 QDateEdit控件的使用说明
+        # https://blog.csdn.net/liang19890820/article/details/52387275  QDateEdit 控件的使用说明
         self.LabelDate.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
         self.LineEditDate.setDisplayFormat("yyyy-MM-dd")
         self.LineEditDate.setCalendarPopup(True)  # 调出下拉箭头，单击弹出日期控件
@@ -118,4 +123,9 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxButton.addStretch(1)
         self.HboxButton.addWidget(self.btnCancel)
         self.HboxButton.addStretch(1)
+        # 设置按钮功能
+        self.btnCancel.clicked.connect(self.quit)
 
+    def quit(self):
+        print("aASASASAS")
+        self.fwindow.close()
