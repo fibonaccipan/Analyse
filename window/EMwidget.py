@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-this is the central widget to every pop QMainWindow
+this is the examine manage widget ,which is a part of examineManage pop QMainWindow
+be used to contain different kind widget and split window layout
 for  Yanteng's game analysis program,
 Author : fibonacci
 connect : ericpan1124@yahoo.com
@@ -22,8 +23,8 @@ class EMwidget(Qtqw.QWidget):
         # self.show()
 
     def initUI(self):
-        self.setGeometry(300, 300, 300, 220)
-        self.setWindowTitle('MainWidget')
+        # self.setGeometry(300, 300, 300, 220)
+        # self.setWindowTitle('MainWidget')
 
         Hbox = Qtqw.QHBoxLayout()
         # btn = Qtqw.QPushButton("按钮", self)

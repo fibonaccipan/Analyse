@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-this is the pop window for  Yanteng's game analysis program, 模态弹出框
+this is the 试题管理 window for  Yanteng's game analysis program, 模态弹出框
 Author : fibonacci
 connect : ericpan1124@yahoo.com
 Edit date :20180606
@@ -26,7 +26,7 @@ class EMwindow(Qtqw.QMainWindow):
         self.setWindowTitle("试题管理")
         self.setGeometry(300, 150, 800, 600)
         self.setWindowIcon(Qtqg.QIcon('../img/examine.png'))
-        centralWidget = EMwdgt.ExamineManageWidget()
+        centralWidget = EMwdgt.EMwidget()
         self.setCentralWidget(centralWidget)
         # self.show()
 

@@ -13,6 +13,7 @@ import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
 # 以下为自建库
 import window.examineManage as EM
+import window.importData as IptDT
 
 
 
@@ -32,7 +33,7 @@ class MainWindow(Qtqw.QMainWindow):
 
         # 生成 导入数据 按钮
         importData = Qtqw.QAction('&导入数据', self)
-        importData.triggered.connect(self.printsss)
+        importData.triggered.connect(self.showIptDate)
         menubar.addAction(importData)
 
         # 生成 小组数据 按钮
@@ -57,7 +58,7 @@ class MainWindow(Qtqw.QMainWindow):
 
 
         self.setWindowTitle("通用数据分析工具")
-        self.setGeometry(350, 180, 400, 300)
+        self.setGeometry(350, 180, 500, 400)
         self.setWindowIcon(Qtqg.QIcon('../img/ico.png'))
         self.show()
 
@@ -75,7 +76,9 @@ class MainWindow(Qtqw.QMainWindow):
         self.EMwindow.show()
 
     def showIptDate(self):
-        print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        # print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.IptDTwindow = IptDT.IptDTwindow()
+        self.IptDTwindow.show()
 
     def printsss(self):
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
