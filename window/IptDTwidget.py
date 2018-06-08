@@ -17,97 +17,105 @@ import PyQt5.QtCore as Qtqc
 class IptDTwidget(Qtqw.QWidget):
     def __init__(self):
         super().__init__()
+        # 定义按钮层控件
+        self.HboxButton = Qtqw.QHBoxLayout()
+        self.btnYes = Qtqw.QPushButton("确定", self)
+        self.btnCancel = Qtqw.QPushButton("取消", self)
+        # 定义文件选择层控件
+        self.HboxFileChoice = Qtqw.QHBoxLayout()
+        self.LabelFile = Qtqw.QLabel("比赛数据：")
+        self.LineEditFile = Qtqw.QLineEdit()
+        self.btnFileChose = Qtqw.QPushButton("选择文件", self)
+        # 定义日期层控件
+        self.HboxDate = Qtqw.QHBoxLayout()
+        self.LabelDate = Qtqw.QLabel("比赛日期：")
+        self.LineEditDate = Qtqw.QDateEdit(Qtqc.QDate.currentDate())
+        self.LabelDateNull = Qtqw.QLabel()
+        # 定义比赛名称层控件
+        self.HboxGameName = Qtqw.QHBoxLayout()
+        self.LabelGameName = Qtqw.QLabel("比赛名称：")
+        self.LineEditGameName = Qtqw.QLineEdit()
+        self.LabelGameNameNull = Qtqw.QLabel()
+        # 定义试题层控件
+        self.HboxExamine = Qtqw.QHBoxLayout()
+        self.LabelExamine = Qtqw.QLabel("试题：")
+        self.ComBoxExamine = Qtqw.QComboBox()
+        self.LabelExamineNull = Qtqw.QLabel()
+        # 定义纵向布局
+        self.Vbox = Qtqw.QVBoxLayout()
+        # 初始化
         self.initUI()
 
     def initUI(self):
-        Vbox = Qtqw.QVBoxLayout() # 定义纵向布局
-
-        # 定义按钮层的横向布局 及该层控件
-        HboxButton = Qtqw.QHBoxLayout()
-        btnYes = Qtqw.QPushButton("确定",self)
-        btnCancel = Qtqw.QPushButton("取消",self)
-        # 设置按钮层左右布局
-        HboxButton.addStretch(1)
-        HboxButton.addWidget(btnYes)
-        HboxButton.addStretch(1)
-        HboxButton.addWidget(btnCancel)
-        HboxButton.addStretch(1)
-
-        # 定义文件选择层横向布局 及该层控件
-        HboxFileChoice = Qtqw.QHBoxLayout()
-        LabelFile = Qtqw.QLabel("比赛数据：")
-        LabelFile.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        LabelFile.setContentsMargins(0, 0, 0, 3)  # 设置文本的下边距为3个像素
-        LineEditFile = Qtqw.QLineEdit()
-        LineEditFile.setContentsMargins(0, 0, 0, 0)  # 设置边距为 0个像素
-        btnFileChose = Qtqw.QPushButton("选择文件", self)
-        # 设置文件选择层左右布局
-        # HboxFileChoice.addStretch(1)
-        HboxFileChoice.addWidget(LabelFile)
-        HboxFileChoice.addWidget(LineEditFile)
-        # HboxFileChoice.addStretch(1)
-        HboxFileChoice.addWidget(btnFileChose)
-        # HboxFileChoice.addStretch(1)
-        HboxFileChoice.setStretchFactor(LabelFile, 4)
-        HboxFileChoice.setStretchFactor(LineEditFile, 6)
-        HboxFileChoice.setStretchFactor(btnFileChose, 3)
-
-        # 定义日期层控件横向布局 及该层控件
-        HboxDate = Qtqw.QHBoxLayout()
-        LabelDate = Qtqw.QLabel("比赛日期：")
-        LabelDate.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        LabelDate.setContentsMargins(0, 0, 0, 0)  # 设置边距为0个像素
-        LineEditDate = Qtqw.QDateEdit(Qtqc.QDate.currentDate())
-        # https://blog.csdn.net/liang19890820/article/details/52387275 QDateEdit控件的使用说明
-        LineEditDate.setDisplayFormat("yyyy-MM-dd")
-        LineEditDate.setCalendarPopup(True)  # 调出下拉箭头，单击弹出日期控件
-        LabelDateNull = Qtqw.QLabel()
-        HboxDate.addWidget(LabelDate)
-        HboxDate.addWidget(LineEditDate)
-        HboxDate.addWidget(LabelDateNull)
-        HboxDate.setStretchFactor(LabelDate, 4)
-        HboxDate.setStretchFactor(LineEditDate, 6)
-        HboxDate.setStretchFactor(LabelDateNull, 3)
-
-        # 定义比赛名称层级 控件横向布局 及该层控件
-        HboxGameName = Qtqw.QHBoxLayout()
-        LabelGameName = Qtqw.QLabel("比赛名称：")
-        LabelGameName.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        LabelGameName.setContentsMargins(0, 0, 0, 0)  # 设置下边距为0个像素
-        LineEditGameName = Qtqw.QLineEdit()
-        LabelGameNameNull = Qtqw.QLabel()
-        HboxGameName.addWidget(LabelGameName)
-        HboxGameName.addWidget(LineEditGameName)
-        HboxGameName.addWidget(LabelGameNameNull)
-        HboxGameName.setStretchFactor(LabelGameName, 4)
-        HboxGameName.setStretchFactor(LineEditGameName, 6)
-        HboxGameName.setStretchFactor(LabelGameNameNull, 3)
-
-        # 定义试题层级 控件横向布局 及该层控件
-        HboxExamine = Qtqw.QHBoxLayout()
-        LabelExamine = Qtqw.QLabel("试题：")
-        LabelExamine.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        ComBoxExamine = Qtqw.QComboBox()
-        LabelExamineNull = Qtqw.QLabel()
-        HboxExamine.addWidget(LabelExamine)
-        HboxExamine.addWidget(ComBoxExamine)
-        HboxExamine.addWidget(LabelExamineNull)
-        HboxExamine.setStretchFactor(LabelExamine, 4)
-        HboxExamine.setStretchFactor(ComBoxExamine, 6)
-        HboxExamine.setStretchFactor(LabelExamineNull, 3)
-
+        self.initBtnLay()
+        self.initFileLay()
+        self.initDateLay()
+        self.initGameNameLay()
 
         # 设置纵向 各Hbox的布局
-        Vbox.addStretch(2)
-        Vbox.addLayout(HboxExamine)
-        Vbox.addStretch(1)
-        Vbox.addLayout(HboxGameName)
-        Vbox.addStretch(1)
-        Vbox.addLayout(HboxDate)
-        Vbox.addStretch(1)
-        Vbox.addLayout(HboxFileChoice)
-        Vbox.addStretch(1)
-        Vbox.addLayout(HboxButton)
-        Vbox.addStretch(1)
-        self.setLayout(Vbox)
-        print("aaaa")
+        self.Vbox.addStretch(2)
+        self.Vbox.addLayout(self.HboxExamine)
+        self.Vbox.addStretch(1)
+        self.Vbox.addLayout(self.HboxGameName)
+        self.Vbox.addStretch(1)
+        self.Vbox.addLayout(self.HboxDate)
+        self.Vbox.addStretch(1)
+        self.Vbox.addLayout(self.HboxFileChoice)
+        self.Vbox.addStretch(1)
+        self.Vbox.addLayout(self.HboxButton)
+        self.Vbox.addStretch(2)
+
+        self.setLayout(self.Vbox)
+
+    def initExamine(self):
+        self.LabelExamine.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+        self.ComBoxExamine.addItem("aaaa")  # 此处去读比赛类型 目录得到循环解析到Item
+        self.HboxExamine.addWidget(self.LabelExamine)
+        self.HboxExamine.addWidget(self.ComBoxExamine)
+        self.HboxExamine.addWidget(self.LabelExamineNull)
+        self.HboxExamine.setStretchFactor(self.LabelExamine, 4)
+        self.HboxExamine.setStretchFactor(self.ComBoxExamine, 6)
+        self.HboxExamine.setStretchFactor(self.LabelExamineNull, 3)
+
+    def initGameNameLay(self):
+        # 初始化比赛名称层
+        self.LabelGameName.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+        self.HboxGameName.addWidget(self.LabelGameName)
+        self.HboxGameName.addWidget(self.LineEditGameName)
+        self.HboxGameName.addWidget(self.LabelGameNameNull)
+        self.HboxGameName.setStretchFactor(self.LabelGameName, 4)
+        self.HboxGameName.setStretchFactor(self.LineEditGameName, 6)
+        self.HboxGameName.setStretchFactor(self.LabelGameNameNull, 3)
+
+    def initDateLay(self):
+        # 初始化日期选择层
+        # https://blog.csdn.net/liang19890820/article/details/52387275 QDateEdit控件的使用说明
+        self.LabelDate.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+        self.LineEditDate.setDisplayFormat("yyyy-MM-dd")
+        self.LineEditDate.setCalendarPopup(True)  # 调出下拉箭头，单击弹出日期控件
+        self.HboxDate.addWidget(self.LabelDate)
+        self.HboxDate.addWidget(self.LineEditDate)
+        self.HboxDate.addWidget(self.LabelDateNull)
+        self.HboxDate.setStretchFactor(self.LabelDate, 4)
+        self.HboxDate.setStretchFactor(self.LineEditDate, 6)
+        self.HboxDate.setStretchFactor(self.LabelDateNull, 3)
+
+    def initFileLay(self):
+        # 初始化文件选择层 并设置布局
+        self.LabelFile.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+        self.LabelFile.setContentsMargins(0, 0, 0, 3)  # 设置文本的下边距为3个像素
+        self.HboxFileChoice.addWidget(self.LabelFile)
+        self.HboxFileChoice.addWidget(self.LineEditFile)
+        self.HboxFileChoice.addWidget(self.btnFileChose)
+        self.HboxFileChoice.setStretchFactor(self.LabelFile, 4)
+        self.HboxFileChoice.setStretchFactor(self.LineEditFile, 6)
+        self.HboxFileChoice.setStretchFactor(self.btnFileChose, 3)
+
+    def initBtnLay(self):
+        # 初始化按钮层 并设置布局
+        self.HboxButton.addStretch(1)
+        self.HboxButton.addWidget(self.btnYes)
+        self.HboxButton.addStretch(1)
+        self.HboxButton.addWidget(self.btnCancel)
+        self.HboxButton.addStretch(1)
+
