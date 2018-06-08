@@ -9,7 +9,7 @@ Edit date :20180608
 Accomplish : No
 Final : No
 """
-import sys
+import os
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
@@ -115,6 +115,8 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxFileChoice.setStretchFactor(self.LabelFile, 4)
         self.HboxFileChoice.setStretchFactor(self.LineEditFile, 6)
         self.HboxFileChoice.setStretchFactor(self.btnFileChose, 3)
+        # 设置选择文件 按钮功能
+        self.btnFileChose.clicked.connect(self.choseFile)
 
     def initBtnLay(self):
         # 初始化按钮层 并设置布局
@@ -125,7 +127,37 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxButton.addStretch(1)
         # 设置按钮功能
         self.btnCancel.clicked.connect(self.quit)
+        self.btnYes.clicked.connect(self.importAndRelease)
 
     def quit(self):
         # print("aASASASAS")
         self.fwindow.close()
+
+    def choseFile(self):
+        fname = Qtqw.QFileDialog.getOpenFileName()
+        # print(fname[0])
+        self.LineEditFile.setText(fname[0])
+
+    def importAndRelease(self):
+        # print("import function")
+        # 判断 内容LineEdit是否为空
+        nullWarning = Qtqw.QMessageBox()
+        nullWarning.setText("比赛数据或者比赛名称不能为空！")
+        nullWarning.setWindowTitle("提示")
+        # nullWarning.exec()
+        incorrectWarning = Qtqw.QMessageBox()
+        incorrectWarning.setText("所选文件不存在！")
+        incorrectWarning.setWindowTitle("提示")
+        if self.LineEditFile.text() and self.LineEditGameName.text():
+            if os.path.exists(self.LineEditFile.text()):
+                print(self.LineEditFile.text())
+            else:
+                print("文件目录错误")
+                incorrectWarning.exec()
+        else:
+            nullWarning.exec()
+            print("空文件路径")
+
+
+    # def warning(self):
+    #     Qtqw.QMessageBox.text("aaaaaaaaaaaaaaaa")
