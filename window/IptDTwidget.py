@@ -127,5 +127,5 @@ class IptDTwidget(Qtqw.QWidget):
         self.btnCancel.clicked.connect(self.quit)
 
     def quit(self):
-        print("aASASASAS")
+        # print("aASASASAS")
         self.fwindow.close()
