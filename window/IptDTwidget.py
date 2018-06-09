@@ -48,7 +48,6 @@ class IptDTwidget(Qtqw.QWidget):
         # 初始化
         self.initUI()
 
-
     def initUI(self):
         self.initBtnLay()
         self.initFileLay()
@@ -130,7 +129,6 @@ class IptDTwidget(Qtqw.QWidget):
         self.btnYes.clicked.connect(self.importAndRelease)
 
     def quit(self):
-        # print("aASASASAS")
         self.fwindow.close()
 
     def choseFile(self):
@@ -142,22 +140,22 @@ class IptDTwidget(Qtqw.QWidget):
         # print("import function")
         # 判断 内容LineEdit是否为空
         nullWarning = Qtqw.QMessageBox()
-        nullWarning.setText("比赛数据或者比赛名称不能为空！")
+        nullWarning.setText("不能提交空！")
         nullWarning.setWindowTitle("提示")
-        # nullWarning.exec()
+        nullWarning.setWindowIcon(Qtqg.QIcon('../img/error.png'))
+        nullWarning.setContentsMargins(10, 10, 25, 10)
+
         incorrectWarning = Qtqw.QMessageBox()
-        incorrectWarning.setText("所选文件不存在！")
+        incorrectWarning.setText("文件不存在！")
         incorrectWarning.setWindowTitle("提示")
+        incorrectWarning.setWindowIcon(Qtqg.QIcon('../img/error.png'))
+        incorrectWarning.setContentsMargins(10, 10, 25, 10)
         if self.LineEditFile.text() and self.LineEditGameName.text():
             if os.path.exists(self.LineEditFile.text()):
                 print(self.LineEditFile.text())
             else:
-                print("文件目录错误")
+                # print("文件目录错误")
                 incorrectWarning.exec()
         else:
             nullWarning.exec()
-            print("空文件路径")
-
-
-    # def warning(self):
-    #     Qtqw.QMessageBox.text("aaaaaaaaaaaaaaaa")
+            # print("空文件路径")
