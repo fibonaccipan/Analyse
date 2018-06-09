@@ -8,6 +8,7 @@ Accomplish : No
 Final : No
 """
 import sys
+import os
 import datetime
 import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
@@ -20,7 +21,9 @@ import window.importData as IptDT
 class MainWindow(Qtqw.QMainWindow):
     def __init__(self):
         super().__init__()
-        # 软件打开 需要考虑 判断相应目录是否存在，否则建立，
+        # 软件打开 判断规则目录是否存在，否则建立，
+        if not os.path.exists('../rule'):
+            os.mkdir('../rule')
         self.initUI()
 
     def initUI(self):
