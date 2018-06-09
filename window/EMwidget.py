@@ -64,20 +64,6 @@ class EMwidget(Qtqw.QWidget):
             for examine in version:
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
                 lvl2.setText(0, examine)
-
-        # secondLvl1 = Qtqw.QTreeWidgetItem(firstLvl1)
-        # secondLvl1.setText(0, "试题1")
-        # secondLvl2 = Qtqw.QTreeWidgetItem(firstLvl1)
-        # secondLvl2.setText(0, "试题2")
-        # secondLvl3 = Qtqw.QTreeWidgetItem(firstLvl1)
-        # secondLvl3.setText(0, "试题3")
-        #
-        # secondLvl4 = Qtqw.QTreeWidgetItem(firstLvl2)
-        # secondLvl4.setText(0, "试题4")
-        # secondLvl5 = Qtqw.QTreeWidgetItem(firstLvl2)
-        # secondLvl5.setText(0, "试题5")
-        # secondLvl6 = Qtqw.QTreeWidgetItem(firstLvl2)
-        # secondLvl6.setText(0, "试题6")
         return Qtree
 
 if __name__ == '__main__':
