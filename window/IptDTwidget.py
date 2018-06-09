@@ -16,7 +16,7 @@ import PyQt5.QtGui as Qtqg
 
 
 class IptDTwidget(Qtqw.QWidget):
-    def __init__(self,fwindow:Qtqw.QMainWindow):
+    def __init__(self, fwindow: Qtqw.QMainWindow):
         super().__init__()
         self.fwindow = fwindow
         # 定义按钮层控件

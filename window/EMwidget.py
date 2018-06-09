@@ -13,6 +13,8 @@ import os
 import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
+# 以下 为自建库
+import edge_test.Override_Qtree as Ovqt
 
 
 class EMwidget(Qtqw.QWidget):
@@ -54,9 +56,11 @@ class EMwidget(Qtqw.QWidget):
         return myTable
 
     def initTree(self):
-        Qtree = Qtqw.QTreeWidget()
+        # Qtree = Qtqw.QTreeWidget()
+        Qtree = Ovqt.OverQtreeWidget()
         Qtree.setHeaderHidden(True)
         root = Qtqw.QTreeWidgetItem(Qtree)
+        # Qtree.contextMenuEvent.connect(self.show)
         root.setText(0, "通用数据分析工具")
         for version in self.treeList:
             lvl1 = Qtqw.QTreeWidgetItem(root)
@@ -65,6 +69,9 @@ class EMwidget(Qtqw.QWidget):
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
                 lvl2.setText(0, examine)
         return Qtree
+
+    def show(self):
+        print("11111111")
 
 if __name__ == '__main__':
     app = Qtqw.QApplication(sys.argv)
