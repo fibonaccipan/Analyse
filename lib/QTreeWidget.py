@@ -6,6 +6,7 @@ https://bbs.csdn.net/topics/380162634
 https://www.cnblogs.com/flamebird/archive/2016/12/03/6129919.html
 """
 import os
+import shutil
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
 
@@ -14,15 +15,17 @@ class QTreeWidget(Qtqw.QTreeWidget):
     def __init__(self):
         super().__init__()
 
-
-
     def contextMenuEvent(self, event: Qtqg.QContextMenuEvent):
         # print("override success")
+        # addVersionAction
         addVersionAction = Qtqw.QAction('&添加', self)
         addVersionAction.triggered.connect(self.addVersionPop)
-        # addExamineAction
+        # addExamineAction & delVersionAction
         addExamineAction = Qtqw.QAction('&添加', self)
         addExamineAction.triggered.connect(self.addExaminePop)
+        delVersionAction = Qtqw.QAction('&删除', self)
+        delVersionAction.triggered.connect(self.delVersionFun)
+        # delExamineAction
         delExamineAction = Qtqw.QAction('&删除', self)
         delExamineAction.triggered.connect(self.delExamineFun)
         popMenu = Qtqw.QMenu()
@@ -36,6 +39,8 @@ class QTreeWidget(Qtqw.QTreeWidget):
                 popMenu.addAction(addVersionAction)
             elif self.item.parent().text(0) == "通用数据分析工具": # 父节点为root 则为二级节点
                 popMenu.addAction(addExamineAction)
+                popMenu.addAction(delVersionAction)
+            elif self.item.parent().parent().text(0) == "通用数据分析工具": # 父节点的父节点为root 则为三级节点
                 popMenu.addAction(delExamineAction)
         except:
             pass
@@ -99,9 +104,29 @@ class QTreeWidget(Qtqw.QTreeWidget):
         self.initPopDialogAddExamine()
         self.addDig.exec()
 
+    def delVersionFun(self):
+        if self.item.parent():
+            replay = Qtqw.QMessageBox.question(self, "消息", "该项目所包含内容将全部删除！",
+                                               Qtqw.QMessageBox.Yes | Qtqw.QMessageBox.No, Qtqw.QMessageBox.No)
+            if replay == Qtqw.QMessageBox.Yes:
+                if os.path.exists('../rule/' + self.item.text(0)):
+                    shutil.rmtree('../rule/' + self.item.text(0))
+                self.item.parent().removeChild(self.item)
+            else:
+                pass
+
     def delExamineFun(self):
         print(self.item.text(0))
-        pass
+        if self.item.parent():
+            replay = Qtqw.QMessageBox.question(self, "消息", "确认删除该节点？",
+                                               Qtqw.QMessageBox.Yes | Qtqw.QMessageBox.No, Qtqw.QMessageBox.No)
+            if replay == Qtqw.QMessageBox.Yes:
+                if os.path.exists('../rule/' + self.item.parent().text(0) + '/' + self.item.text(0)):
+                    os.remove('../rule/' + self.item.parent().text(0) + '/' + self.item.text(0))
+            # print('../rule/' + self.item.parent().text(0) + '/' + self.item.text(0))
+                self.item.parent().removeChild(self.item)
+            else:
+                pass
 
     def saveVersionAddition(self):
         try:
@@ -109,6 +134,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
             # 给topLevelItem 即 root增加一个child ,setText 为 录入框的文本
             # Qtqw.QTreeWidgetItem(self.topLevelItem(0)).setText(0, self.versionEdit.text())
             Qtqw.QTreeWidgetItem(self.item).setText(0, self.versionEdit.text())
+            self.expandAll()
             # print(addItem)
         except OSError:
             # print("创建失败！")
@@ -125,6 +151,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
         try:
             open("../rule/" + self.item.text(0) + "/" + self.examineEdit.text(),"w").write("None")
             Qtqw.QTreeWidgetItem(self.item).setText(0, self.examineEdit.text())
+            self.expandAll()
         except OSError:
             incorrectWarning = Qtqw.QMessageBox()
             incorrectWarning.setText("创建失败！")
