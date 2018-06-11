@@ -100,6 +100,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
         self.addDig.exec()
 
     def delExamineFun(self):
+        print(self.item.text(0))
         pass
 
     def saveVersionAddition(self):
