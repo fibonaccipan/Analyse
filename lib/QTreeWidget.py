@@ -30,20 +30,20 @@ class QTreeWidget(Qtqw.QTreeWidget):
         pointItem = event.pos()  # 右击空白处获取不到位置，会导致 下面的itme 为None, 后面报错退出程序。
         point = Qtqg.QCursor.pos()
 
-        item = self.itemAt(pointItem)
+        self.item = self.itemAt(pointItem)
         try:
-            if item.text(0) == "通用数据分析工具":
+            if self.item.text(0) == "通用数据分析工具":
                 popMenu.addAction(addVersionAction)
-            elif item.parent().text(0) == "通用数据分析工具": # 父节点为root 则为二级节点
+            elif self.item.parent().text(0) == "通用数据分析工具": # 父节点为root 则为二级节点
                 popMenu.addAction(addExamineAction)
+                popMenu.addAction(delExamineAction)
         except:
             pass
         else:
             popMenu.exec(point)
             event.accept()
 
-    def initPopDialog(self):
-        # print("1111")
+    def initPopDialogAddVersion(self):
         self.addDig = Qtqw.QDialog()
         self.addDig.setGeometry(400, 230, 200, 100)
         self.addDig.setWindowTitle("新建版本")
@@ -67,12 +67,37 @@ class QTreeWidget(Qtqw.QTreeWidget):
         Vbox.addStretch(1)
         self.addDig.setLayout(Vbox)
 
+    def initPopDialogAddExamine(self):
+        self.addDig = Qtqw.QDialog()
+        self.addDig.setGeometry(400, 230, 200, 100)
+        self.addDig.setWindowTitle("新建考试")
+
+        self.examineEdit = Qtqw.QLineEdit()
+        Hbox = Qtqw.QHBoxLayout()
+        Hbox.addWidget(self.examineEdit)
+
+        btn = Qtqw.QPushButton("确定", self)
+        btn.clicked.connect(self.saveExamineAddition)
+        Hboxbtn = Qtqw.QHBoxLayout()
+        Hboxbtn.addStretch(1)
+        Hboxbtn.addWidget(btn)
+        Hboxbtn.addStretch(1)
+
+        Vbox = Qtqw.QVBoxLayout()
+        Vbox.addStretch(1)
+        Vbox.addLayout(Hbox)
+        Vbox.addStretch(1)
+        Vbox.addLayout(Hboxbtn)
+        Vbox.addStretch(1)
+        self.addDig.setLayout(Vbox)
+
     def addVersionPop(self):
-        self.initPopDialog()
+        self.initPopDialogAddVersion()
         self.addDig.exec()
 
     def addExaminePop(self):
-        pass
+        self.initPopDialogAddExamine()
+        self.addDig.exec()
 
     def delExamineFun(self):
         pass
@@ -80,11 +105,26 @@ class QTreeWidget(Qtqw.QTreeWidget):
     def saveVersionAddition(self):
         try:
             os.mkdir('../rule/' + self.versionEdit.text())
-            # self.__init__()
-            Qtqw.QTreeWidgetItem(self.topLevelItem(0)).setText(0, self.versionEdit.text())
+            # 给topLevelItem 即 root增加一个child ,setText 为 录入框的文本
+            # Qtqw.QTreeWidgetItem(self.topLevelItem(0)).setText(0, self.versionEdit.text())
+            Qtqw.QTreeWidgetItem(self.item).setText(0, self.versionEdit.text())
             # print(addItem)
         except OSError:
             # print("创建失败！")
+            incorrectWarning = Qtqw.QMessageBox()
+            incorrectWarning.setText("创建失败！")
+            incorrectWarning.setWindowTitle("提示")
+            incorrectWarning.setWindowIcon(Qtqg.QIcon('../img/error.png'))
+            incorrectWarning.setContentsMargins(10, 10, 25, 10)
+            incorrectWarning.exec()
+        else:
+            self.addDig.close()
+
+    def saveExamineAddition(self):
+        try:
+            open("../rule/" + self.item.text(0) + "/" + self.examineEdit.text(),"w").write("None")
+            Qtqw.QTreeWidgetItem(self.item).setText(0, self.examineEdit.text())
+        except OSError:
             incorrectWarning = Qtqw.QMessageBox()
             incorrectWarning.setText("创建失败！")
             incorrectWarning.setWindowTitle("提示")
