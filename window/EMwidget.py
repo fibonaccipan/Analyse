@@ -68,6 +68,7 @@ class EMwidget(Qtqw.QWidget):
             for examine in version:
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
                 lvl2.setText(0, examine)
+        Qtree.expandAll()
         return Qtree
 
     def show(self):

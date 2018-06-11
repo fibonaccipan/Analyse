@@ -3,6 +3,7 @@
 override PyQt5.QtWidgets.QTreeWidget Class
 defined contextMenuEvent method
 https://bbs.csdn.net/topics/380162634
+https://www.cnblogs.com/flamebird/archive/2016/12/03/6129919.html
 """
 import os
 import PyQt5.QtWidgets as Qtqw
@@ -16,10 +17,14 @@ class QTreeWidget(Qtqw.QTreeWidget):
 
 
     def contextMenuEvent(self, event: Qtqg.QContextMenuEvent):
-        print("override success")
+        # print("override success")
         addVersionAction = Qtqw.QAction('&添加', self)
         addVersionAction.triggered.connect(self.addVersionPop)
         # addExamineAction
+        addExamineAction = Qtqw.QAction('&添加', self)
+        addExamineAction.triggered.connect(self.addExaminePop)
+        delExamineAction = Qtqw.QAction('&删除', self)
+        delExamineAction.triggered.connect(self.delExamineFun)
         popMenu = Qtqw.QMenu()
         popMenu.clear()
         pointItem = event.pos()  # 右击空白处获取不到位置，会导致 下面的itme 为None, 后面报错退出程序。
@@ -29,8 +34,8 @@ class QTreeWidget(Qtqw.QTreeWidget):
         try:
             if item.text(0) == "通用数据分析工具":
                 popMenu.addAction(addVersionAction)
-            else:
-                print(item.text(0))
+            elif item.parent().text(0) == "通用数据分析工具": # 父节点为root 则为二级节点
+                popMenu.addAction(addExamineAction)
         except:
             pass
         else:
@@ -62,14 +67,22 @@ class QTreeWidget(Qtqw.QTreeWidget):
         Vbox.addStretch(1)
         self.addDig.setLayout(Vbox)
 
-
     def addVersionPop(self):
         self.initPopDialog()
         self.addDig.exec()
 
+    def addExaminePop(self):
+        pass
+
+    def delExamineFun(self):
+        pass
+
     def saveVersionAddition(self):
         try:
             os.mkdir('../rule/' + self.versionEdit.text())
+            # self.__init__()
+            Qtqw.QTreeWidgetItem(self.topLevelItem(0)).setText(0, self.versionEdit.text())
+            # print(addItem)
         except OSError:
             # print("创建失败！")
             incorrectWarning = Qtqw.QMessageBox()
