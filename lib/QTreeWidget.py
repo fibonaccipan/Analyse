@@ -149,7 +149,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
 
     def saveExamineAddition(self):
         try:
-            open("../rule/" + self.item.text(0) + "/" + self.examineEdit.text(),"w").write("None")
+            open("../rule/" + self.item.text(0) + "/" + self.examineEdit.text(), "w").write(self.examineEdit.text()) #  .write("None")
             Qtqw.QTreeWidgetItem(self.item).setText(0, self.examineEdit.text())
             self.expandAll()
         except OSError:

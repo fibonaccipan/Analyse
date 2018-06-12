@@ -29,7 +29,7 @@ class EMwidget(Qtqw.QWidget):
             examineList.append(version)  # 在规则列表的头部插入软件版本
             self.treeList.append(examineList)  # 将软件版本和 试题规则的组合列表 并入 treeList，留作后面解析生成树
         self.Qtree = self.initTree()
-        self.Qtree.doubleClicked.connect(self.show)
+        self.Qtree.doubleClicked.connect(self.showa)
         self.Qtable = self.initTable()
         self.initUI()
 
@@ -54,7 +54,7 @@ class EMwidget(Qtqw.QWidget):
         flag = Qtqc.Qt.ItemFlags(63)
         newItem = Qtqw.QTableWidgetItem("666")
         newItem.setFlags(flag)
-        myTable.setItem(1, 1, newItem)
+        myTable.setItem(0, 0, newItem)
         return myTable
 
     def initTree(self):
@@ -73,11 +73,20 @@ class EMwidget(Qtqw.QWidget):
         Qtree.expandAll()
         return Qtree
 
-    def show(self):
+    def showa(self):
         print(self.Qtree.currentItem().text(0))
-        print("11111111")
+        if self.Qtree.currentItem().parent().parent():
+            if self.Qtree.currentItem().parent().parent().text(0) == "通用数据分析工具":
+                self.Qtable.clearContents()
+                flag = Qtqc.Qt.ItemFlags(63)
+                newItem = Qtqw.QTableWidgetItem("777")
+                newItem.setFlags(flag)
+                self.Qtable.setItem(1, 1, newItem)
+        else:
+            print("over")
 
-if __name__ == '__main__':
-    app = Qtqw.QApplication(sys.argv)
-    mw = EMwidget()
-    sys.exit(app.exec_())
+
+# if __name__ == '__main__':
+#     app = Qtqw.QApplication(sys.argv)
+#     mw = EMwidget()
+#     sys.exit(app.exec_())
