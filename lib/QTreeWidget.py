@@ -116,7 +116,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
                 pass
 
     def delExamineFun(self):
-        print(self.item.text(0))
+        # print(self.item.text(0))
         if self.item.parent():
             replay = Qtqw.QMessageBox.question(self, "消息", "确认删除该节点？",
                                                Qtqw.QMessageBox.Yes | Qtqw.QMessageBox.No, Qtqw.QMessageBox.No)

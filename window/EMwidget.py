@@ -13,6 +13,7 @@ import os
 import sys
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
+import PyQt5.QtGui as Qtqg
 # 以下 为自建库
 import lib.QTreeWidget as Ovqtree
 
@@ -28,6 +29,7 @@ class EMwidget(Qtqw.QWidget):
             examineList.append(version)  # 在规则列表的头部插入软件版本
             self.treeList.append(examineList)  # 将软件版本和 试题规则的组合列表 并入 treeList，留作后面解析生成树
         self.Qtree = self.initTree()
+        self.Qtree.doubleClicked.connect(self.show)
         self.Qtable = self.initTable()
         self.initUI()
 
@@ -72,6 +74,7 @@ class EMwidget(Qtqw.QWidget):
         return Qtree
 
     def show(self):
+        print(self.Qtree.currentItem().text(0))
         print("11111111")
 
 if __name__ == '__main__':
