@@ -66,12 +66,27 @@ class EMwidget(Qtqw.QWidget):
         myTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
         myTable.verticalHeader().setVisible(False)
         myTable.horizontalHeader().setVisible(False)
+        # 设置行高为20
         myTable.verticalHeader().setDefaultSectionSize(20)
-        myTable.horizontalHeader().setDefaultSectionSize(60)
+        # 设置列宽为80
+        # myTable.horizontalHeader().setDefaultSectionSize(80)
+        # 设置行高列宽为自适应
+        # myTable.verticalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
+        myTable.horizontalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
         # 设置0行高度 显示试题名称
         myTable.setRowHeight(0, 50)
         myTable = self.setTableStruct(myTable)  # 构造表结构，合并单元格
         myTable = self.setTableConstValue2(myTable)  # 固定值填入表格
+        # 设置第0,5,12列宽 为20
+        # myTable.setColumnWidth(0, 20)
+        # myTable.setColumnWidth(5, 20)
+        # myTable.setColumnWidth(12, 20)
+        # 设置表名
+        newItem = Qtqw.QTableWidgetItem("第xx试题")
+        newItem = self.setItemStyle(newItem)
+        # titleFont = Qtqg.QFont("song", pointSize=20, Qtqg.QFont.Bold)
+        newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
+        myTable.setItem(0, 0, newItem)
         return myTable
 
     def setTableConstValue(self, myTable: Qtqw.QTableWidget):
@@ -133,7 +148,50 @@ class EMwidget(Qtqw.QWidget):
             [None],
             [None, "产品构成及研发", None, None, None, None, "生产线"],
             [None, "P1", None, None, None, None, "名称", "超级手工线", "自动线", "柔性线", "自动租赁线", "柔性租赁线"],
-            [None, "产品构成", "数量", "原料构成", " 数量 ", None, "投资总额"]
+            [None, "产品构成", "数量", "原料构成", " 数量 ", None, "投资总额"],
+            [None, "P1", None, "R1", None, None, "每季投资额"],
+            [None, "P2", None, "R2", None, None, "安装周期"],
+            [None, "P3", None, "R3", None, None, "生产周期"],
+            [None, "P4", None, "R4", None, None, "总转产费用"],
+            [None, "P5", None, "R5", None, None, "转产周期"],
+            [None, "开发费", None, "加工费", None, None, "维修费"],
+            [None, "直接成本", None, "开发时间", None, None, "残值"],
+            [None, "P2", None, None, None, None, "折旧费"],
+            [None, "产品构成", "数量", "原料构成", " 数量 ", None, "折旧时间"],
+            [None, "P1", None, "R1", None, None, "市场开拓及原料设置"],
+            [None, "P2", None, "R2", None, None, "名称", "开发费", "开发时间", " 名称 ", "购买单价", "提前期"],
+            [None, "P3", None, "R3", None, None, "本地"],
+            [None, "P4", None, "R4", None, None, "区域"],
+            [None, "P5", None, "R5", None, None, "国内"],
+            [None, "开发费", None, "加工费", None, None, "亚洲"],
+            [None, "直接成本", None, "开发时间", None, None, "国际"],
+            [None, "P3", None, None, None, None, "重要参数"],
+            [None, "产品构成", "数量", "原料构成", " 数量 ", None, "贴现账期", "贴现率", "违约金比例", None, "贷款额倍数"],
+            [None, "P1", None, "R1", None, None, "1季 2季", None, "初始现金", None, "管理费"],
+            [None, "P2", None, "R2", None, None, "3季 4季", None, "信息费", None, "所得税率"],
+            [None, "P3", None, "R3", None, None, "库存拍卖", "折价率", "长贷年限", None, "最小得单额"],
+            [None, "P4", None, "R4", None, None, "产品", None, "原料紧采倍", None, "产品紧采倍"],
+            [None, "P5", None, "R5", None, None, "原料", None, "选单时间", None, "首单补时"],
+            [None, "开发费", None, "加工费", None, None, "贷款类型", "年息", "市场同开数", None, "市场老大"],
+            [None, "直接成本", None, "开发时间", None, None, "长期贷款", None, "竞单时间", None, "竞单同竞数"],
+            [None, "P4", None, None, None, None, "短期贷款", None, "最大厂房数"],
+            [None, "产品构成", "数量", "原料构成", " 数量 ", None, "厂房"],
+            [None, "P1", None, "R1", None, None, "名称", "购买价格", "租金", "出售价格", "容量", "购买上限"],
+            [None, "P2", None, "R2", None, None, "大厂房"],
+            [None, "P3", None, "R3", None, None, "中厂房"],
+            [None, "P4", None, "R4", None, None, "小厂房"],
+            [None, "P5", None, "R5", None, None, "迷你厂房"],
+            [None, "开发费", None, "加工费", None, None, "IOS资格认证", "年息", "市场同开数", None, "市场老大"],
+            [None, "直接成本", None, "开发时间", None, None, "名称", "开发费", "开发时间", " 名称 ", " 开发费 ", "开发时间"],
+            [None, "P5"],
+            [None, "产品构成", "数量", "原料构成", " 数量 "],
+            [None, "P1", None, "R1"],
+            [None, "P2", None, "R2"],
+            [None, "P3", None, "R3"],
+            [None, "P4", None, "R4"],
+            [None, "P5", None, "R5"],
+            [None, "开发费", None, "加工费"],
+            [None, "直接成本", None, "开发时间"]
         ]
         for lineList in contentList:
             for content in lineList:
@@ -173,6 +231,8 @@ class EMwidget(Qtqw.QWidget):
         myTable.setSpan(36, 6, 1, 6)
         # 合并 第38 行
         myTable.setSpan(38, 1, 1, 4)
+        # 合并 第39行第6列往后所有
+        myTable.setSpan(39, 6, 8, 6)
         return myTable
 
     def showa(self):
