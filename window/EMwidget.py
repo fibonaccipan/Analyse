@@ -132,7 +132,8 @@ class EMwidget(Qtqw.QWidget):
         contentList = [
             [None],
             [None, "产品构成及研发", None, None, None, None, "生产线"],
-            [None, "P1", None, None, None, None, "名称", "超级手工线", "自动线", "柔性线", "自动租赁线", "柔性租赁线"]
+            [None, "P1", None, None, None, None, "名称", "超级手工线", "自动线", "柔性线", "自动租赁线", "柔性租赁线"],
+            [None, "产品构成", "数量", "原料构成", " 数量 ", None, "投资总额"]
         ]
         for lineList in contentList:
             for content in lineList:
