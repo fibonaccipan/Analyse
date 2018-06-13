@@ -1,19 +1,31 @@
 # -*- coding: utf-8 -*-
-
+import os
 
 class SaveRule:
     def __init__(self, path):
-        pass
         # 设置文件指指针
+        self.fp = None
+        if os.path.exists(path):
+            self.fp = open(path, 'w')
 
-    def saveDict(self, dictV: dict):
-        pass
-        # 打开指针，存入 dict 关闭指针
+    def saveDict(self, dictVar: dict):
+        # 存入 文件
+        self.fp.write(str(dictVar))
+        self.fp.close()
 
 
 class ReadRule:
     def __init__(self, path):
-        pass
-        # 打开 path目录的文件 读入为dict
-        # self.dict1 =
-        # 关闭文件
+        # 打开 path目录的文件 得到文件指针
+        self.fp = None
+        self.dict: dict
+        if os.path.exists(path):
+            self.fp = open(path, 'r')
+
+    def __del__(self):  # 析构函数 关闭文件指针
+        self.fp.close()
+
+    def getDict(self):
+        self.dict = eval(self.fp.read())
+        return self.dict
+
