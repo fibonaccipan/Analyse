@@ -204,6 +204,9 @@ class EMwidget(Qtqw.QWidget):
                     myTable.setItem(row, col, newItem)
         return myTable
 
+    def setTableVariable(self, path: str):
+        print(path)
+
     def setTableStruct(self, myTable: Qtqw.QTableWidget):
         # 合并 第 0,5,12 列
         myTable.setSpan(1, 0, 46, 1)

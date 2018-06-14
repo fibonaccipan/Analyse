@@ -32,7 +32,6 @@ class Window(Qtqw.QWidget):
         self.show()
 
 
-
 if __name__ == '__main__':
     app = Qtqw.QApplication(sys.argv)
     ex = Window()
