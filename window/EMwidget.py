@@ -16,6 +16,7 @@ import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
 # 以下 为自建库
 import lib.QTreeWidget as Ovqtree
+import lib.ruleOperate as RuOpt
 
 
 class EMwidget(Qtqw.QWidget):
@@ -28,9 +29,17 @@ class EMwidget(Qtqw.QWidget):
             examineList = os.listdir("../rule/" + version)  # 得到不同版本软件下的试题规则
             examineList.append(version)  # 在规则列表的头部插入软件版本
             self.treeList.append(examineList)  # 将软件版本和 试题规则的组合列表 并入 treeList，留作后面解析生成树
+        self.currentItem: Qtqw.QTableWidgetItem = None  # 表格展示内容的当前 试题 在树上的item
         self.Qtree = self.initTree()
-        self.Qtree.doubleClicked.connect(self.showa)
+        self.Qtree.doubleClicked.connect(self.setTableVariable)
         self.Qtable = self.initTable()
+        # 初始化 按钮控件和插入表格的widget
+        self.QbtnWdgt = Qtqw.QWidget()
+        self.btnSave = Qtqw.QPushButton("保存")
+        self.btnReLoad = Qtqw.QPushButton("重载")
+        self.btnReLoad.clicked.connect(self.reLoadTable)
+        self.initBtnWdgt()
+        self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
         self.initUI()
 
     def initUI(self):
@@ -44,6 +53,8 @@ class EMwidget(Qtqw.QWidget):
         Hbox.addWidget(self.Qtable)
         Hbox.setStretchFactor(self.Qtree, 1)
         Hbox.setStretchFactor(self.Qtable, 4)
+
+        # self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
 
     def initTree(self):
         # Qtree = Qtqw.QTreeWidget()
@@ -82,12 +93,41 @@ class EMwidget(Qtqw.QWidget):
         # myTable.setColumnWidth(5, 20)
         # myTable.setColumnWidth(12, 20)
         # 设置表名
-        newItem = Qtqw.QTableWidgetItem("第xx试题")
+        newItem = Qtqw.QTableWidgetItem("试题")
         newItem = self.setItemStyle(newItem)
-        # titleFont = Qtqg.QFont("song", pointSize=20, Qtqg.QFont.Bold)
         newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
         myTable.setItem(0, 0, newItem)
         return myTable
+
+    def initBtnWdgt(self):
+        Hbox = Qtqw.QHBoxLayout()
+        Hbox.addStretch(1)
+        Hbox.addWidget(self.btnSave)
+        Hbox.addStretch(1)
+        Hbox.addWidget(self.btnReLoad)
+        Hbox.addStretch(1)
+        self.QbtnWdgt.setLayout(Hbox)
+
+    def reLoadTable(self):
+        if self.currentItem:
+            print(self.currentItem.text(0))
+            print(self.currentItem.parent().text(0))
+            # reload 的方法
+
+    def setTableVariable(self):
+        if self.Qtree.currentItem().parent().parent():
+            self.currentItem = self.Qtree.currentItem()
+            filepath = "../rule/" + self.Qtree.currentItem().text(0) + "/" + self.Qtree.currentItem().parent().text(0)
+            Operater = RuOpt.ReadRule(filepath)
+            print(str(Operater.getDict()))
+            # set a table value
+            newItem = Qtqw.QTableWidgetItem(self.Qtree.currentItem().text(0))
+            newItem = self.setItemStyle(newItem)
+            newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
+            self.Qtable.setItem(0, 0, newItem)
+
+    def getTableVariable(self):
+        print("getVariable")
 
     def setTableConstValue(self, myTable: Qtqw.QTableWidget):
         # 产品构成及研发
@@ -125,11 +165,11 @@ class EMwidget(Qtqw.QWidget):
                 # R{1-5}
                 newItem = Qtqw.QTableWidgetItem("R" + str(j))
                 newItem = self.setItemStyle(newItem)
-                myTable.setItem(4 + (j - 1) + (i - 1) * 9, 3,newItem)
+                myTable.setItem(4 + (j - 1) + (i - 1) * 9, 3, newItem)
             #  开发费 and 加工费
             newItem = Qtqw.QTableWidgetItem("开发费")
             newItem = self.setItemStyle(newItem)
-            myTable.setItem(9 + (i - 1) * 9, 1,newItem)
+            myTable.setItem(9 + (i - 1) * 9, 1, newItem)
             newItem = Qtqw.QTableWidgetItem("加工费")
             newItem = self.setItemStyle(newItem)
             myTable.setItem(9 + (i - 1) * 9, 3, newItem)
@@ -204,9 +244,6 @@ class EMwidget(Qtqw.QWidget):
                     myTable.setItem(row, col, newItem)
         return myTable
 
-    def setTableVariable(self, path: str):
-        print(path)
-
     def setTableStruct(self, myTable: Qtqw.QTableWidget):
         # 合并 第 0,5,12 列
         myTable.setSpan(1, 0, 46, 1)
@@ -239,16 +276,19 @@ class EMwidget(Qtqw.QWidget):
         return myTable
 
     def showa(self):
-        print(self.Qtree.currentItem().text(0))
         if self.Qtree.currentItem().parent().parent():
-            if self.Qtree.currentItem().parent().parent().text(0) == "通用数据分析工具":
-                self.Qtable.clearContents()
-                flag = Qtqc.Qt.ItemFlags(63)
-                newItem = Qtqw.QTableWidgetItem("777")
-                newItem.setFlags(flag)
-                self.Qtable.setItem(1, 1, newItem)
+            filepath = "../rule/" + self.Qtree.currentItem().text(0) + "/" + self.Qtree.currentItem().parent().text(0)
+            # if self.Qtree.currentItem().parent().parent().text(0) == "通用数据分析工具":
+            #     self.Qtable.clearContents()
+            #     flag = Qtqc.Qt.ItemFlags(63)
+            #     newItem = Qtqw.QTableWidgetItem("777")
+            #     newItem.setFlags(flag)
+            #     self.Qtable.setItem(1, 1, newItem)
+            Operater = RuOpt.ReadRule(filepath)
+            print(str(Operater.getDict()))
+            # Operater.getDict()
         else:
-            print("over")
+            print("else")
 
     def setItemStyle(self, item: Qtqw.QTableWidgetItem):
         flag = Qtqc.Qt.ItemFlag(32)  # 黑色 不可编辑

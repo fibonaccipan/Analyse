@@ -23,9 +23,16 @@ class ReadRule:
             self.fp = open(path, 'r')
 
     def __del__(self):  # 析构函数 关闭文件指针
-        self.fp.close()
+        try:
+            self.fp.close()
+        except:
+            pass
 
     def getDict(self):
-        self.dict = eval(self.fp.read())
-        return self.dict
+        try:
+            self.dict = eval(self.fp.read())
+        except:
+            print("read a not exists file")
+        # print(self.dict)
+        # return self.dict
 
