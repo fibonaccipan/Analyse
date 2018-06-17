@@ -329,10 +329,11 @@ class EMwidget(Qtqw.QWidget):
         return myTable
 
     def setTableStruct(self, myTable: Qtqw.QTableWidget):
-        # 合并 第 0,5,12 列
+        # 合并 第 0,5,12 列  设置不可编辑
         myTable.setSpan(1, 0, 46, 1)
         myTable.setSpan(1, 5, 46, 1)
         myTable.setSpan(1, 12, 46, 1)
+
         # 合并第0行
         myTable.setSpan(0, 0, 1, 13)
         # 合并 第1 行
@@ -357,6 +358,10 @@ class EMwidget(Qtqw.QWidget):
         myTable.setSpan(38, 1, 1, 4)
         # 合并 第39行第6列往后所有
         myTable.setSpan(39, 6, 8, 6)
+        for i in (0, 5, 12):
+            newItem = Qtqw.QTableWidgetItem()
+            newItem = self.setItemStyle(newItem)
+            myTable.setItem(1, i, newItem)
         return myTable
 
     def showa(self):
