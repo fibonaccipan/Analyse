@@ -34,5 +34,5 @@ class ReadRule:
         except:
             print("read a not exists file")
         # print(self.dict)
-        # return self.dict
+        return self.dict
 

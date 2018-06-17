@@ -27,9 +27,18 @@ class EMwindow(Qtqw.QMainWindow):
         self.setWindowTitle("试题管理")
         self.setGeometry(300, 150, 800, 600)
         self.setWindowIcon(Qtqg.QIcon('../img/examine.png'))
-        centralWidget = EMwdgt.EMwidget()
-        self.setCentralWidget(centralWidget)
+        self.centralWidget = EMwdgt.EMwidget()
+        self.setCentralWidget(self.centralWidget)
         # self.show()
+
+    def closeEvent(self, event: Qtqg.QCloseEvent):
+        if self.centralWidget.changeFlag == 1:
+            replay = Qtqw.QMessageBox.question(self, "提示", "放弃修改并退出？",
+                                               Qtqw.QMessageBox.Yes | Qtqw.QMessageBox.No, Qtqw.QMessageBox.No)
+            if replay == Qtqw.QMessageBox.Yes:
+                event.accept()
+            else:
+                event.ignore()
 
     def printsss(self):
         print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

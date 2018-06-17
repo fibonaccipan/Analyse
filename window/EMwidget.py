@@ -22,6 +22,51 @@ import lib.ruleOperate as RuOpt
 class EMwidget(Qtqw.QWidget):
     def __init__(self):
         super().__init__()
+        # 定义 修改标识
+        self.changeFlag = 0
+        # 定义 记录表格位置的 tuple
+        self.varPosTuple = (  # 填入可编辑空格的位置
+            (3, 7), (3, 8), (3, 9), (3, 10), (3, 11),
+            (4, 2), (4, 4), (4, 7), (4, 8), (4, 9), (4, 10), (4, 11),
+            (5, 2), (5, 4), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11),
+            (6, 2), (6, 4), (6, 7), (6, 8), (6, 9), (6, 10), (6, 11),
+            (7, 2), (7, 4), (7, 7), (7, 8), (7, 9), (7, 10), (7, 11),
+            (8, 2), (8, 4), (8, 7), (8, 8), (8, 9), (8, 10), (8, 11),
+            (9, 2), (9, 4), (9, 7), (9, 8), (9, 9), (9, 10), (9, 11),
+            (10, 2), (10, 4), (10, 7), (10, 8), (10, 9), (10, 10), (10, 11),
+            (11, 7), (11, 8), (11, 9), (11, 10), (11, 11),
+            (12, 7), (12, 8), (12, 9), (12, 10), (12, 11),
+            (13, 2), (13, 4),
+            (14, 2), (14, 4),
+            (15, 2), (15, 4), (15, 7), (15, 8), (15, 9), (15, 10), (15, 11),
+            (16, 2), (16, 4), (16, 7), (16, 8), (16, 9), (16, 10), (16, 11),
+            (17, 2), (17, 4), (17, 7), (17, 8), (17, 9), (17, 10), (17, 11),
+            (18, 2), (18, 4), (18, 7), (18, 8), (18, 9), (18, 10), (18, 11),
+            (19, 2), (19, 4), (19, 7), (19, 8), (19, 9), (19, 10), (19, 11),
+            (22, 2), (22, 4), (22, 7), (22, 9), (22, 11),
+            (23, 2), (23, 4), (23, 7), (23, 9), (23, 11),
+            (24, 2), (24, 4), (24, 9), (24, 11),
+            (25, 2), (25, 4), (25, 7), (25, 9), (25, 11),
+            (26, 2), (26, 4), (26, 7), (26, 9), (26, 11),
+            (27, 2), (27, 4), (27, 9), (27, 11),
+            (28, 2), (28, 4), (28, 7), (28, 9), (28, 11),
+            (29, 7), (29, 9),
+            (31, 2), (31, 4),
+            (32, 2), (32, 4), (32, 7), (32, 8), (32, 9), (32, 10), (32, 11),
+            (33, 2), (33, 4), (33, 7), (33, 8), (33, 9), (33, 10), (33, 11),
+            (34, 2), (34, 4), (34, 7), (34, 8), (34, 9), (34, 10), (34, 11),
+            (35, 2), (35, 4), (35, 7), (35, 8), (35, 9), (35, 10), (35, 11),
+            (36, 2), (36, 4),
+            (37, 2), (37, 4),
+            (38, 7), (38, 8), (38, 10), (38, 11),
+            (40, 2), (40, 4),
+            (41, 2), (41, 4),
+            (42, 2), (42, 4),
+            (43, 2), (43, 4),
+            (44, 2), (44, 4),
+            (45, 2), (45, 4),
+            (46, 2), (46, 4),
+        )
         # 读取rule目录
         self.versionList = os.listdir("../rule")
         self.treeList = []
@@ -110,27 +155,41 @@ class EMwidget(Qtqw.QWidget):
         Hbox.addStretch(1)
         self.QbtnWdgt.setLayout(Hbox)
 
-    def reLoadTable(self):
-        if self.currentItem:
-            print(self.currentItem.text(0))
-            print(self.currentItem.parent().text(0))
-            # reload 的方法
-
     def setTableVariable(self):
         if self.Qtree.currentItem().parent().parent():
             self.currentItem = self.Qtree.currentItem()
-            filepath = "../rule/" + self.Qtree.currentItem().text(0) + "/" + self.Qtree.currentItem().parent().text(0)
-            Operater = RuOpt.ReadRule(filepath)
-            print(str(Operater.getDict()))
-            # set a table value
+            filePath = "../rule/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0)
+            Operater = RuOpt.ReadRule(filePath)
+            dict = Operater.getDict()
+            # 设置表头 为选中树的叶子节点
             newItem = Qtqw.QTableWidgetItem(self.Qtree.currentItem().text(0))
-            newItem = self.setItemStyle(newItem)
+            newItem = self.setEditItemStyle(newItem)
             newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
             self.Qtable.setItem(0, 0, newItem)
+            # 载入 读文件得到 dictionary  填入表格
+            for varPos in self.varPosTuple:
+                key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
+                newItem = Qtqw.QTableWidgetItem(dict[key])
+                newItem = self.setEditItemStyle(newItem)
+                self.Qtable.setItem(varPos[0], varPos[1], newItem)
+            self.changeFlag = 0  # 设置修改标志为 未修改
+
+    def reLoadTable(self):
+        dict = {}
+        if self.currentItem:
+            filePath = "../rule/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0)
+            Operater = RuOpt.ReadRule(filePath)
+            dict = Operater.getDict()
+            for varPos in self.varPosTuple:
+                key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
+                newItem = Qtqw.QTableWidgetItem(dict[key])
+                newItem = self.setEditItemStyle(newItem)
+                self.Qtable.setItem(varPos[0], varPos[1], newItem)
+            self.changeFlag = 0  # 设置标志位 未修改
 
     def checkCurrentQtreeItem(self):
         if self.currentItem:
-            pass
+            self.changeFlag = 1  # 有选中的 树节点，并且点击了报表  视为 对表格修改过
         else:
             nullCurrentWarning = Qtqw.QMessageBox()
             nullCurrentWarning.setText("请选择试题！")
@@ -141,49 +200,7 @@ class EMwidget(Qtqw.QWidget):
 
     def saveTableVariable(self):
         dict = {}
-        varPosTuple = (  # 填入变量的位置
-                            (3, 7), (3, 8), (3, 9), (3, 10), (3, 11),
-            (4, 2), (4, 4), (4, 7), (4, 8), (4, 9), (4, 10), (4, 11),
-            (5, 2), (5, 4), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11),
-            (6, 2), (6, 4), (6, 7), (6, 8), (6, 9), (6, 10), (6, 11),
-            (7, 2), (7, 4), (7, 7), (7, 8), (7, 9), (7, 10), (7, 11),
-            (8, 2), (8, 4), (8, 7), (8, 8), (8, 9), (8, 10), (8, 11),
-            (9, 2), (9, 4), (9, 7), (9, 8), (9, 9), (9, 10), (9, 11),
-            (10, 2), (10, 4), (10, 7), (10, 8), (10, 9), (10, 10), (10, 11),
-                            (11, 7), (11, 8), (11, 9), (11, 10), (11, 11),
-                            (12, 7), (12, 8), (12, 9), (12, 10), (12, 11),
-            (13, 2), (13, 4),
-            (14, 2), (14, 4),
-            (15, 2), (15, 4), (15, 7), (15, 8), (15, 9), (15, 10), (15, 11),
-            (16, 2), (16, 4), (16, 7), (16, 8), (16, 9), (16, 10), (16, 11),
-            (17, 2), (17, 4), (17, 7), (17, 8), (17, 9), (17, 10), (17, 11),
-            (18, 2), (18, 4), (18, 7), (18, 8), (18, 9), (18, 10), (18, 11),
-            (19, 2), (19, 4), (19, 7), (19, 8), (19, 9), (19, 10), (19, 11),
-            (22, 2), (22, 4), (22, 7), (22, 9), (22, 11),
-            (23, 2), (23, 4), (23, 7), (23, 9), (23, 11),
-            (24, 2), (24, 4), (24, 9), (24, 11),
-            (25, 2), (25, 4), (25, 7), (25, 9), (25, 11),
-            (26, 2), (26, 4), (26, 7), (26, 9), (26, 11),
-            (27, 2), (27, 4), (27, 9), (27, 11),
-            (28, 2), (28, 4), (28, 7), (28, 9), (28, 11),
-                            (29, 7), (29, 9),
-            (31, 2), (31, 4),
-            (32, 2), (32, 4), (32, 7), (32, 8), (32, 9), (32, 10), (32, 11),
-            (33, 2), (33, 4), (33, 7), (33, 8), (33, 9), (33, 10), (33, 11),
-            (34, 2), (34, 4), (34, 7), (34, 8), (34, 9), (34, 10), (34, 11),
-            (35, 2), (35, 4), (35, 7), (35, 8), (35, 9), (35, 10), (35, 11),
-            (36, 2), (36, 4),
-            (37, 2), (37, 4),
-                            (38, 7), (38, 8), (38, 10), (38, 11),
-            (40, 2), (40, 4),
-            (41, 2), (41, 4),
-            (42, 2), (42, 4),
-            (43, 2), (43, 4),
-            (44, 2), (44, 4),
-            (45, 2), (45, 4),
-            (46, 2), (46, 4),
-        )
-        for varPos in varPosTuple:
+        for varPos in self.varPosTuple:
             key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
             try:
                 variable = self.Qtable.item(varPos[0], varPos[1]).text()
@@ -194,6 +211,7 @@ class EMwidget(Qtqw.QWidget):
             filePath = "../rule/" + self.currentItem.parent().text(0) + "/" + self.currentItem.text(0)
             Operater = RuOpt.SaveRule(filePath)
             Operater.saveDict(dict)
+        self.changeFlag = 0  # 保存成功 视为表格未修改过
 
     def setTableConstValue(self, myTable: Qtqw.QTableWidget):
         # 产品构成及研发
@@ -358,6 +376,12 @@ class EMwidget(Qtqw.QWidget):
 
     def setItemStyle(self, item: Qtqw.QTableWidgetItem):
         flag = Qtqc.Qt.ItemFlag(32)  # 黑色 不可编辑
+        item.setFlags(flag)
+        item.setTextAlignment(Qtqc.Qt.AlignCenter)
+        return item
+
+    def setEditItemStyle(self, item: Qtqw.QTableWidgetItem):
+        flag = Qtqc.Qt.ItemFlag(63)  # 黑色 可编辑
         item.setFlags(flag)
         item.setTextAlignment(Qtqc.Qt.AlignCenter)
         return item
