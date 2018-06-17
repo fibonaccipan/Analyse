@@ -33,6 +33,7 @@ class EMwidget(Qtqw.QWidget):
         self.Qtree = self.initTree()
         self.Qtree.doubleClicked.connect(self.setTableVariable)
         self.Qtable = self.initTable()
+        self.Qtable.cellClicked.connect(self.checkCurrentQtreeItem)
         # 初始化 按钮控件和插入表格的widget
         self.QbtnWdgt = Qtqw.QWidget()
         self.btnSave = Qtqw.QPushButton("保存")
@@ -127,6 +128,17 @@ class EMwidget(Qtqw.QWidget):
             newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
             self.Qtable.setItem(0, 0, newItem)
 
+    def checkCurrentQtreeItem(self):
+        if self.currentItem:
+            pass
+        else:
+            nullCurrentWarning = Qtqw.QMessageBox()
+            nullCurrentWarning.setText("请选择试题！")
+            nullCurrentWarning.setWindowTitle("提示")
+            nullCurrentWarning.setWindowIcon(Qtqg.QIcon('../img/error.png'))
+            nullCurrentWarning.setContentsMargins(10, 10, 25, 10)
+            nullCurrentWarning.exec()
+
     def saveTableVariable(self):
         dict = {}
         varPosTuple = (  # 填入变量的位置
@@ -178,8 +190,10 @@ class EMwidget(Qtqw.QWidget):
             except:
                 variable = ""
             dict[key] = variable
-        print(dict)
-            # self.Qtable.item(varPos[0], varPos[1]).text()
+        if self.currentItem:
+            filePath = "../rule/" + self.currentItem.parent().text(0) + "/" + self.currentItem.text(0)
+            Operater = RuOpt.SaveRule(filePath)
+            Operater.saveDict(dict)
 
     def setTableConstValue(self, myTable: Qtqw.QTableWidget):
         # 产品构成及研发
