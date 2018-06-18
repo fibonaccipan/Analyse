@@ -3,7 +3,7 @@
 this is the main window for  Yanteng's game analysis program,
 Author : fibonacci
 connect : ericpan1124@yahoo.com
-Edit date :20180606
+Edit date :20180618
 Accomplish : No
 Final : No
 """
