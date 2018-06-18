@@ -160,8 +160,12 @@ class EMwidget(Qtqw.QWidget):
             self.currentItem = self.Qtree.currentItem()
             filePath = "../rule/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0)
             Operater = RuOpt.ReadRule(filePath)
+            dict = {}
+            # try:
             dict = Operater.getDict()
-            # 设置表头 为选中树的叶子节点
+                # print("yes")
+            # except:
+            #     print("nnnnn")
             newItem = Qtqw.QTableWidgetItem(self.Qtree.currentItem().text(0))
             newItem = self.setEditItemStyle(newItem)
             newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
@@ -169,10 +173,14 @@ class EMwidget(Qtqw.QWidget):
             # 载入 读文件得到 dictionary  填入表格
             for varPos in self.varPosTuple:
                 key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
-                newItem = Qtqw.QTableWidgetItem(dict[key])
+                try:
+                    newItem = Qtqw.QTableWidgetItem(dict[key])
+                except :
+                    newItem = Qtqw.QTableWidgetItem()
                 newItem = self.setEditItemStyle(newItem)
                 self.Qtable.setItem(varPos[0], varPos[1], newItem)
             self.changeFlag = 0  # 设置修改标志为 未修改
+            # print(newItem)
 
     def reLoadTable(self):
         dict = {}

@@ -18,7 +18,7 @@ class ReadRule:
     def __init__(self, path):
         # 打开 path目录的文件 得到文件指针
         self.fp = None
-        self.dict: dict
+        self.dict = {}
         if os.path.exists(path):
             self.fp = open(path, 'r')
 
@@ -33,6 +33,6 @@ class ReadRule:
             self.dict = eval(self.fp.read())
         except:
             print("read a not exists file")
-        # print(self.dict)
         return self.dict
+
 
