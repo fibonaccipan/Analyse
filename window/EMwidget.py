@@ -116,10 +116,12 @@ class EMwidget(Qtqw.QWidget):
         Qtree = Ovqtree.QTreeWidget()
         Qtree.setHeaderHidden(True)
         root = Qtqw.QTreeWidgetItem(Qtree)
+        root.setFont(0, Qtqg.QFont("Times", 10, Qtqg.QFont.Bold))
         # Qtree.contextMenuEvent.connect(self.show)
         root.setText(0, "通用数据分析工具")
         for version in self.treeList:
             lvl1 = Qtqw.QTreeWidgetItem(root)
+            lvl1.setFont(0, Qtqg.QFont("Times", 9, Qtqg.QFont.Bold))
             lvl1.setText(0, version.pop())
             for examine in version:
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
