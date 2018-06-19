@@ -78,7 +78,7 @@ class EMwidget(Qtqw.QWidget):
         self.Qtree = self.initTree()
         self.Qtree.doubleClicked.connect(self.setTableVariable)
 
-        self.treeSearchText = Qtqw.QLineEdit()  # 结构树 搜索框
+        self.treeSearchText = Qtqw.QLineEdit()  # 结构树 的搜索框
         self.treeSearchText.setPlaceholderText("输入搜索内容...")
         self.treeSearchText.textChanged.connect(self.searchOnTree)
 
@@ -92,6 +92,13 @@ class EMwidget(Qtqw.QWidget):
         self.btnReLoad.clicked.connect(self.reLoadTable)
         self.initBtnWdgt()
         self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
+        # 初始化 选项卡
+        self.Qtable_1 = self.initTable()
+        self.Qtable_2 = self.initTable()
+        self.QTab = Qtqw.QTabWidget()
+        self.QTab.addTab(self.Qtable, "规则")
+        self.QTab.addTab(self.Qtable_1, "预测")
+        self.QTab.addTab(self.Qtable_2, "详单")
         self.initUI()
 
     def initUI(self):
@@ -107,9 +114,9 @@ class EMwidget(Qtqw.QWidget):
         self.setLayout(Hbox)
         # Hbox.addStretch(1)
         Hbox.addLayout(Vbox)
-        Hbox.addWidget(self.Qtable)
+        Hbox.addWidget(self.QTab)
         Hbox.setStretchFactor(Vbox, 1)
-        Hbox.setStretchFactor(self.Qtable, 4)
+        Hbox.setStretchFactor(self.QTab, 4)
 
         # self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
 
@@ -120,7 +127,7 @@ class EMwidget(Qtqw.QWidget):
         root = Qtqw.QTreeWidgetItem(Qtree)
         root.setFont(0, Qtqg.QFont("Times", 10, Qtqg.QFont.Bold))
         # Qtree.contextMenuEvent.connect(self.show)
-        root.setText(0, "通用数据分析工具")
+        root.setText(0, "新创业者竞赛场次管理")
         for version in self.treeList:
             lvl1 = Qtqw.QTreeWidgetItem(root)
             lvl1.setFont(0, Qtqg.QFont("Times", 9, Qtqg.QFont.Bold))
@@ -389,7 +396,7 @@ class EMwidget(Qtqw.QWidget):
     def showa(self):
         if self.Qtree.currentItem().parent().parent():
             filepath = "../rule/" + self.Qtree.currentItem().text(0) + "/" + self.Qtree.currentItem().parent().text(0)
-            # if self.Qtree.currentItem().parent().parent().text(0) == "通用数据分析工具":
+            # if self.Qtree.currentItem().parent().parent().text(0) == "新创业者竞赛场次管理":
             #     self.Qtable.clearContents()
             #     flag = Qtqc.Qt.ItemFlags(63)
             #     newItem = Qtqw.QTableWidgetItem("777")

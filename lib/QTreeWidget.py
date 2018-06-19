@@ -35,12 +35,12 @@ class QTreeWidget(Qtqw.QTreeWidget):
 
         self.item = self.itemAt(pointItem)
         try:
-            if self.item.text(0) == "通用数据分析工具":
+            if self.item.text(0) == "新创业者竞赛场次管理":
                 popMenu.addAction(addVersionAction)
-            elif self.item.parent().text(0) == "通用数据分析工具": # 父节点为root 则为二级节点
+            elif self.item.parent().text(0) == "新创业者竞赛场次管理": # 父节点为root 则为二级节点
                 popMenu.addAction(addExamineAction)
                 popMenu.addAction(delVersionAction)
-            elif self.item.parent().parent().text(0) == "通用数据分析工具": # 父节点的父节点为root 则为三级节点
+            elif self.item.parent().parent().text(0) == "新创业者竞赛场次管理": # 父节点的父节点为root 则为三级节点
                 popMenu.addAction(delExamineAction)
         except:
             pass

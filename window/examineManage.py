@@ -15,6 +15,7 @@ import PyQt5.QtCore as Qtqc
 # 以下为自建库
 import window.EMwidget as EMwdgt
 
+
 class EMwindow(Qtqw.QMainWindow):
     def __init__(self):
 

@@ -17,8 +17,8 @@ import window.examineManage as EM
 import window.importData as IptDT
 
 
-
 class MainWindow(Qtqw.QMainWindow):
+
     def __init__(self):
         super().__init__()
         # 软件打开 判断规则目录是否存在，否则建立，
