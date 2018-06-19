@@ -7,6 +7,8 @@ Edit date :20180618
 Accomplish : No
 Final : No
 """
+# https://www.cnblogs.com/ling123/p/5503465.html
+# https://blog.csdn.net/zhulove86/article/details/52530214
 import sys
 import os
 import datetime
@@ -36,9 +38,9 @@ class MainWindow(Qtqw.QMainWindow):
         menubar.addAction(examineManage)
 
         # 生成 导入数据 按钮
-        importData = Qtqw.QAction('&导入数据', self)
-        importData.triggered.connect(self.showIptDate)
-        menubar.addAction(importData)
+        # importData = Qtqw.QAction('&导入数据', self)
+        # importData.triggered.connect(self.showIptDate)
+        # menubar.addAction(importData)
 
         # 生成 小组数据 按钮
         groupData = Qtqw.QAction('&小组数据', self)
