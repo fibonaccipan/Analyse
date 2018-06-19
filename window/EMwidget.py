@@ -379,6 +379,9 @@ class EMwidget(Qtqw.QWidget):
             newItem = Qtqw.QTableWidgetItem()
             newItem = self.setItemStyle(newItem)
             myTable.setItem(1, i, newItem)
+        newItem = Qtqw.QTableWidgetItem()
+        newItem = self.setItemStyle(newItem)
+        myTable.setItem(39, 6, newItem)
         return myTable
 
     def showa(self):
@@ -417,7 +420,9 @@ class EMwidget(Qtqw.QWidget):
             version.setHidden(versionHidden)
 
     def setItemStyle(self, item: Qtqw.QTableWidgetItem):
-        flag = Qtqc.Qt.ItemFlag(32)  # 黑色 不可编辑
+        # 32 黑色不可编辑
+        # 60 黑色不可编辑不可选中 高亮
+        flag = Qtqc.Qt.ItemFlag(60)
         item.setFlags(flag)
         item.setTextAlignment(Qtqc.Qt.AlignCenter)
         return item
