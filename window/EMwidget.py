@@ -156,31 +156,30 @@ class EMwidget(Qtqw.QWidget):
         self.QbtnWdgt.setLayout(Hbox)
 
     def setTableVariable(self):
-        if self.Qtree.currentItem().parent().parent():
-            self.currentItem = self.Qtree.currentItem()
-            filePath = "../rule/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0)
-            Operater = RuOpt.ReadRule(filePath)
-            dict = {}
-            # try:
-            dict = Operater.getDict()
-                # print("yes")
-            # except:
-            #     print("nnnnn")
-            newItem = Qtqw.QTableWidgetItem(self.Qtree.currentItem().text(0))
-            newItem = self.setEditItemStyle(newItem)
-            newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
-            self.Qtable.setItem(0, 0, newItem)
-            # 载入 读文件得到 dictionary  填入表格
-            for varPos in self.varPosTuple:
-                key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
-                try:
-                    newItem = Qtqw.QTableWidgetItem(dict[key])
-                except :
-                    newItem = Qtqw.QTableWidgetItem()
+        # print(self.Qtree.currentItem().text(0))
+        try:
+            if self.Qtree.currentItem().parent().parent():
+                self.currentItem = self.Qtree.currentItem()
+                filePath = "../rule/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0)
+                Operater = RuOpt.ReadRule(filePath)
+                dict = {}
+                dict = Operater.getDict()
+                newItem = Qtqw.QTableWidgetItem(self.Qtree.currentItem().text(0))
                 newItem = self.setEditItemStyle(newItem)
-                self.Qtable.setItem(varPos[0], varPos[1], newItem)
-            self.changeFlag = 0  # 设置修改标志为 未修改
-            # print(newItem)
+                newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
+                self.Qtable.setItem(0, 0, newItem)
+                # 载入 读文件得到 dictionary  填入表格
+                for varPos in self.varPosTuple:
+                    key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
+                    try:
+                        newItem = Qtqw.QTableWidgetItem(dict[key])
+                    except :
+                        newItem = Qtqw.QTableWidgetItem()
+                    newItem = self.setEditItemStyle(newItem)
+                    self.Qtable.setItem(varPos[0], varPos[1], newItem)
+                self.changeFlag = 0  # 设置修改标志为 未修改
+        except:
+            print("ROOT Double clicked")
 
     def reLoadTable(self):
         dict = {}
