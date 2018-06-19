@@ -27,6 +27,7 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxFileChoice = Qtqw.QHBoxLayout()
         self.LabelFile = Qtqw.QLabel("比赛数据：")
         self.LineEditFile = Qtqw.QLineEdit()
+        self.LineEditFile.setPlaceholderText("选择比赛文件...")
         self.btnFileChose = Qtqw.QPushButton("选择文件", self)
         # 定义日期层控件
         self.HboxDate = Qtqw.QHBoxLayout()
@@ -37,6 +38,7 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxGameName = Qtqw.QHBoxLayout()
         self.LabelGameName = Qtqw.QLabel("比赛名称：")
         self.LineEditGameName = Qtqw.QLineEdit()
+        self.LineEditGameName.setPlaceholderText("输入比赛名称...")
         self.LabelGameNameNull = Qtqw.QLabel()
         # 定义试题层控件
         self.HboxExamine = Qtqw.QHBoxLayout()
