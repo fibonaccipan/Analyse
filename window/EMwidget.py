@@ -77,6 +77,9 @@ class EMwidget(Qtqw.QWidget):
         self.currentItem: Qtqw.QTableWidgetItem = None  # 表格展示内容的当前 试题 在树上的item
         self.Qtree = self.initTree()
         self.Qtree.doubleClicked.connect(self.setTableVariable)
+        self.treeSearchText = Qtqw.QLineEdit()
+        self.treeSearchText.textChanged.connect(self.searchOnTree)
+
         self.Qtable = self.initTable()
         self.Qtable.cellClicked.connect(self.checkCurrentQtreeItem)
         # 初始化 按钮控件和插入表格的widget
@@ -93,12 +96,17 @@ class EMwidget(Qtqw.QWidget):
         # self.setGeometry(300, 300, 300, 220)
         # self.setWindowTitle('MainWidget')
         Hbox = Qtqw.QHBoxLayout()
+        Vbox = Qtqw.QVBoxLayout()
         # btn = Qtqw.QPushButton("按钮", self)
+        # self.treeSearchText.setContentsMargins(0, 0, 0, 0)
+        # self.Qtree.setContentsMargins(0, 0, 0, 0)
+        Vbox.addWidget(self.treeSearchText)
+        Vbox.addWidget(self.Qtree)
         self.setLayout(Hbox)
         # Hbox.addStretch(1)
-        Hbox.addWidget(self.Qtree)
+        Hbox.addLayout(Vbox)
         Hbox.addWidget(self.Qtable)
-        Hbox.setStretchFactor(self.Qtree, 1)
+        Hbox.setStretchFactor(Vbox, 1)
         Hbox.setStretchFactor(self.Qtable, 4)
 
         # self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
@@ -385,6 +393,26 @@ class EMwidget(Qtqw.QWidget):
             # Operater.getDict()
         else:
             print("else")
+
+    def searchOnTree(self):
+        # print("search on tree!")
+        searchWord = self.treeSearchText.text()
+        for i in range(self.Qtree.topLevelItem(0).childCount()):
+            # print(i)
+            versionHidden = True
+            version =self.Qtree.topLevelItem(0).child(i)
+            # print(version.text(0))
+            for j in range(version.childCount()):
+                # print(i, j, self.Qtree.topLevelItem(0).child(i).child(j).text(0))
+                examineHidden = True
+                examine = version.child(j)
+                # print(examine.text(0))
+                if searchWord in examine.text(0):
+                    examineHidden = False
+                    versionHidden = False
+                examine.setHidden(examineHidden)
+                # print(examineHidden)
+            version.setHidden(versionHidden)
 
     def setItemStyle(self, item: Qtqw.QTableWidgetItem):
         flag = Qtqc.Qt.ItemFlag(32)  # 黑色 不可编辑
