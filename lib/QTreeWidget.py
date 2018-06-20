@@ -27,7 +27,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
         delVersionAction = Qtqw.QAction('&删除', self)
         delVersionAction.triggered.connect(self.delVersionFun)
         renameVersionAction = Qtqw.QAction('&重命名', self)
-        renameVersionAction.triggered.connect(self.addExaminePop)
+        renameVersionAction.triggered.connect(self.renameVersionFun)
         # delExamineAction & renameExamineAction & importDataAction
         delExamineAction = Qtqw.QAction('&删除', self)
         delExamineAction.triggered.connect(self.delExamineFun)
@@ -48,7 +48,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
             elif self.item.parent().text(0) == "新创业者竞赛场次管理":  # 父节点为root 则为二级节点
                 popMenu.addAction(addExamineAction)
                 popMenu.addAction(delVersionAction)
-                popMenu.addAction(renameExamineAction)
+                popMenu.addAction(renameVersionAction)
             elif self.item.parent().parent().text(0) == "新创业者竞赛场次管理":  # 父节点的父节点为root 则为三级节点
                 popMenu.addAction(delExamineAction)
                 popMenu.addAction(renameExamineAction)
@@ -138,6 +138,25 @@ class QTreeWidget(Qtqw.QTreeWidget):
                 self.item.parent().removeChild(self.item)
             else:
                 pass
+
+    def renameVersionFun(self):
+        self.versionItemPreRulePath = "../rule/" + self.currentItem().text(0)
+        self.versionItemPreDatePath = "../date/" + self.currentItem().text(0)
+        self.editItem(self.currentItem(), 0)
+        self.itemChanged.connect(self.nameChanged)
+
+    def nameChanged(self):
+        self.versionItemNewRulePath = "../rule/" + self.currentItem().text(0)
+        self.versionItemNewDatePath = "../date/" + self.currentItem().text(0)
+        try:
+            os.rename(self.versionItemPreRulePath, self.versionItemNewRulePath)
+        except OSError:
+            print(OSError)
+            # 提示修改失败
+        else:
+            print(OSError)
+            #提示修改成功
+
 
     def saveVersionAddition(self):
         try:

@@ -132,13 +132,13 @@ class EMwidget(Qtqw.QWidget):
         root.setText(0, "新创业者竞赛场次管理")
         for version in self.treeList:
             lvl1 = Qtqw.QTreeWidgetItem(root)
+            lvl1.setFlags(Qtqc.Qt.ItemFlag(2) | Qtqc.Qt.ItemFlag(32))
             lvl1.setFont(0, Qtqg.QFont("Times", 9, Qtqg.QFont.Bold))
             lvl1.setText(0, version.pop())
             for examine in version:
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
                 lvl2.setText(0, examine)
         Qtree.expandAll()
-        Qtree
         return Qtree
 
     def initTable(self):
