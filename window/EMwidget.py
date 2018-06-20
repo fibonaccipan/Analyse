@@ -8,6 +8,8 @@ connect : ericpan1124@yahoo.com
 Edit date :20180606
 Accomplish : No
 Final : No
+# https://www.cnblogs.com/ling123/p/5503465.html
+# https://blog.csdn.net/zhulove86/article/details/52530214
 """
 import os
 import sys
@@ -136,6 +138,7 @@ class EMwidget(Qtqw.QWidget):
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
                 lvl2.setText(0, examine)
         Qtree.expandAll()
+        Qtree
         return Qtree
 
     def initTable(self):

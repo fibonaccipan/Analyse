@@ -4,6 +4,7 @@ override PyQt5.QtWidgets.QTreeWidget Class
 defined contextMenuEvent method
 https://bbs.csdn.net/topics/380162634
 https://www.cnblogs.com/flamebird/archive/2016/12/03/6129919.html
+https://www.cnblogs.com/ling123/p/5503465.html
 """
 import os
 import shutil
@@ -20,14 +21,21 @@ class QTreeWidget(Qtqw.QTreeWidget):
         # addVersionAction
         addVersionAction = Qtqw.QAction('&添加', self)
         addVersionAction.triggered.connect(self.addVersionPop)
-        # addExamineAction & delVersionAction
+        # addExamineAction & delVersionAction & renameVersionAction
         addExamineAction = Qtqw.QAction('&添加', self)
         addExamineAction.triggered.connect(self.addExaminePop)
         delVersionAction = Qtqw.QAction('&删除', self)
         delVersionAction.triggered.connect(self.delVersionFun)
-        # delExamineAction
+        renameVersionAction = Qtqw.QAction('&重命名', self)
+        renameVersionAction.triggered.connect(self.addExaminePop)
+        # delExamineAction & renameExamineAction & importDataAction
         delExamineAction = Qtqw.QAction('&删除', self)
         delExamineAction.triggered.connect(self.delExamineFun)
+        renameExamineAction = Qtqw.QAction('&重命名', self)
+        renameExamineAction.triggered.connect(self.delExamineFun)
+        importDataAction = Qtqw.QAction('&导入数据', self)
+        importDataAction.triggered.connect(self.delExamineFun)
+
         popMenu = Qtqw.QMenu()
         popMenu.clear()
         pointItem = event.pos()  # 右击空白处获取不到位置，会导致 下面的itme 为None, 后面报错退出程序。
@@ -37,11 +45,14 @@ class QTreeWidget(Qtqw.QTreeWidget):
         try:
             if self.item.text(0) == "新创业者竞赛场次管理":
                 popMenu.addAction(addVersionAction)
-            elif self.item.parent().text(0) == "新创业者竞赛场次管理": # 父节点为root 则为二级节点
+            elif self.item.parent().text(0) == "新创业者竞赛场次管理":  # 父节点为root 则为二级节点
                 popMenu.addAction(addExamineAction)
                 popMenu.addAction(delVersionAction)
-            elif self.item.parent().parent().text(0) == "新创业者竞赛场次管理": # 父节点的父节点为root 则为三级节点
+                popMenu.addAction(renameExamineAction)
+            elif self.item.parent().parent().text(0) == "新创业者竞赛场次管理":  # 父节点的父节点为root 则为三级节点
                 popMenu.addAction(delExamineAction)
+                popMenu.addAction(renameExamineAction)
+                popMenu.addAction(importDataAction)
         except:
             pass
         else:

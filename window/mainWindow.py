@@ -7,8 +7,6 @@ Edit date :20180618
 Accomplish : No
 Final : No
 """
-# https://www.cnblogs.com/ling123/p/5503465.html
-# https://blog.csdn.net/zhulove86/article/details/52530214
 import sys
 import os
 import datetime
