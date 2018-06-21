@@ -32,7 +32,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
         delExamineAction = Qtqw.QAction('&删除', self)
         delExamineAction.triggered.connect(self.delExamineFun)
         renameExamineAction = Qtqw.QAction('&重命名', self)
-        renameExamineAction.triggered.connect(self.delExamineFun)
+        renameExamineAction.triggered.connect(self.renameExamineFun)
         importDataAction = Qtqw.QAction('&导入数据', self)
         importDataAction.triggered.connect(self.delExamineFun)
 
@@ -139,13 +139,31 @@ class QTreeWidget(Qtqw.QTreeWidget):
             else:
                 pass
 
+    def renameExamineFun(self):
+        self.examineItemPreRulePath = "../rule/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
+        self.examineItemPreDatePath = "../date/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
+        self.editItem(self.currentItem(), 0)
+        self.itemChanged.connect(self.nameExamineChanged)
+
+    def nameExamineChanged(self):
+        self.examineItemNewRulePath = "../rule/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
+        self.examineItemNewDatePath = "../date/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
+        try:
+            os.rename(self.examineItemPreRulePath, self.examineItemNewRulePath)
+        except OSError:
+            print(OSError)
+            # 提示修改失败
+        else:
+            print(OSError)
+            #提示修改成功
+
     def renameVersionFun(self):
         self.versionItemPreRulePath = "../rule/" + self.currentItem().text(0)
         self.versionItemPreDatePath = "../date/" + self.currentItem().text(0)
         self.editItem(self.currentItem(), 0)
-        self.itemChanged.connect(self.nameChanged)
+        self.itemChanged.connect(self.nameVersionChanged)
 
-    def nameChanged(self):
+    def nameVersionChanged(self):
         self.versionItemNewRulePath = "../rule/" + self.currentItem().text(0)
         self.versionItemNewDatePath = "../date/" + self.currentItem().text(0)
         try:
@@ -156,7 +174,6 @@ class QTreeWidget(Qtqw.QTreeWidget):
         else:
             print(OSError)
             #提示修改成功
-
 
     def saveVersionAddition(self):
         try:

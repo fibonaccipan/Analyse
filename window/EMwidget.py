@@ -73,6 +73,8 @@ class EMwidget(Qtqw.QWidget):
         self.versionList = os.listdir("../rule")
         self.treeList = []
         for version in self.versionList:  # 循环软件版本级别目录
+            if os.path.isfile("../rule/" + version):
+                continue
             examineList = os.listdir("../rule/" + version)  # 得到不同版本软件下的试题规则
             examineList.append(version)  # 在规则列表的头部插入软件版本
             self.treeList.append(examineList)  # 将软件版本和 试题规则的组合列表 并入 treeList，留作后面解析生成树
@@ -137,6 +139,7 @@ class EMwidget(Qtqw.QWidget):
             lvl1.setText(0, version.pop())
             for examine in version:
                 lvl2 = Qtqw.QTreeWidgetItem(lvl1)
+                lvl2.setFlags(Qtqc.Qt.ItemFlag(2) | Qtqc.Qt.ItemFlag(32))
                 lvl2.setText(0, examine)
         Qtree.expandAll()
         return Qtree
