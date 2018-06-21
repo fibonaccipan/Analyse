@@ -21,9 +21,11 @@ class MainWindow(Qtqw.QMainWindow):
 
     def __init__(self):
         super().__init__()
-        # 软件打开 判断规则目录是否存在，否则建立，
+        # 软件打开 判断规则和数据目录是否存在，否则建立，
         if not os.path.exists('../rule'):
             os.mkdir('../rule')
+        if not os.path.exists('../data'):
+            os.mkdir('../data')
         self.initUI()
 
     def initUI(self):

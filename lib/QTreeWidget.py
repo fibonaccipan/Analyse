@@ -122,6 +122,8 @@ class QTreeWidget(Qtqw.QTreeWidget):
             if replay == Qtqw.QMessageBox.Yes:
                 if os.path.exists('../rule/' + self.item.text(0)):
                     shutil.rmtree('../rule/' + self.item.text(0))
+                if os.path.exists('../data/' + self.item.text(0)):
+                    shutil.rmtree('../data/' + self.item.text(0))
                 self.item.parent().removeChild(self.item)
             else:
                 pass
@@ -134,6 +136,8 @@ class QTreeWidget(Qtqw.QTreeWidget):
             if replay == Qtqw.QMessageBox.Yes:
                 if os.path.exists('../rule/' + self.item.parent().text(0) + '/' + self.item.text(0)):
                     os.remove('../rule/' + self.item.parent().text(0) + '/' + self.item.text(0))
+                if os.path.exists('../data/' + self.item.parent().text(0) + '/' + self.item.text(0)):
+                    os.remove('../data/' + self.item.parent().text(0) + '/' + self.item.text(0))
             # print('../rule/' + self.item.parent().text(0) + '/' + self.item.text(0))
                 self.item.parent().removeChild(self.item)
             else:
@@ -141,13 +145,13 @@ class QTreeWidget(Qtqw.QTreeWidget):
 
     def renameExamineFun(self):
         self.examineItemPreRulePath = "../rule/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
-        self.examineItemPreDatePath = "../date/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
+        self.examineItemPreDatePath = "../data/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
         self.editItem(self.currentItem(), 0)
         self.itemChanged.connect(self.nameExamineChanged)
 
     def nameExamineChanged(self):
         self.examineItemNewRulePath = "../rule/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
-        self.examineItemNewDatePath = "../date/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
+        self.examineItemNewDatePath = "../data/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
         try:
             os.rename(self.examineItemPreRulePath, self.examineItemNewRulePath)
         except OSError:
@@ -159,15 +163,16 @@ class QTreeWidget(Qtqw.QTreeWidget):
 
     def renameVersionFun(self):
         self.versionItemPreRulePath = "../rule/" + self.currentItem().text(0)
-        self.versionItemPreDatePath = "../date/" + self.currentItem().text(0)
+        self.versionItemPreDatePath = "../data/" + self.currentItem().text(0)
         self.editItem(self.currentItem(), 0)
         self.itemChanged.connect(self.nameVersionChanged)
 
     def nameVersionChanged(self):
         self.versionItemNewRulePath = "../rule/" + self.currentItem().text(0)
-        self.versionItemNewDatePath = "../date/" + self.currentItem().text(0)
+        self.versionItemNewDatePath = "../data/" + self.currentItem().text(0)
         try:
             os.rename(self.versionItemPreRulePath, self.versionItemNewRulePath)
+            os.rename(self.versionItemPreDatePath, self.versionItemNewDatePath)
         except OSError:
             print(OSError)
             # 提示修改失败
@@ -178,6 +183,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
     def saveVersionAddition(self):
         try:
             os.mkdir('../rule/' + self.versionEdit.text())
+            os.mkdir('../data/' + self.versionEdit.text())
             # 给topLevelItem 即 root增加一个child ,setText 为 录入框的文本
             # Qtqw.QTreeWidgetItem(self.topLevelItem(0)).setText(0, self.versionEdit.text())
             Qtqw.QTreeWidgetItem(self.item).setText(0, self.versionEdit.text())
@@ -197,6 +203,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
     def saveExamineAddition(self):
         try:
             open("../rule/" + self.item.text(0) + "/" + self.examineEdit.text(), "w").write(self.examineEdit.text()) #  .write("None")
+            os.mkdir('../data/' + self.item.text(0) + "/" + self.examineEdit.text())
             Qtqw.QTreeWidgetItem(self.item).setText(0, self.examineEdit.text())
             self.expandAll()
         except OSError:

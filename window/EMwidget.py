@@ -74,6 +74,7 @@ class EMwidget(Qtqw.QWidget):
         self.treeList = []
         for version in self.versionList:  # 循环软件版本级别目录
             if os.path.isfile("../rule/" + version):
+                os.remove("../rule/" + version)
                 continue
             examineList = os.listdir("../rule/" + version)  # 得到不同版本软件下的试题规则
             examineList.append(version)  # 在规则列表的头部插入软件版本
