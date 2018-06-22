@@ -10,6 +10,8 @@ import os
 import shutil
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtGui as Qtqg
+# 以下为自建库
+import lib.importData as IptDT
 
 
 class QTreeWidget(Qtqw.QTreeWidget):
@@ -34,7 +36,7 @@ class QTreeWidget(Qtqw.QTreeWidget):
         renameExamineAction = Qtqw.QAction('&重命名', self)
         renameExamineAction.triggered.connect(self.renameExamineFun)
         importDataAction = Qtqw.QAction('&导入数据', self)
-        importDataAction.triggered.connect(self.delExamineFun)
+        importDataAction.triggered.connect(self.showIptDate)
 
         popMenu = Qtqw.QMenu()
         popMenu.clear()
@@ -215,3 +217,8 @@ class QTreeWidget(Qtqw.QTreeWidget):
             incorrectWarning.exec()
         else:
             self.addDig.close()
+
+    def showIptDate(self):
+        # print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.IptDTwindow = IptDT.IptDTwindow()
+        self.IptDTwindow.show()

@@ -23,28 +23,32 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxButton = Qtqw.QHBoxLayout()
         self.btnYes = Qtqw.QPushButton("确定", self)
         self.btnCancel = Qtqw.QPushButton("取消", self)
+
         # 定义文件选择层控件
         self.HboxFileChoice = Qtqw.QHBoxLayout()
         self.LabelFile = Qtqw.QLabel("比赛数据：")
         self.LineEditFile = Qtqw.QLineEdit()
         self.LineEditFile.setPlaceholderText("选择比赛文件...")
         self.btnFileChose = Qtqw.QPushButton("选择文件", self)
+
         # 定义日期层控件
-        self.HboxDate = Qtqw.QHBoxLayout()
-        self.LabelDate = Qtqw.QLabel("比赛日期：")
-        self.LineEditDate = Qtqw.QDateEdit(Qtqc.QDate.currentDate())
-        self.LabelDateNull = Qtqw.QLabel()
+        # self.HboxDate = Qtqw.QHBoxLayout()
+        # self.LabelDate = Qtqw.QLabel("比赛日期：")
+        # self.LineEditDate = Qtqw.QDateEdit(Qtqc.QDate.currentDate())
+        # self.LabelDateNull = Qtqw.QLabel()
+
         # 定义比赛名称层控件
-        self.HboxGameName = Qtqw.QHBoxLayout()
-        self.LabelGameName = Qtqw.QLabel("比赛名称：")
-        self.LineEditGameName = Qtqw.QLineEdit()
-        self.LineEditGameName.setPlaceholderText("输入比赛名称...")
-        self.LabelGameNameNull = Qtqw.QLabel()
+        # self.HboxGameName = Qtqw.QHBoxLayout()
+        # self.LabelGameName = Qtqw.QLabel("比赛名称：")
+        # self.LineEditGameName = Qtqw.QLineEdit()
+        # self.LineEditGameName.setPlaceholderText("输入比赛名称...")
+        # self.LabelGameNameNull = Qtqw.QLabel()
+
         # 定义试题层控件
-        self.HboxExamine = Qtqw.QHBoxLayout()
-        self.LabelExamine = Qtqw.QLabel("试题：")
-        self.ComBoxExamine = Qtqw.QComboBox()
-        self.LabelExamineNull = Qtqw.QLabel()
+        # self.HboxExamine = Qtqw.QHBoxLayout()
+        # self.LabelExamine = Qtqw.QLabel("试题：")
+        # self.ComBoxExamine = Qtqw.QComboBox()
+        # self.LabelExamineNull = Qtqw.QLabel()
         # 定义纵向布局
         self.Vbox = Qtqw.QVBoxLayout()
         # 初始化
@@ -53,18 +57,18 @@ class IptDTwidget(Qtqw.QWidget):
     def initUI(self):
         self.initBtnLay()
         self.initFileLay()
-        self.initDateLay()
-        self.initGameNameLay()
-        self.initExamine()
+        # self.initDateLay()
+        # self.initGameNameLay()
+        # self.initExamine()
 
         # 设置纵向 各Hbox的布局
         self.Vbox.addStretch(2)
-        self.Vbox.addLayout(self.HboxExamine)
-        self.Vbox.addStretch(1)
-        self.Vbox.addLayout(self.HboxGameName)
-        self.Vbox.addStretch(1)
-        self.Vbox.addLayout(self.HboxDate)
-        self.Vbox.addStretch(1)
+        # self.Vbox.addLayout(self.HboxExamine)
+        # self.Vbox.addStretch(1)
+        # self.Vbox.addLayout(self.HboxGameName)
+        # self.Vbox.addStretch(1)
+        # self.Vbox.addLayout(self.HboxDate)
+        # self.Vbox.addStretch(1)
         self.Vbox.addLayout(self.HboxFileChoice)
         self.Vbox.addStretch(1)
         self.Vbox.addLayout(self.HboxButton)
@@ -72,16 +76,16 @@ class IptDTwidget(Qtqw.QWidget):
 
         self.setLayout(self.Vbox)
 
-    def initExamine(self):
-        # 初始化试题层
-        self.LabelExamine.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        self.ComBoxExamine.addItem("aaaa")  # 此处去读比赛类型 目录得到循环解析到Item
-        self.HboxExamine.addWidget(self.LabelExamine)
-        self.HboxExamine.addWidget(self.ComBoxExamine)
-        self.HboxExamine.addWidget(self.LabelExamineNull)
-        self.HboxExamine.setStretchFactor(self.LabelExamine, 4)
-        self.HboxExamine.setStretchFactor(self.ComBoxExamine, 6)
-        self.HboxExamine.setStretchFactor(self.LabelExamineNull, 3)
+    # def initExamine(self):
+    #     # 初始化试题层
+    #     self.LabelExamine.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+    #     self.ComBoxExamine.addItem("aaaa")  # 此处去读比赛类型 目录得到循环解析到Item
+    #     self.HboxExamine.addWidget(self.LabelExamine)
+    #     self.HboxExamine.addWidget(self.ComBoxExamine)
+    #     self.HboxExamine.addWidget(self.LabelExamineNull)
+    #     self.HboxExamine.setStretchFactor(self.LabelExamine, 4)
+    #     self.HboxExamine.setStretchFactor(self.ComBoxExamine, 6)
+    #     self.HboxExamine.setStretchFactor(self.LabelExamineNull, 3)
 
     def initGameNameLay(self):
         # 初始化比赛名称层

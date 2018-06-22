@@ -7,12 +7,11 @@ Edit date :20180608
 Accomplish : No
 Final : No
 """
-import datetime
 import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 # 以下为自建库
-import window.IptDTwidget as IptDTwdgt
+import lib.IptDTwidget as IptDTwdgt
 
 
 class IptDTwindow(Qtqw.QMainWindow):

@@ -14,7 +14,7 @@ import PyQt5.QtGui as Qtqg
 import PyQt5.QtWidgets as Qtqw
 # 以下为自建库
 import window.examineManage as EM
-import window.importData as IptDT
+import lib.importData as IptDT
 
 
 class MainWindow(Qtqw.QMainWindow):
