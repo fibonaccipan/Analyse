@@ -24,12 +24,19 @@ class IptDTwidget(Qtqw.QWidget):
         self.btnYes = Qtqw.QPushButton("确定", self)
         self.btnCancel = Qtqw.QPushButton("取消", self)
 
-        # 定义文件选择层控件
-        self.HboxFileChoice = Qtqw.QHBoxLayout()
-        self.LabelFile = Qtqw.QLabel("比赛数据：")
-        self.LineEditFile = Qtqw.QLineEdit()
-        self.LineEditFile.setPlaceholderText("选择比赛文件...")
-        self.btnFileChose = Qtqw.QPushButton("选择文件", self)
+        # 定义数据文件选择层控件
+        self.HboxDataChoice = Qtqw.QHBoxLayout()
+        self.LabelData = Qtqw.QLabel("数据文件：")
+        self.LineEditData = Qtqw.QLineEdit()
+        self.LineEditData.setPlaceholderText("选择比赛文件...")
+        self.btnDataChose = Qtqw.QPushButton("选择文件", self)
+
+        # 定义订单文件选择层控件
+        self.HboxOrderChoice = Qtqw.QHBoxLayout()
+        self.LabelOrder = Qtqw.QLabel("订单文件：")
+        self.LineEditOrder = Qtqw.QLineEdit()
+        self.LineEditOrder.setPlaceholderText("选择比赛文件...")
+        self.btnOrderChose = Qtqw.QPushButton("选择文件", self)
 
         # 定义日期层控件
         # self.HboxDate = Qtqw.QHBoxLayout()
@@ -56,7 +63,8 @@ class IptDTwidget(Qtqw.QWidget):
 
     def initUI(self):
         self.initBtnLay()
-        self.initFileLay()
+        self.initDataLay()
+        self.initOrderLay()
         # self.initDateLay()
         # self.initGameNameLay()
         # self.initExamine()
@@ -69,7 +77,9 @@ class IptDTwidget(Qtqw.QWidget):
         # self.Vbox.addStretch(1)
         # self.Vbox.addLayout(self.HboxDate)
         # self.Vbox.addStretch(1)
-        self.Vbox.addLayout(self.HboxFileChoice)
+        self.Vbox.addLayout(self.HboxDataChoice)
+        self.Vbox.addStretch(1)
+        self.Vbox.addLayout(self.HboxOrderChoice)
         self.Vbox.addStretch(1)
         self.Vbox.addLayout(self.HboxButton)
         self.Vbox.addStretch(2)
@@ -110,18 +120,31 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxDate.setStretchFactor(self.LineEditDate, 6)
         self.HboxDate.setStretchFactor(self.LabelDateNull, 3)
 
-    def initFileLay(self):
+    def initDataLay(self):
         # 初始化文件选择层 并设置布局
-        self.LabelFile.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        self.LabelFile.setContentsMargins(0, 0, 0, 3)  # 设置文本的下边距为3个像素
-        self.HboxFileChoice.addWidget(self.LabelFile)
-        self.HboxFileChoice.addWidget(self.LineEditFile)
-        self.HboxFileChoice.addWidget(self.btnFileChose)
-        self.HboxFileChoice.setStretchFactor(self.LabelFile, 4)
-        self.HboxFileChoice.setStretchFactor(self.LineEditFile, 6)
-        self.HboxFileChoice.setStretchFactor(self.btnFileChose, 3)
+        self.LabelData.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+        self.LabelData.setContentsMargins(0, 0, 0, 3)  # 设置文本的下边距为3个像素
+        self.HboxDataChoice.addWidget(self.LabelData)
+        self.HboxDataChoice.addWidget(self.LineEditData)
+        self.HboxDataChoice.addWidget(self.btnDataChose)
+        self.HboxDataChoice.setStretchFactor(self.LabelData, 4)
+        self.HboxDataChoice.setStretchFactor(self.LineEditData, 6)
+        self.HboxDataChoice.setStretchFactor(self.btnDataChose, 3)
         # 设置选择文件 按钮功能
-        self.btnFileChose.clicked.connect(self.choseFile)
+        self.btnDataChose.clicked.connect(self.choseData)
+
+    def initOrderLay(self):
+        # 初始化文件选择层 并设置布局
+        self.LabelOrder.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+        self.LabelOrder.setContentsMargins(0, 0, 0, 3)  # 设置文本的下边距为3个像素
+        self.HboxOrderChoice.addWidget(self.LabelOrder)
+        self.HboxOrderChoice.addWidget(self.LineEditOrder)
+        self.HboxOrderChoice.addWidget(self.btnOrderChose)
+        self.HboxOrderChoice.setStretchFactor(self.LabelOrder, 4)
+        self.HboxOrderChoice.setStretchFactor(self.LineEditOrder, 6)
+        self.HboxOrderChoice.setStretchFactor(self.btnOrderChose, 3)
+        # 设置选择文件 按钮功能
+        self.btnOrderChose.clicked.connect(self.choseOrder)
 
     def initBtnLay(self):
         # 初始化按钮层 并设置布局
@@ -137,10 +160,15 @@ class IptDTwidget(Qtqw.QWidget):
     def quit(self):
         self.fwindow.close()
 
-    def choseFile(self):
+    def choseData(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
         # print(fname[0])
-        self.LineEditFile.setText(fname[0])
+        self.LineEditData.setText(fname[0])
+
+    def choseOrder(self):
+        fname = Qtqw.QFileDialog.getOpenFileName()
+        # print(fname[0])
+        self.LineEditOrder.setText(fname[0])
 
     def importAndRelease(self):
         # print("import function")
@@ -156,9 +184,10 @@ class IptDTwidget(Qtqw.QWidget):
         incorrectWarning.setWindowTitle("提示")
         incorrectWarning.setWindowIcon(Qtqg.QIcon('../img/error.png'))
         incorrectWarning.setContentsMargins(10, 10, 25, 10)
-        if self.LineEditFile.text() and self.LineEditGameName.text():
-            if os.path.exists(self.LineEditFile.text()):
-                print(self.LineEditFile.text())
+        if self.LineEditData.text() and self.LineEditOrder.text():
+            if os.path.exists(self.LineEditData.text()) and os.path.exists(self.LineEditOrder.text()):
+                print(self.LineEditData.text())
+                print(self.LineEditOrder.text())
             else:
                 # print("文件目录错误")
                 incorrectWarning.exec()
