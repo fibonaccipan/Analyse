@@ -156,6 +156,10 @@ class QTreeWidget(Qtqw.QTreeWidget):
         self.examineItemNewDatePath = "../data/" + self.currentItem().parent().text(0) + "/"+ self.currentItem().text(0)
         try:
             os.rename(self.examineItemPreRulePath, self.examineItemNewRulePath)
+            if os.path.exists(self.examineItemPreDatePath):
+                os.rename(self.examineItemPreDatePath, self.examineItemNewDatePath)
+            else:
+                os.mkdir(self.examineItemNewDatePath)
         except OSError:
             print(OSError)
             # 提示修改失败
@@ -174,7 +178,10 @@ class QTreeWidget(Qtqw.QTreeWidget):
         self.versionItemNewDatePath = "../data/" + self.currentItem().text(0)
         try:
             os.rename(self.versionItemPreRulePath, self.versionItemNewRulePath)
-            os.rename(self.versionItemPreDatePath, self.versionItemNewDatePath)
+            if os.path.exists(self.versionItemPreDatePath):
+                os.rename(self.versionItemPreDatePath, self.versionItemNewDatePath)
+            else:
+                os.mkdir(self.versionItemNewDatePath)
         except OSError:
             print(OSError)
             # 提示修改失败
