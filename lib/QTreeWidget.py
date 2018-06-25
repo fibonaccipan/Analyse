@@ -184,7 +184,6 @@ class QTreeWidget(Qtqw.QTreeWidget):
                 os.mkdir(self.versionItemNewDatePath)
         except OSError:
             print(OSError)
-            print(OSError)
             # 提示修改失败
         else:
             print(OSError)
