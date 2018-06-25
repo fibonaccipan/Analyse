@@ -28,14 +28,14 @@ class IptDTwidget(Qtqw.QWidget):
         self.HboxDataChoice = Qtqw.QHBoxLayout()
         self.LabelData = Qtqw.QLabel("数据文件：")
         self.LineEditData = Qtqw.QLineEdit()
-        self.LineEditData.setPlaceholderText("选择比赛文件...")
+        self.LineEditData.setPlaceholderText("选择数据文件...")
         self.btnDataChose = Qtqw.QPushButton("选择文件", self)
 
         # 定义订单文件选择层控件
         self.HboxOrderChoice = Qtqw.QHBoxLayout()
         self.LabelOrder = Qtqw.QLabel("订单文件：")
         self.LineEditOrder = Qtqw.QLineEdit()
-        self.LineEditOrder.setPlaceholderText("选择比赛文件...")
+        self.LineEditOrder.setPlaceholderText("选择订单文件...")
         self.btnOrderChose = Qtqw.QPushButton("选择文件", self)
 
         # 定义日期层控件
