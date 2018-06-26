@@ -13,6 +13,9 @@ import os
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
+# 以下为自建库
+import lib.releaseZip as rls
+import lib.processData as prcd
 
 
 class IptDTwidget(Qtqw.QWidget):
@@ -97,28 +100,28 @@ class IptDTwidget(Qtqw.QWidget):
     #     self.HboxExamine.setStretchFactor(self.ComBoxExamine, 6)
     #     self.HboxExamine.setStretchFactor(self.LabelExamineNull, 3)
 
-    def initGameNameLay(self):
-        # 初始化比赛名称层
-        self.LabelGameName.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        self.HboxGameName.addWidget(self.LabelGameName)
-        self.HboxGameName.addWidget(self.LineEditGameName)
-        self.HboxGameName.addWidget(self.LabelGameNameNull)
-        self.HboxGameName.setStretchFactor(self.LabelGameName, 4)
-        self.HboxGameName.setStretchFactor(self.LineEditGameName, 6)
-        self.HboxGameName.setStretchFactor(self.LabelGameNameNull, 3)
+    # def initGameNameLay(self):
+    #     # 初始化比赛名称层
+    #     self.LabelGameName.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+    #     self.HboxGameName.addWidget(self.LabelGameName)
+    #     self.HboxGameName.addWidget(self.LineEditGameName)
+    #     self.HboxGameName.addWidget(self.LabelGameNameNull)
+    #     self.HboxGameName.setStretchFactor(self.LabelGameName, 4)
+    #     self.HboxGameName.setStretchFactor(self.LineEditGameName, 6)
+    #     self.HboxGameName.setStretchFactor(self.LabelGameNameNull, 3)
 
-    def initDateLay(self):
-        # 初始化日期选择层
-        # https://blog.csdn.net/liang19890820/article/details/52387275  QDateEdit 控件的使用说明
-        self.LabelDate.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
-        self.LineEditDate.setDisplayFormat("yyyy-MM-dd")
-        self.LineEditDate.setCalendarPopup(True)  # 调出下拉箭头，单击弹出日期控件
-        self.HboxDate.addWidget(self.LabelDate)
-        self.HboxDate.addWidget(self.LineEditDate)
-        self.HboxDate.addWidget(self.LabelDateNull)
-        self.HboxDate.setStretchFactor(self.LabelDate, 4)
-        self.HboxDate.setStretchFactor(self.LineEditDate, 6)
-        self.HboxDate.setStretchFactor(self.LabelDateNull, 3)
+    # def initDateLay(self):
+    #     # 初始化日期选择层
+    #     # https://blog.csdn.net/liang19890820/article/details/52387275  QDateEdit 控件的使用说明
+    #     self.LabelDate.setAlignment(Qtqc.Qt.AlignRight | Qtqc.Qt.AlignVCenter)  # 设置文本右对齐，纵向居中
+    #     self.LineEditDate.setDisplayFormat("yyyy-MM-dd")
+    #     self.LineEditDate.setCalendarPopup(True)  # 调出下拉箭头，单击弹出日期控件
+    #     self.HboxDate.addWidget(self.LabelDate)
+    #     self.HboxDate.addWidget(self.LineEditDate)
+    #     self.HboxDate.addWidget(self.LabelDateNull)
+    #     self.HboxDate.setStretchFactor(self.LabelDate, 4)
+    #     self.HboxDate.setStretchFactor(self.LineEditDate, 6)
+    #     self.HboxDate.setStretchFactor(self.LabelDateNull, 3)
 
     def initDataLay(self):
         # 初始化文件选择层 并设置布局
@@ -157,8 +160,10 @@ class IptDTwidget(Qtqw.QWidget):
         self.btnCancel.clicked.connect(self.quit)
         self.btnYes.clicked.connect(self.importAndRelease)
 
-    def quit(self):
+    def quit(self):  # 为取消按钮设计 直接关闭 widget外层的qmainwindow
         self.fwindow.close()
+        # print(self.fwindow)
+        # pass
 
     def choseData(self):
         fname = Qtqw.QFileDialog.getOpenFileName()
@@ -187,7 +192,11 @@ class IptDTwidget(Qtqw.QWidget):
         if self.LineEditData.text() and self.LineEditOrder.text():
             if os.path.exists(self.LineEditData.text()) and os.path.exists(self.LineEditOrder.text()):
                 print(self.LineEditData.text())
+                releaser = rls.ReleaseZip(self.LineEditData.text())
+                releaser.release()
+                procDate = prcd.SplitData()
                 print(self.LineEditOrder.text())
+
             else:
                 # print("文件目录错误")
                 incorrectWarning.exec()

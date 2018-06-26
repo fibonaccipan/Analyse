@@ -20,12 +20,11 @@ import lib.processDataFunc as PDF
 
 
 class SplitData:
-    def __init__(self, gameDegree, gameRound):
+    def __init__(self,  gameRound):
         # self.fPath = os.path.abspath('..').replace('\\', '/')
-        self.fromPath = "../tmp/" + gameRound
+        self.fromPath = "../tmp/"
         self.gameRound = gameRound
-        self.gameDegree = gameDegree
-        self.outPath = "../data/" + self.gameDegree + "/" + self.gameRound
+        self.outPath = "../data/" + self.gameRound
 
     def splitDate(self):
         if os.path.exists(self.outPath):
@@ -59,5 +58,4 @@ class SplitData:
         # print(self.fPath)
         print(self.fromPath)
         print(self.gameRound)
-        print(self.gameDegree)
         print(self.outPath)
