@@ -65,7 +65,7 @@ class IptDTwidget(Qtqw.QWidget):
         # 定义纵向布局
         self.Vbox = Qtqw.QVBoxLayout()
 
-        self.Qbar = rtb.QRateBar()
+        self.Qbar = rtb.QRateBar(self.fwindow)
         # self.Qbar.show()
         # self.Qbar.hide()
         # 初始化
@@ -207,7 +207,6 @@ class IptDTwidget(Qtqw.QWidget):
                 def back_job():
                     processor = pcsd.SplitData(self.currentRound)
                     processor.splitDate()
-                    print(self.currentRound)
                 t = td.Thread(target=back_job, name="back_process_job")
                 t.start()
                 self.Qbar.thd = t

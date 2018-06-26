@@ -7,8 +7,11 @@ import PyQt5.QtWidgets as Qtqw
 
 
 class QRateBar(Qtqw.QDialog):
-    def __init__(self):
+    def __init__(self, fwindow: Qtqw.QMainWindow):
         super().__init__()
+        self.setWindowModality(Qtqc.Qt.ApplicationModal)
+        self.setAttribute(Qtqc.Qt.WA_DeleteOnClose)
+        self.fwindow = fwindow
         self.step: int = 0
         self.thd: td.Thread
         # 创建 进度保存文件
@@ -57,8 +60,10 @@ class QRateBar(Qtqw.QDialog):
         if self.step >= 100:
             pass
         else:
-            stptd.stop_thread(self.thd)
+            # stptd.stop_thread(self.thd)
+            pass
 
     def Qquit(self):
+        self.fwindow.close()
         self.timer.stop()
         self.close()
