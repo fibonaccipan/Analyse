@@ -66,8 +66,8 @@ class IptDTwidget(Qtqw.QWidget):
         self.Vbox = Qtqw.QVBoxLayout()
 
         self.Qbar = rtb.QRateBar()
-        self.Qbar.show()
-        self.Qbar.hide()
+        # self.Qbar.show()
+        # self.Qbar.hide()
         # 初始化
         self.initUI()
 
@@ -201,6 +201,9 @@ class IptDTwidget(Qtqw.QWidget):
                 print(self.LineEditData.text())
                 releaser = rls.ReleaseZip(self.LineEditData.text())
                 releaser.release()
+                self.Qbar.show()
+                self.Qbar.do()
+
                 def back_job():
                     processor = pcsd.SplitData(self.currentRound)
                     processor.splitDate()

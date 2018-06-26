@@ -1,8 +1,10 @@
+import lib.rateBar as rtb
+
 
 class Test:
     def __init__(self):
-        self.dict1 = {"aaa": "111", "bbb": "222", "ccc": "333", "ddd": "444"}
-        self.dict2: dict
+        self.Qbar = rtb.QRateBar()
+        self.Qbar.show()
 
     def fun(self):
         print(self.dict1)

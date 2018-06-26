@@ -130,7 +130,7 @@ class MainWindow(Qtqw.QMainWindow):
         self.Qbar.do()
 
         def back_job():
-            spliter = pcsd.SplitData(self.gameDegree, self.gameRound)
+            spliter = pcsd.SplitData(self.gameDegree,)
             spliter.splitDate()
         t = td.Thread(target=back_job, name="back_split_job")
         t.start()

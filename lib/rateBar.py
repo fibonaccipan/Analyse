@@ -28,7 +28,7 @@ class QRateBar(Qtqw.QDialog):
         self.setGeometry(500, 350, 280, 170)
         self.setWindowFlags(Qt.Qt.WindowTitleHint)  # 使得关闭按钮失效
         self.setWindowTitle('进度')
-        self.show()
+        # self.show()
 
     def getstep(self):
         f = open("../rate/step.txt", "r")
