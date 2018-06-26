@@ -227,5 +227,8 @@ class QTreeWidget(Qtqw.QTreeWidget):
 
     def showIptDate(self):
         # print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        self.IptDTwindow = IptDT.IptDTwindow()
+        # print(self.currentItem().text(0))
+        # print("llllll")
+        self.IptDTwindow = IptDT.IptDTwindow(self.currentItem().parent().text(0) + "/" + self.currentItem().text(0))
+        # 传入当前比赛名称
         self.IptDTwindow.show()

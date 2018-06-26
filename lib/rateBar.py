@@ -28,7 +28,7 @@ class QRateBar(Qtqw.QDialog):
         self.setGeometry(500, 350, 280, 170)
         self.setWindowFlags(Qt.Qt.WindowTitleHint)  # 使得关闭按钮失效
         self.setWindowTitle('进度')
-        # self.show()
+        self.show()
 
     def getstep(self):
         f = open("../rate/step.txt", "r")
@@ -45,12 +45,6 @@ class QRateBar(Qtqw.QDialog):
         self.step = self.getstep()
         self.pbar.setValue(self.step)
 
-    # def doAction(self, value):
-    #     if self.timer.isActive():  # running 状态下点一下 stop , 按钮变为开始
-    #        self.timer.stop()
-    #     else:
-    #         self.timer.start(100, self)
-    #
     def do(self):
         self.step = 0
         self.btn.setText('取消')

@@ -13,15 +13,18 @@ import os
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
+import threading as td
 # 以下为自建库
 import lib.releaseZip as rls
-import lib.processData as prcd
+import lib.processData as pcsd
+import lib.rateBar as rtb
 
 
 class IptDTwidget(Qtqw.QWidget):
-    def __init__(self, fwindow: Qtqw.QMainWindow):
+    def __init__(self, fwindow: Qtqw.QMainWindow, currentRound: str):
         super().__init__()
         self.fwindow = fwindow
+        self.currentRound = currentRound
         # 定义按钮层控件
         self.HboxButton = Qtqw.QHBoxLayout()
         self.btnYes = Qtqw.QPushButton("确定", self)
@@ -61,6 +64,10 @@ class IptDTwidget(Qtqw.QWidget):
         # self.LabelExamineNull = Qtqw.QLabel()
         # 定义纵向布局
         self.Vbox = Qtqw.QVBoxLayout()
+
+        self.Qbar = rtb.QRateBar()
+        self.Qbar.show()
+        self.Qbar.hide()
         # 初始化
         self.initUI()
 
@@ -194,12 +201,17 @@ class IptDTwidget(Qtqw.QWidget):
                 print(self.LineEditData.text())
                 releaser = rls.ReleaseZip(self.LineEditData.text())
                 releaser.release()
-                procDate = prcd.SplitData()
+                def back_job():
+                    processor = pcsd.SplitData(self.currentRound)
+                    processor.splitDate()
+                    print(self.currentRound)
+                t = td.Thread(target=back_job, name="back_process_job")
+                t.start()
+                self.Qbar.thd = t
                 print(self.LineEditOrder.text())
-
             else:
-                # print("文件目录错误")
+                print("文件目录错误")
                 incorrectWarning.exec()
         else:
             nullWarning.exec()
-            # print("空文件路径")
+            print("空文件路径")
