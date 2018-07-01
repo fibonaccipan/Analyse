@@ -87,7 +87,7 @@ class EMwidget(Qtqw.QWidget):
         self.treeSearchText.setPlaceholderText("输入搜索内容...")
         self.treeSearchText.textChanged.connect(self.searchOnTree)
 
-        self.Qtable = self.initTable()
+        self.Qtable = self.initRuleTable()
         self.Qtable.cellClicked.connect(self.checkCurrentQtreeItem)
         # 初始化 按钮控件和插入表格的widget
         self.QbtnWdgt = Qtqw.QWidget()
@@ -98,8 +98,8 @@ class EMwidget(Qtqw.QWidget):
         self.initBtnWdgt()
         self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
         # 初始化 选项卡
-        self.Qtable_1 = self.initTable()
-        self.Qtable_2 = self.initTable()
+        self.Qtable_1 = self.initRuleTable()
+        self.Qtable_2 = self.initRuleTable()
         self.QTab = Qtqw.QTabWidget()
         self.QTab.addTab(self.Qtable, "规则")
         self.QTab.addTab(self.Qtable_1, "预测")
@@ -145,7 +145,7 @@ class EMwidget(Qtqw.QWidget):
         Qtree.expandAll()
         return Qtree
 
-    def initTable(self):
+    def initRuleTable(self):
         myTable = Qtqw.QTableWidget(47, 13)
         myTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
         myTable.verticalHeader().setVisible(False)
