@@ -50,3 +50,19 @@ class clear_data:
         df.drop([0, 1, 2], inplace=True)
         dfsave = df.reset_index(drop=True)
         dfsave.to_excel(self.outpath + "/" + self.sheet + ".xlsx")
+
+    def clear_order(self):
+        df = pd.read_excel(self.infile, sheet_name=self.sheet, header=None)
+        if df.empty:
+            return 0
+        df.columns = df.iloc[1, :].tolist()
+        # print(df.iloc[2, :].tolist())
+        # col_nm = [x for x in df.ix[1, :].tolist() if str(x) != 'nan']
+        # col_nm = ["".join(x.split()) for x in col_nm]
+        # print(col_nm)
+        # df = df[col_nm]
+        df.drop([0, 1], inplace=True)
+        dfsave = df.reset_index(drop=True)
+        dfsave.to_excel(self.outpath)
+        print(df)
+        # print(self.infile, self.sheet, self.outpath)

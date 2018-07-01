@@ -20,11 +20,13 @@ import lib.processDataFunc as PDF
 
 
 class SplitData:
-    def __init__(self,  gameRound):
+    def __init__(self,  gameRound, orderInPath):
         # self.fPath = os.path.abspath('..').replace('\\', '/')
         self.fromPath = "../tmp/"
         self.gameRound = gameRound
         self.outPath = "../data/" + self.gameRound
+        self.orderInPath = orderInPath
+        self.orderOutPath = "../data/" + self.gameRound + "/order.xlsx"
 
     def splitDate(self):
         if os.path.exists(self.outPath):
@@ -53,6 +55,12 @@ class SplitData:
             f.write(str(int((filelist.index(teamdata)+1)*100/len(filelist))))
             f.close()
             time.sleep(0.2)
+
+    def processOrder(self):
+        # print(self.orderOutPath)
+        cleanr = PDF.clear_data(self.orderInPath, "Sheet1", self.orderOutPath)
+        cleanr.clear_order()
+
 
     def showAll(self):
         # print(self.fPath)

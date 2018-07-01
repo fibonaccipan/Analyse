@@ -198,19 +198,21 @@ class IptDTwidget(Qtqw.QWidget):
         incorrectWarning.setContentsMargins(10, 10, 25, 10)
         if self.LineEditData.text() and self.LineEditOrder.text():
             if os.path.exists(self.LineEditData.text()) and os.path.exists(self.LineEditOrder.text()):
-                print(self.LineEditData.text())
+                # print(self.LineEditData.text())
                 releaser = rls.ReleaseZip(self.LineEditData.text())
                 releaser.release()
                 self.Qbar.show()
                 self.Qbar.do()
 
                 def back_job():
-                    processor = pcsd.SplitData(self.currentRound)
+                    processor = pcsd.SplitData(self.currentRound, self.LineEditOrder.text())
                     processor.splitDate()
+                    # 使用splitDate 直接读取订单文件到data目录
                 t = td.Thread(target=back_job, name="back_process_job")
                 t.start()
                 self.Qbar.thd = t
-                print(self.LineEditOrder.text())
+                processor = pcsd.SplitData(self.currentRound, self.LineEditOrder.text())
+                processor.processOrder()
             else:
                 print("文件目录错误")
                 incorrectWarning.exec()
