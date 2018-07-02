@@ -32,7 +32,7 @@ class ReadRule:
         try:
             self.dict = eval(self.fp.read())
         except:
-            print("read a not exists file")
+            print("analyze rule error")
         return self.dict
 
 

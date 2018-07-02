@@ -12,7 +12,7 @@ Final : No
 # https://blog.csdn.net/zhulove86/article/details/52530214
 """
 import os
-import sys
+import pandas as pd
 import PyQt5.QtWidgets as Qtqw
 import PyQt5.QtCore as Qtqc
 import PyQt5.QtGui as Qtqg
@@ -81,14 +81,15 @@ class EMwidget(Qtqw.QWidget):
             self.treeList.append(examineList)  # 将软件版本和 试题规则的组合列表 并入 treeList，留作后面解析生成树
         self.currentItem: Qtqw.QTableWidgetItem = None  # 表格展示内容的当前 试题 在树上的item
         self.Qtree = self.initTree()
+        # self.Qtree.doubleClicked.connect(self.setTableVariable)
         self.Qtree.doubleClicked.connect(self.setTableVariable)
 
         self.treeSearchText = Qtqw.QLineEdit()  # 结构树 的搜索框
         self.treeSearchText.setPlaceholderText("输入搜索内容...")
         self.treeSearchText.textChanged.connect(self.searchOnTree)
 
-        self.Qtable = self.initRuleTable()
-        self.Qtable.cellClicked.connect(self.checkCurrentQtreeItem)
+        self.QRuleTable = self.initRuleTable()
+        self.QRuleTable.cellClicked.connect(self.checkCurrentQtreeItem)
         # 初始化 按钮控件和插入表格的widget
         self.QbtnWdgt = Qtqw.QWidget()
         self.btnSave = Qtqw.QPushButton("保存")
@@ -96,14 +97,14 @@ class EMwidget(Qtqw.QWidget):
         self.btnReLoad = Qtqw.QPushButton("重载")
         self.btnReLoad.clicked.connect(self.reLoadTable)
         self.initBtnWdgt()
-        self.Qtable.setCellWidget(39, 6, self.QbtnWdgt)
+        self.QRuleTable.setCellWidget(39, 6, self.QbtnWdgt)
         # 初始化 选项卡
-        self.Qtable_1 = self.initRuleTable()
+        self.QOrderTable = self.initOrderTable()
         self.Qtable_2 = self.initRuleTable()
         self.QTab = Qtqw.QTabWidget()
-        self.QTab.addTab(self.Qtable, "规则")
-        self.QTab.addTab(self.Qtable_1, "预测")
-        self.QTab.addTab(self.Qtable_2, "详单")
+        self.QTab.addTab(self.QRuleTable, "规则")
+        self.QTab.addTab(self.Qtable_2, "预测")
+        self.QTab.addTab(self.QOrderTable, "详单")
         self.initUI()
 
     def initUI(self):
@@ -145,6 +146,19 @@ class EMwidget(Qtqw.QWidget):
         Qtree.expandAll()
         return Qtree
 
+    def initOrderTable(self):
+        if self.Qtree.currentItem():
+            # 为选中树节点， return 一个表头
+            myTable = Qtqw.QTableWidget(5, 5)
+        else:
+            myTable = Qtqw.QTableWidget(6, 6)
+        # if self.Qtree.currentItem().parent().parent():
+        #     print("../data/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0))
+        # df = pd.read_excel(self.infile)
+        # if df.empty:
+        #     return 0
+        return myTable
+
     def initRuleTable(self):
         myTable = Qtqw.QTableWidget(47, 13)
         myTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
@@ -182,9 +196,9 @@ class EMwidget(Qtqw.QWidget):
         self.QbtnWdgt.setLayout(Hbox)
 
     def setTableVariable(self):
-        # print(self.Qtree.currentItem().text(0))
         try:
             if self.Qtree.currentItem().parent().parent():
+                print(self.Qtree.currentItem().text(0))
                 self.currentItem = self.Qtree.currentItem()
                 filePath = "../rule/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0)
                 Operater = RuOpt.ReadRule(filePath)
@@ -193,7 +207,7 @@ class EMwidget(Qtqw.QWidget):
                 newItem = Qtqw.QTableWidgetItem(self.Qtree.currentItem().text(0))
                 newItem = self.setEditItemStyle(newItem)
                 newItem.setFont(Qtqg.QFont("Times", 20, Qtqg.QFont.Bold))
-                self.Qtable.setItem(0, 0, newItem)
+                self.QRuleTable.setItem(0, 0, newItem)
                 # 载入 读文件得到 dictionary  填入表格
                 for varPos in self.varPosTuple:
                     key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
@@ -202,7 +216,7 @@ class EMwidget(Qtqw.QWidget):
                     except :
                         newItem = Qtqw.QTableWidgetItem()
                     newItem = self.setEditItemStyle(newItem)
-                    self.Qtable.setItem(varPos[0], varPos[1], newItem)
+                    self.QRuleTable.setItem(varPos[0], varPos[1], newItem)
                 self.changeFlag = 0  # 设置修改标志为 未修改
         except:
             print("ROOT Double clicked")
@@ -217,7 +231,7 @@ class EMwidget(Qtqw.QWidget):
                 key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
                 newItem = Qtqw.QTableWidgetItem(dict[key])
                 newItem = self.setEditItemStyle(newItem)
-                self.Qtable.setItem(varPos[0], varPos[1], newItem)
+                self.QRuleTable.setItem(varPos[0], varPos[1], newItem)
             self.changeFlag = 0  # 设置标志位 未修改
 
     def checkCurrentQtreeItem(self):
@@ -236,7 +250,7 @@ class EMwidget(Qtqw.QWidget):
         for varPos in self.varPosTuple:
             key = "Item_" + str(varPos[0]) + "_" + str(varPos[1])
             try:
-                variable = self.Qtable.item(varPos[0], varPos[1]).text()
+                variable = self.QRuleTable.item(varPos[0], varPos[1]).text()
             except:
                 variable = ""
             dict[key] = variable
