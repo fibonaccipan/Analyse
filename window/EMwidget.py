@@ -82,7 +82,7 @@ class EMwidget(Qtqw.QWidget):
         self.currentItem: Qtqw.QTableWidgetItem = None  # 表格展示内容的当前 试题 在树上的item
         self.Qtree = self.initTree()
         # self.Qtree.doubleClicked.connect(self.setTableVariable)
-        self.Qtree.doubleClicked.connect(self.setTableVariable)
+        self.Qtree.clicked.connect(self.setTableVariable)
 
         self.treeSearchText = Qtqw.QLineEdit()  # 结构树 的搜索框
         self.treeSearchText.setPlaceholderText("输入搜索内容...")
