@@ -83,6 +83,7 @@ class EMwidget(Qtqw.QWidget):
         self.Qtree = self.initTree()
         # self.Qtree.doubleClicked.connect(self.setTableVariable)
         self.Qtree.clicked.connect(self.setTableVariable)
+        self.Qtree.clicked.connect(self.updateOrderTable)
 
         self.treeSearchText = Qtqw.QLineEdit()  # 结构树 的搜索框
         self.treeSearchText.setPlaceholderText("输入搜索内容...")
@@ -147,17 +148,37 @@ class EMwidget(Qtqw.QWidget):
         return Qtree
 
     def initOrderTable(self):
-        if self.Qtree.currentItem():
             # 为选中树节点， return 一个表头
-            myTable = Qtqw.QTableWidget(5, 5)
-        else:
-            myTable = Qtqw.QTableWidget(6, 6)
-        # if self.Qtree.currentItem().parent().parent():
-        #     print("../data/" + self.Qtree.currentItem().parent().text(0) + "/" + self.Qtree.currentItem().text(0))
-        # df = pd.read_excel(self.infile)
-        # if df.empty:
-        #     return 0
+        myTable = Qtqw.QTableWidget(5, 5)
         return myTable
+
+    def updateOrderTable(self):
+        try:
+            if self.Qtree.currentItem().parent().parent():
+                secondPath = self.Qtree.currentItem().parent().text(0) + "/"
+                thridPath = self.Qtree.currentItem().text(0) + "/"
+                df = pd.read_excel("../data/" + secondPath + thridPath + "order.xlsx")
+                columns = [x.strip() for x in df.columns ]
+                df.columns = columns
+                myTable = Qtqw.QTableWidget(len(df)+1, df.columns.size)
+                myTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
+                myTable.verticalHeader().setVisible(False)
+                myTable.horizontalHeader().setVisible(False)
+                # 设置行高为20
+                myTable.verticalHeader().setDefaultSectionSize(20)
+                # 设置列宽为80
+                # myTable.horizontalHeader().setDefaultSectionSize(80)
+                # 设置行高列宽为自适应
+                # myTable.verticalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
+                myTable.horizontalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
+                # 完成新表构建，删除旧Tab并插入新的
+                self.QTab.removeTab(2)
+                self.QTab.insertTab(2, myTable, "详单")
+                print(len(df))
+                print(df.columns.size)
+                # print(df)
+        except:
+            print("order file doesn't exists")
 
     def initRuleTable(self):
         myTable = Qtqw.QTableWidget(47, 13)

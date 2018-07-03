@@ -64,5 +64,5 @@ class clear_data:
         df.drop([0, 1], inplace=True)
         dfsave = df.reset_index(drop=True)
         dfsave.to_excel(self.outpath)
-        print(df)
+        # print(df)
         # print(self.infile, self.sheet, self.outpath)
