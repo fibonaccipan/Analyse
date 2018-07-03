@@ -106,6 +106,9 @@ class EMwidget(Qtqw.QWidget):
         self.QTab.addTab(self.QRuleTable, "规则")
         self.QTab.addTab(self.Qtable_2, "预测")
         self.QTab.addTab(self.QOrderTable, "详单")
+        # 定义 QOrderTable 表头的 下拉选择框
+        self.QComboBoxYear = Qtqw.QComboBox()
+        # self.QComboBoxYear.additem("aaa")
         self.initUI()
 
     def initUI(self):
@@ -148,8 +151,18 @@ class EMwidget(Qtqw.QWidget):
         return Qtree
 
     def initOrderTable(self):
-            # 为选中树节点， return 一个表头
-        myTable = Qtqw.QTableWidget(5, 5)
+        # 为选中树节点， return 一个表头
+        myTable = Qtqw.QTableWidget(1, 11)
+        myTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
+        myTable.verticalHeader().setVisible(False)
+        myTable.horizontalHeader().setVisible(False)
+        # 设置行高为20
+        myTable.verticalHeader().setDefaultSectionSize(20)
+        # 设置列宽为80
+        # myTable.horizontalHeader().setDefaultSectionSize(80)
+        # 设置行高列宽为自适应
+        # myTable.verticalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
+        myTable.horizontalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
         return myTable
 
     def updateOrderTable(self):
@@ -158,8 +171,9 @@ class EMwidget(Qtqw.QWidget):
                 secondPath = self.Qtree.currentItem().parent().text(0) + "/"
                 thridPath = self.Qtree.currentItem().text(0) + "/"
                 df = pd.read_excel("../data/" + secondPath + thridPath + "order.xlsx")
-                columns = [x.strip() for x in df.columns ]
+                columns = [x.strip() for x in df.columns]
                 df.columns = columns
+                # 定义表格框架
                 myTable = Qtqw.QTableWidget(len(df)+1, df.columns.size)
                 myTable.setEditTriggers(Qtqw.QAbstractItemView.DoubleClicked)
                 myTable.verticalHeader().setVisible(False)
@@ -171,12 +185,19 @@ class EMwidget(Qtqw.QWidget):
                 # 设置行高列宽为自适应
                 # myTable.verticalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
                 myTable.horizontalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
-                # 完成新表构建，删除旧Tab并插入新的
+                myTable.setCellWidget(0, 1, self.QComboBoxYear)
+                self.QComboBoxYear.clear()
+                self.QComboBoxYear.addItems(["aaaaa","bbbb"])
+
+                # pandas query https://www.cnblogs.com/en-heng/p/5630849.html
+                df = df[(df['年份'] == '')]
+                #  构造函数内新建 下拉按钮，并设置 选中事件。 这里 为按钮增加内容
+                #
+
+                # 完成新表构建，删除旧Tab并插入新表
                 self.QTab.removeTab(2)
                 self.QTab.insertTab(2, myTable, "详单")
-                print(len(df))
-                print(df.columns.size)
-                # print(df)
+                print(df)
         except:
             print("order file doesn't exists")
 
