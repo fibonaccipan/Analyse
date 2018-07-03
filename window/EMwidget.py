@@ -193,7 +193,6 @@ class EMwidget(Qtqw.QWidget):
                 df = df[(df['年份'] == '')]
                 #  构造函数内新建 下拉按钮，并设置 选中事件。 这里 为按钮增加内容
                 #
-
                 # 完成新表构建，删除旧Tab并插入新表
                 self.QTab.removeTab(2)
                 self.QTab.insertTab(2, myTable, "详单")
