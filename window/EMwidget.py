@@ -273,7 +273,7 @@ class EMwidget(Qtqw.QWidget):
 
                 self.QTab.removeTab(2)
                 self.QTab.insertTab(2, myTable, "详单")
-                print(df)
+                # print(df)
         except:
             print("order file doesn't exists")
 
