@@ -108,7 +108,7 @@ class EMwidget(Qtqw.QWidget):
         self.QTab.addTab(self.QOrderTable, "详单")
         # 定义 QOrderTable 表头的 下拉选择框
         self.QComboBoxYear = Qtqw.QComboBox()
-        # self.QComboBoxYear.additem("aaa")
+        # self.QComboBoxYear.additem("aaa")  
         self.initUI()
 
     def initUI(self):
