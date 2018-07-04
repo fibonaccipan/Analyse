@@ -108,7 +108,14 @@ class EMwidget(Qtqw.QWidget):
         self.QTab.addTab(self.QOrderTable, "详单")
         # 定义 QOrderTable 表头的 下拉选择框
         self.QComboBoxYear = Qtqw.QComboBox()
-        # self.QComboBoxYear.additem("aaa")  
+        self.QComboBoxMarket = Qtqw.QComboBox()
+        self.QComboBoxProduct = Qtqw.QComboBox()
+        self.QComboBoxDlvPird = Qtqw.QComboBox()
+        self.QComboBoxAcutPird = Qtqw.QComboBox()
+        self.QComboBoxISO = Qtqw.QComboBox()
+        self.QComboBoxUser = Qtqw.QComboBox()
+        self.QComboBoxStat = Qtqw.QComboBox()
+        # self.QComboBoxYear.additem("年份")
         self.initUI()
 
     def initUI(self):
@@ -185,15 +192,85 @@ class EMwidget(Qtqw.QWidget):
                 # 设置行高列宽为自适应
                 # myTable.verticalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
                 myTable.horizontalHeader().setSectionResizeMode(Qtqw.QHeaderView.Stretch)
+                newItem = Qtqw.QTableWidgetItem("订单编号")
+                newItem = self.setItemStyle(newItem)
+                myTable.setItem(0, 0, newItem)
                 myTable.setCellWidget(0, 1, self.QComboBoxYear)
-                self.QComboBoxYear.clear()
-                self.QComboBoxYear.addItems(["aaaaa","bbbb"])
+                myTable.setCellWidget(0, 2, self.QComboBoxMarket)
+                myTable.setCellWidget(0, 3, self.QComboBoxProduct)
+                newItem = Qtqw.QTableWidgetItem("数量")
+                newItem = self.setItemStyle(newItem)
+                myTable.setItem(0, 4, newItem)
+                newItem = Qtqw.QTableWidgetItem("总价")
+                newItem = self.setItemStyle(newItem)
+                myTable.setItem(0, 5, newItem)
+                myTable.setCellWidget(0, 6, self.QComboBoxDlvPird)
+                myTable.setCellWidget(0, 7, self.QComboBoxAcutPird)
+                myTable.setCellWidget(0, 8, self.QComboBoxISO)
+                myTable.setCellWidget(0, 9, self.QComboBoxUser)
+                myTable.setCellWidget(0, 10, self.QComboBoxStat)
 
                 # pandas query https://www.cnblogs.com/en-heng/p/5630849.html
-                df = df[(df['年份'] == '')]
+                # df = df[(df['年份'] == '')]
                 #  构造函数内新建 下拉按钮，并设置 选中事件。 这里 为按钮增加内容
-                #
+                dfYear = df.drop_duplicates(subset=['年份'], keep='last')
+                dfYear = dfYear['年份'].tolist()
+                dfYear.sort()
+                self.QComboBoxYear.clear()
+                dfYear.insert(0, "年份")
+                self.QComboBoxYear.addItems(dfYear)
+
+                dfMarket = df.drop_duplicates(subset=['市场'], keep='last')
+                dfMarket = dfMarket['市场'].tolist()
+                dfMarket.sort()
+                self.QComboBoxMarket.clear()
+                dfMarket.insert(0, "市场")
+                self.QComboBoxMarket.addItems(dfMarket)
+
+                dfProduct = df.drop_duplicates(subset=['产品'], keep='last')
+                dfProduct = dfProduct['产品'].tolist()
+                dfProduct.sort()
+                self.QComboBoxProduct.clear()
+                dfProduct.insert(0, "产品")
+                self.QComboBoxProduct.addItems(dfProduct)
+
+                dfDlvPird = df.drop_duplicates(subset=['交货期'], keep='last')
+                dfDlvPird = dfDlvPird['交货期'].tolist()
+                dfDlvPird.sort()
+                self.QComboBoxDlvPird.clear()
+                dfDlvPird.insert(0, "交货期")
+                self.QComboBoxDlvPird.addItems(dfDlvPird)
+
+                dfAcutPird = df.drop_duplicates(subset=['帐期'], keep='last')
+                dfAcutPird = dfAcutPird['帐期'].tolist()
+                dfAcutPird.sort()
+                self.QComboBoxAcutPird.clear()
+                dfAcutPird.insert(0, "帐期")
+                self.QComboBoxAcutPird.addItems(dfAcutPird)
+
+                dfISO = df.drop_duplicates(subset=['ISO'], keep='last')
+                dfISO = dfISO['ISO'].astype(str).tolist()
+                dfISO.sort()
+                self.QComboBoxISO.clear()
+                dfISO.insert(0, "ISO")
+                self.QComboBoxISO.addItems(dfISO)
+
+                dfUser = df.drop_duplicates(subset=['所属用户'], keep='last')
+                dfUser = dfUser['所属用户'].tolist()
+                dfUser.sort()
+                self.QComboBoxUser.clear()
+                dfUser.insert(0, "所属用户")
+                self.QComboBoxUser.addItems(dfUser)
+
+                dfStat = df.drop_duplicates(subset=['状态'], keep='last')
+                dfStat = dfStat['状态'].tolist()
+                dfStat.sort()
+                self.QComboBoxStat.clear()
+                dfStat.insert(0, "状态")
+                self.QComboBoxStat.addItems(dfStat)
+
                 # 完成新表构建，删除旧Tab并插入新表
+
                 self.QTab.removeTab(2)
                 self.QTab.insertTab(2, myTable, "详单")
                 print(df)

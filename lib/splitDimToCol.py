@@ -27,7 +27,7 @@ class SplitDimToCol:
             tmp.drop([self.col_nm[self.dimcol]], axis=1, inplace=True)  # 删除列
             # 给分裂后的小块 度量列 设置新的列名，新列名是在老列名前加上当行的维度值
             col_lst = list(map(lambda x: dim_idx[0] + "_" + x, tmp.columns.tolist()))
-            tmp.columns = col_lst # 设置新列名
+            tmp.columns = col_lst  # 设置新列名
             tmp = tmp.groupby(by=[self.col_nm[self.xclo]]).sum()  # 小块集合 防止重复的同维多值
             try:
                 dfrslt
