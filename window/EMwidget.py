@@ -115,7 +115,11 @@ class EMwidget(Qtqw.QWidget):
         self.QComboBoxISO = Qtqw.QComboBox()
         self.QComboBoxUser = Qtqw.QComboBox()
         self.QComboBoxStat = Qtqw.QComboBox()
-        # self.QComboBoxYear.additem("年份")
+        # 定义 QorderTable 表头下拉选择框的信号
+        self.QComboBoxYear.activated.connect(self.showSome)
+        # self.QComboBoxYear.activated.connect(self.updateOrderTable)
+        self.yridx = 0
+
         self.initUI()
 
     def initUI(self):
@@ -268,7 +272,15 @@ class EMwidget(Qtqw.QWidget):
                 self.QComboBoxStat.clear()
                 dfStat.insert(0, "状态")
                 self.QComboBoxStat.addItems(dfStat)
+                # 筛选动作
+                self.QComboBoxYear.setCurrentIndex(self.yridx)
+                if self.yridx != 0:
+                    dfout = df[(df['年份'] == self.QComboBoxYear.currentText())]
+                else:
+                    dfout = df
 
+                # 将筛选完成的 dataframe 值插入表格
+                self.dfToTable(dfout, myTable)
                 # 完成新表构建，删除旧Tab并插入新表
 
                 self.QTab.removeTab(2)
@@ -276,6 +288,17 @@ class EMwidget(Qtqw.QWidget):
                 # print(df)
         except:
             print("order file doesn't exists")
+
+    def dfToTable(self, df: pd.DataFrame, myTable: Qtqw.QTableWidget):
+        x = 1
+        for idx in df.index:
+            y = 0
+            for col in df.columns:
+                newItem = Qtqw.QTableWidgetItem(str(df.loc[idx, col]))
+                newItem = self.setItemStyle(newItem)
+                myTable.setItem(x, y, newItem)
+                y = y + 1
+            x = x + 1
 
     def initRuleTable(self):
         myTable = Qtqw.QTableWidget(47, 13)
@@ -532,21 +555,6 @@ class EMwidget(Qtqw.QWidget):
         myTable.setItem(39, 6, newItem)
         return myTable
 
-    def showa(self):
-        if self.Qtree.currentItem().parent().parent():
-            filepath = "../rule/" + self.Qtree.currentItem().text(0) + "/" + self.Qtree.currentItem().parent().text(0)
-            # if self.Qtree.currentItem().parent().parent().text(0) == "新创业者竞赛场次管理":
-            #     self.Qtable.clearContents()
-            #     flag = Qtqc.Qt.ItemFlags(63)
-            #     newItem = Qtqw.QTableWidgetItem("777")
-            #     newItem.setFlags(flag)
-            #     self.Qtable.setItem(1, 1, newItem)
-            Operater = RuOpt.ReadRule(filepath)
-            print(str(Operater.getDict()))
-            # Operater.getDict()
-        else:
-            print("else")
-
     def searchOnTree(self):
         # print("search on tree!")
         searchWord = self.treeSearchText.text()
@@ -580,3 +588,10 @@ class EMwidget(Qtqw.QWidget):
         item.setFlags(flag)
         item.setTextAlignment(Qtqc.Qt.AlignCenter)
         return item
+
+    def showSome(self):
+        # print(self.QComboBoxYear.currentIndex())
+        self.yridx = self.QComboBoxYear.currentIndex()
+        print(self.yridx)
+        self.updateOrderTable()
+        self.QTab.setCurrentIndex(2)
