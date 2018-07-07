@@ -116,9 +116,23 @@ class EMwidget(Qtqw.QWidget):
         self.QComboBoxUser = Qtqw.QComboBox()
         self.QComboBoxStat = Qtqw.QComboBox()
         # 定义 QorderTable 表头下拉选择框的信号
-        self.QComboBoxYear.activated.connect(self.showSome)
+        self.QComboBoxYear.activated.connect(self.filter)
+        self.QComboBoxMarket.activated.connect(self.filter)
+        self.QComboBoxProduct.activated.connect(self.filter)
+        self.QComboBoxDlvPird.activated.connect(self.filter)
+        self.QComboBoxAcutPird.activated.connect(self.filter)
+        self.QComboBoxISO.activated.connect(self.filter)
+        self.QComboBoxUser.activated.connect(self.filter)
+        self.QComboBoxStat.activated.connect(self.filter)
         # self.QComboBoxYear.activated.connect(self.updateOrderTable)
         self.yridx = 0
+        self.mktidx = 0
+        self.prdidx = 0
+        self.dlvidx = 0
+        self.actidx = 0
+        self.isoidx = 0
+        self.usridx = 0
+        self.statidx = 0
 
         self.initUI()
 
@@ -273,11 +287,38 @@ class EMwidget(Qtqw.QWidget):
                 dfStat.insert(0, "状态")
                 self.QComboBoxStat.addItems(dfStat)
                 # 筛选动作
+                dfout = df.astype(str)
                 self.QComboBoxYear.setCurrentIndex(self.yridx)
                 if self.yridx != 0:
-                    dfout = df[(df['年份'] == self.QComboBoxYear.currentText())]
-                else:
-                    dfout = df
+                    dfout = dfout[(dfout['年份'] == self.QComboBoxYear.currentText())]
+
+                self.QComboBoxMarket.setCurrentIndex(self.mktidx)
+                if self.mktidx != 0:
+                    dfout = dfout[(dfout['市场'] == self.QComboBoxMarket.currentText())]
+
+                self.QComboBoxProduct.setCurrentIndex(self.prdidx)
+                if self.prdidx != 0:
+                    dfout = dfout[(dfout['产品'] == self.QComboBoxProduct.currentText())]
+
+                self.QComboBoxDlvPird.setCurrentIndex(self.dlvidx)
+                if self.dlvidx != 0:
+                    dfout = dfout[(dfout['交货期'] == self.QComboBoxDlvPird.currentText())]
+
+                self.QComboBoxAcutPird.setCurrentIndex(self.actidx)
+                if self.actidx != 0:
+                    dfout = dfout[(dfout['帐期'] == self.QComboBoxAcutPird.currentText())]
+
+                self.QComboBoxISO.setCurrentIndex(self.isoidx)
+                if self.isoidx != 0:
+                    dfout = dfout[(dfout['ISO'] == self.QComboBoxISO.currentText())]
+
+                self.QComboBoxUser.setCurrentIndex(self.usridx)
+                if self.usridx != 0:
+                    dfout = dfout[(dfout['所属用户'] == self.QComboBoxUser.currentText())]
+
+                self.QComboBoxStat.setCurrentIndex(self.statidx)
+                if self.statidx != 0:
+                    dfout = dfout[(dfout['状态'] == self.QComboBoxStat.currentText())]
 
                 # 将筛选完成的 dataframe 值插入表格
                 self.dfToTable(dfout, myTable)
@@ -589,9 +630,16 @@ class EMwidget(Qtqw.QWidget):
         item.setTextAlignment(Qtqc.Qt.AlignCenter)
         return item
 
-    def showSome(self):
+    def filter(self):
         # print(self.QComboBoxYear.currentIndex())
         self.yridx = self.QComboBoxYear.currentIndex()
-        print(self.yridx)
+        self.mktidx = self.QComboBoxMarket.currentIndex()
+        self.prdidx = self.QComboBoxProduct.currentIndex()
+        self.dlvidx = self.QComboBoxDlvPird.currentIndex()
+        self.actidx = self.QComboBoxAcutPird.currentIndex()
+        self.isoidx = self.QComboBoxISO.currentIndex()
+        self.usridx = self.QComboBoxUser.currentIndex()
+        self.statidx = self.QComboBoxStat.currentIndex()
+        # print(self.mktidx)
         self.updateOrderTable()
         self.QTab.setCurrentIndex(2)
