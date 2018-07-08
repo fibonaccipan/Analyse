@@ -267,7 +267,8 @@ class EMwidget(Qtqw.QWidget):
                 self.QComboBoxAcutPird.addItems(dfAcutPird)
 
                 dfISO = df.drop_duplicates(subset=['ISO'], keep='last')
-                dfISO = dfISO['ISO'].astype(str).tolist()
+                # dfISO = dfISO['ISO'].astype(str).tolist()
+                dfISO = dfISO['ISO'].tolist()
                 dfISO.sort()
                 self.QComboBoxISO.clear()
                 dfISO.insert(0, "ISO")
